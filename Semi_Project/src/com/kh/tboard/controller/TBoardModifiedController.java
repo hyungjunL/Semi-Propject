@@ -114,12 +114,12 @@ public class TBoardModifiedController extends HttpServlet {
 			if(result > 0) {
 				
 				request.setAttribute("errorMsg", "상품 정보 수정에 성공하셨습니다.");
-				response.sendRedirect(request.getContextPath() + "/list.it?currentPage=1");
+				response.sendRedirect(request.getContextPath() + "/list.it?currentPage=1&category="+category);
 				
 			}
 			else { // 실패 => 에러페이지
 				request.setAttribute("errorMsg", "상품 정보 수정에 실패하셨습니다.");
-				response.sendRedirect(request.getContextPath() + "/list.it?currentPage=1");
+				response.sendRedirect(request.getContextPath() + "/list.it?currentPage=1&category="+category);
 			}
 		}
 	}

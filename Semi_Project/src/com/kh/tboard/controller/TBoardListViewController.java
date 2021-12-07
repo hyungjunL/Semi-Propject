@@ -71,10 +71,11 @@ public class TBoardListViewController extends HttpServlet {
 		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, 
 								   maxPage, startPage, endPage);
 		
+		int category = Integer.parseInt(request.getParameter("category"));
+		System.out.println("이것의 카테고리 : " + category);
+		ArrayList<TBoard> pageList = new TBoardService().selectList(pi, category); 
 		
-		ArrayList<TBoard> pageList = new TBoardService().selectList(pi); 
-		
-		
+		request.setAttribute("category", category);
 		request.setAttribute("pageList", pageList); 
 		System.out.println(pageList);
 		request.setAttribute("pi", pi); 

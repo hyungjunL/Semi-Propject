@@ -151,11 +151,14 @@
                         
                     </td>
                 </tr>
-   
+   	
             </table>
 
             <br><br>
-            
+            <div align="center">
+    			<button type="submit" class="btn btn-secondary">수정 완료</button>
+    			<button type="reset" class="btn btn-secondary btn-danger">초기화</button>
+    		</div>
 
             <br><br>
             <div id="file-area">
@@ -215,10 +218,7 @@
 
                 }
             </script>
-            <div align="center">
-    			<button type="submit" class="btn btn-secondary">수정 완료</button>
-    			<button type="reset" class="btn btn-secondary btn-danger">초기화</button>
-    		</div>
+            
         </form>
         
         

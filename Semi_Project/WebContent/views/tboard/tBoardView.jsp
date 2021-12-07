@@ -6,6 +6,7 @@
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
 	ArrayList<TBoard> pageList = (ArrayList<TBoard>)request.getAttribute("pageList");
 	//페이징바 만들때 필요한 변수 미리 셋팅
+	int category = (int)request.getAttribute("category");
 	int currentPage = pi.getCurrentPage();
 	int startPage = pi.getStartPage();
 	int endPage = pi.getEndPage();
@@ -182,7 +183,7 @@
         <% for(int i = startPage; i <= endPage; i++) { %>
             <!-- 버튼이 눌렸을 때 해당 페이지로 이동하게끔 -->
             <% if(i != currentPage) { %>
-                <button  class = "btn-page" onclick="location.href='<%= contextPath %>/list.it?currentPage=<%= i %>'"><%= i %></button>
+                <button  class = "btn-page" onclick="location.href='<%= contextPath %>/list.it?currentPage=<%= i %>&category=<%= category %>'"><%= i %></button>
             <% } else { %>
                 <!-- 현재 내가 보고있는 페이지일 경우에는 클릭이 안되게끔 막고싶다. -->
                 <button class = "btn-page" disabled><%= i %></button>

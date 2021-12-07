@@ -58,11 +58,11 @@ public class TBoardService {
 		return listCount;
 	}
 
-	public ArrayList<TBoard> selectList(PageInfo pi) {
+	public ArrayList<TBoard> selectList(PageInfo pi,int category) {
 
 		Connection conn = getConnection();
 		
-		ArrayList<TBoard> pageList = new TBoardDao().selectList(conn, pi);
+		ArrayList<TBoard> pageList = new TBoardDao().selectList(conn, pi, category);
 		
 		close(conn);
 		

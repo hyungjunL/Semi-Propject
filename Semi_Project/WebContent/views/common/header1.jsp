@@ -141,11 +141,11 @@
 
         <div id="nav">
             <ul id="cat">
-                <li><a href="">국내도서</a></li>
-                <li><a href="">해외도서</a></li>
-                <li><a href="">초/중/고 참고서</a></li>
-                <li><a href="">대학교재</a></li>
-                <li><a href="">수험서/자격증</a></li>
+                <li><a href="/javajo/list.it?currentPage=1&category=1">국내도서</a></li>
+                <li><a href="/javajo/list.it?currentPage=1&category=2">해외도서</a></li>
+                <li><a href="/javajo/list.it?currentPage=1&category=3">초/중/고 참고서</a></li>
+                <li><a href="/javajo/list.it?currentPage=1&category=4">대학교재</a></li>
+                <li><a href="/javajo/list.it?currentPage=1&category=5">수험서/자격증</a></li>
             </ul>
         </div>
        

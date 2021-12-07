@@ -161,7 +161,7 @@ public class TBoardDao {
 		return listCount;
 	}
 
-	public ArrayList<TBoard> selectList(Connection conn, PageInfo pi) {
+	public ArrayList<TBoard> selectList(Connection conn, PageInfo pi, int category) {
 		// SELECT 문 => ResultSet => 여러 행 이므로 ArrayList<Board>
 		// 변수
 		ArrayList<TBoard> pageList = new ArrayList<>();
@@ -180,6 +180,7 @@ public class TBoardDao {
 			
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, endRow);
+			pstmt.setInt(3, category);
 			
 			rset = pstmt.executeQuery();
 			

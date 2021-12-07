@@ -16,6 +16,7 @@
 <style>
   
     #wrap {
+    
         width: 1000px;
         height: 1000px;
         margin: auto;
@@ -28,8 +29,8 @@
 	#slideshow {
 		margin: 80px auto;
 		position: relative;
-		width: 140px;
-		height: 240px;
+		width: 200px;
+		height: 300px;
 		padding: 10px;
 		box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
 	}
@@ -40,6 +41,9 @@
 		left: 10px;
 		right: 10px;
 		bottom: 10px;
+	}
+	table{
+		font-size: large;
 	}
 </style>
 
@@ -53,16 +57,16 @@
 		
 		<div class="outer">
 		<input type="hidden" name="bno" value="<%= b.gettNo() %>" >
-	    <h1 align="center">XXX님의 서점 </h1>
-	    <br>
-        <br>
+	    <h1 align="center">사용자 아이디님의 서점 </h1>
+	    
+       
 	    <table align="center">
 	
 	
 	            
 	        <tr>
 	        
-	            <td align="left" width="250">
+	            <td align="left" width="400">
 					<div id="slideshow">
 						<div>
 						  <img src="<%= contextPath %>/<%= list.get(1).getFilePath() + list.get(1).getChangeName() %>" alt="none" width="100%" height="100%">
@@ -76,7 +80,7 @@
 					
 	            </td>
 	            	
-	                <td width="200" height="300" rowspan="2">
+	                <td  width="300" height="300" rowspan="2" >
 	                <div id="info">
 	                    <p>
 	                        <strong>*제목: <%= b.gettTitle() %> </strong>
@@ -115,14 +119,13 @@
 	        
 	        <tr>
 	            
-	            <td align="center">● ● ● ● </td>
+	            <td align="center"></td>
 	            
 	        </tr>
 	        
 	
 	    </table>
 	
-	    <br>
 	        <div align="center">
 	            <a href="<%= contextPath %>/modifyForm.it?bno=<%= b.gettNo() %>" class="btn btn-warning btn-sm">수정</a>
 	            <button name="deleteBtn" id="deleteBtn" class="btn btn-danger btn-sm">삭제</button>
@@ -143,7 +146,7 @@
 	            </tr>
 	        </table>
 	    </div>
-	
+		<br>
 	    <div class="bottom" align="center">
 	        <table border="1">
 	            <tr>
