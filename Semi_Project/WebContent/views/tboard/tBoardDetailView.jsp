@@ -5,6 +5,7 @@
 <%
 	TBoard b = (TBoard)request.getAttribute("b");
 	int bno = b.gettNo();
+	int category = b.getCategoryNo();
 	ArrayList<Attachment> list = (ArrayList<Attachment>)request.getAttribute("list");
 %>
 <!DOCTYPE html>
@@ -57,6 +58,7 @@
 		
 		<div class="outer">
 		<input type="hidden" name="bno" value="<%= b.gettNo() %>" >
+		<input type="hidden" name="category" value="<%= b.getCategoryNo() %>" >
 	    <h1 align="center">사용자 아이디님의 서점 </h1>
 	    
        
@@ -129,7 +131,7 @@
 	        <div align="center">
 	            <a href="<%= contextPath %>/modifyForm.it?bno=<%= b.gettNo() %>" class="btn btn-warning btn-sm">수정</a>
 	            <button name="deleteBtn" id="deleteBtn" class="btn btn-danger btn-sm">삭제</button>
-	
+				
 	        </div>
 	
 	    <hr>
@@ -179,7 +181,8 @@
        		$("#deleteBtn").click(function(){
        			
        			var bno = $(this).children().eq(0).text();
-       			location.href = "<%= contextPath %>/delete.it?bno=<%= b.gettNo() %>";
+       			
+       			location.href = "<%= contextPath %>/delete.it?bno=<%= b.gettNo() %>&category=<%= b.getCategoryNo() %>";
        		});
        	});
 	</script>

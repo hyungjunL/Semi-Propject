@@ -176,7 +176,7 @@
         
         <!-- 페이징바에서 < 를 담당 : 이전페이지로 이동 -->
         <% if(currentPage != 1) { %>
-            <button class = "btn-page" onclick="location.href='<%= contextPath %>/list.it?currentPage=<%= currentPage - 1 %>'">&lt;</button>
+            <button class = "btn-page" onclick="location.href='<%= contextPath %>/list.it?currentPage=<%= currentPage - 1 %>&category=<%= category %>'">&lt;</button>
         <% } %>
     
         <!-- 페이징바에서 숫자를 담당 -->
@@ -192,7 +192,7 @@
         
         <!-- 페이징바에서 > 를 담당 : 다음페이지로 이동 -->
         <% if(currentPage != maxPage) { %>
-            <button class = "btn-page" onclick="location.href='<%= contextPath %>/list.it?currentPage=<%= currentPage + 1 %>'">&gt;</button>
+            <button class = "btn-page" onclick="location.href='<%= contextPath %>/list.it?currentPage=<%= currentPage + 1 %>&category=<%= category %>'">&gt;</button>
         <% } %>
         
     </div>

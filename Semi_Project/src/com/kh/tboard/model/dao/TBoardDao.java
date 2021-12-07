@@ -145,6 +145,9 @@ public class TBoardDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			
+			
+			
+			
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()) {
@@ -228,7 +231,7 @@ public class TBoardDao {
 			if(rset.next()) {
 				b = new TBoard(rset.getInt("T_NO"), 
 						 	rset.getString("T_TITLE"),
-							  rset.getString("CATEGORY_NAME"), 
+							  rset.getInt("CATEGORY_NO"), 
 							  rset.getString("CONTENT"), 
 							  rset.getDate("CREATE_DATE"),
 							  rset.getString("MEMBER_NO"),

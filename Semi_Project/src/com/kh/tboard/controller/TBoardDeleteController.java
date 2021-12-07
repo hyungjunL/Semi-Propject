@@ -31,13 +31,15 @@ public class TBoardDeleteController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		int boardNo = Integer.parseInt(request.getParameter("bno"));
+		int category = Integer.parseInt(request.getParameter("category"));
+		System.out.println("!@#!@#!@"+category);
 		System.out.println(boardNo);
 		int result = new TBoardService().deleteBoard(boardNo);
 		
 		if(result > 0) { // 성공 => /jsp/list.bo url 재요청 => 리스트페이지가 보여지도록
 			
 			
-			response.sendRedirect(request.getContextPath() + "/list.it?currentPage=1");
+			response.sendRedirect(request.getContextPath() + "/list.it?currentPage=1&category="+category);
 		}
 		else { // 실패 => 에러페이지가 보여지도록 에러문구
 			

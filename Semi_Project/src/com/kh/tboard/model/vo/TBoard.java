@@ -51,11 +51,11 @@ public class TBoard {
 	}
 	
 	
-	public TBoard(int tNo, String tTitle, String categoryName, String content, Date createDate, String memberNo,int tPrice,String status, String bookStatus) {
+	public TBoard(int tNo, String tTitle, int categoryNo, String content, Date createDate, String memberNo,int tPrice,String status, String bookStatus) {
 		super();
 		this.tNo = tNo;
 		this.tTitle = tTitle;
-		this.categoryName = categoryName;
+		this.categoryNo = categoryNo;
 		this.content = content;
 		this.createDate = createDate;
 		this.memberNo = memberNo;

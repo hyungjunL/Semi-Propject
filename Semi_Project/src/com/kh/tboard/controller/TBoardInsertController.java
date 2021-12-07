@@ -114,7 +114,7 @@ public class TBoardInsertController extends HttpServlet {
 			if(result > 0) {
 			
 				request.setAttribute("errorMsg", "상품 등록에 성공하셨습니다.");
-				response.sendRedirect(request.getContextPath() + "/list.it?currentPage=1");
+				response.sendRedirect(request.getContextPath() + "/list.it?currentPage=1&category="+categoryNo);
 				
 			}
 			else { // 실패 => 에러페이지

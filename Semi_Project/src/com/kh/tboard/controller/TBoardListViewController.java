@@ -34,6 +34,9 @@ public class TBoardListViewController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		int category = Integer.parseInt(request.getParameter("category"));
+		System.out.println("이것의 카테고리 : " + category);
+		
 		int listCount; 
 		int currentPage; 
 		int pageLimit; 
@@ -45,7 +48,7 @@ public class TBoardListViewController extends HttpServlet {
 		
 		
 		listCount = new TBoardService().selectListCount();
-		
+		System.out.println("리스트 카운트 : " + listCount);
 		currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		
 
@@ -71,8 +74,7 @@ public class TBoardListViewController extends HttpServlet {
 		PageInfo pi = new PageInfo(listCount, currentPage, pageLimit, boardLimit, 
 								   maxPage, startPage, endPage);
 		
-		int category = Integer.parseInt(request.getParameter("category"));
-		System.out.println("이것의 카테고리 : " + category);
+		
 		ArrayList<TBoard> pageList = new TBoardService().selectList(pi, category); 
 		
 		request.setAttribute("category", category);
