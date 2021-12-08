@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
@@ -59,6 +60,9 @@ public class TBoardInsertController extends HttpServlet {
 			int categoryNo = Integer.parseInt(multiRequest.getParameter("categoryNo"));
 			String bookStatus = multiRequest.getParameter("bookStatus");
 			String content = multiRequest.getParameter("content");
+			String userNo = multiRequest.getParameter("userNo");
+			
+			
 			
 			
 			TBoard tb = new TBoard();
@@ -67,7 +71,7 @@ public class TBoardInsertController extends HttpServlet {
 			tb.setCategoryNo(categoryNo);
 			tb.setBookStatus(bookStatus);
 			tb.setContent(content);
-			tb.setMemberNo("1");
+			tb.setMemberNo(userNo);
 			
 			ArrayList<Attachment> list = new ArrayList<>();
 			

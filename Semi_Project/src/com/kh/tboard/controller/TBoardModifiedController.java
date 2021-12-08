@@ -59,7 +59,7 @@ public class TBoardModifiedController extends HttpServlet {
 			int category = Integer.parseInt(multiRequest.getParameter("category"));
 			String status = multiRequest.getParameter("status");
 			String content = multiRequest.getParameter("content");
-			
+			String userNo = multiRequest.getParameter("userNo");
 			
 			
 			TBoard tb = new TBoard();
@@ -68,7 +68,7 @@ public class TBoardModifiedController extends HttpServlet {
 			tb.setCategoryNo(category);
 			tb.setBookStatus(status);
 			tb.setContent(content);
-			tb.setMemberNo("1");
+			tb.setMemberNo(userNo);
 			
 			ArrayList<Attachment> list = new ArrayList<>();
 			

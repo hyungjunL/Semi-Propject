@@ -119,10 +119,18 @@
 
   
         <div id="miniMenu">
-            <button onclick="enrollForm();">회원가입</button>
-            <button onclick="login();"> 로그인</button>
-            <button>마이페이지</button>
-            <button type="button" onclick="enrollPage();">상품등록</button>
+            
+	        <% if(loginMember == null) { %>
+	            <button class="btn btn-success btn-sm">고객센터</button>
+	            <button class="btn btn-success btn-sm" onclick="enrollForm()">회원가입</button>
+	            <button class="btn btn-success btn-sm" onclick="login();">로그인</button>
+	        <% } else { %>
+	        	<button class="btn btn-success btn-sm">고객센터</button>
+	            <button onclick="location.href='<%= contextPath%>/myPage.me'"class="btn btn-success btn-sm">마이페이지</button>
+	            <button type="button" class="btn btn-success btn-sm" onclick="enrollPage();">상품등록</button>
+	            <button class="btn btn-success btn-sm" onclick="logout();">로그아웃</button>
+	        <% } %>
+        
         </div>
         <script>
 	        	function enrollPage() {

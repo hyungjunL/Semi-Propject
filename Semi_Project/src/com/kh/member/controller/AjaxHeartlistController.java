@@ -1,26 +1,31 @@
 package com.kh.member.controller;
 
+
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
+import com.google.gson.Gson;
 import com.kh.member.model.service.MemberService;
-
+import com.kh.member.model.vo.Heart;
+import com.kh.member.model.vo.Member;
+ 
 /**
- * Servlet implementation class UpdatePasswordController
+ * Servlet implementation class AjaxHeartlistController
  */
-@WebServlet("/changePwd.me")
-public class UpdatePasswordController extends HttpServlet {
+@WebServlet("/hlist.no")
+public class AjaxHeartlistController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UpdatePasswordController() {
+    public AjaxHeartlistController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,22 +34,26 @@ public class UpdatePasswordController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		HttpSession session = request.getSession();
+		//Get 방식
 		
-		String pass = request.getParameter("pass");
-		String memberId = (String)session.getAttribute("memberId");
-		String email = (String)session.getAttribute("email");
+		//값뽑기
+		//값뽑기
+		//int userNo = Integer.parseInt(request.getParameter("userNo"));
 		
-		int result = new MemberService().updatePassword(memberId, email, pass);
+		int userNo = ((Member)request.getSession().getAttribute("loginMember")).getMemberNo();
 		
-		if(result > 0) {	
-			session.setAttribute("alertMsg", "비밀번호가 변경되었습니다.");
-			response.sendRedirect(request.getContextPath());
-		}
-		else {
-			session.setAttribute("alertMsg", "비밀번호가 변경에 실패했습니다.");
-		}
+		
+		//System.out.println(userNo);  
+		//VO가공
+		
+		//Service 단으로 토스 => 게시판 관련 기능
+		ArrayList<Heart> list = new MemberService().selectHeartList(userNo);
+		
+		//형식,인코딩 지정
+		response.setContentType("application/json; charset=UTF-8");
+		
+		new Gson().toJson(list, response.getWriter());
+		
 	}
 
 	/**

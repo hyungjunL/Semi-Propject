@@ -65,7 +65,7 @@
         
         <h2 align="center">내용 수정</h2>
         <form action="<%= contextPath %>/modify.it?bno=<%= boardNo %>" id="update-form" method="post" enctype="multipart/form-data">
-		
+		<input type="hidden" name="userNo" value="<%= loginMember.getMemberNo() %>">
   
             <table>
                 <tr>

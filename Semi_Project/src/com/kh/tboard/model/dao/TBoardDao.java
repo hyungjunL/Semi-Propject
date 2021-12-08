@@ -467,7 +467,7 @@ public class TBoardDao {
 			pstmt.setInt(3, tb.getCategoryNo());
 			pstmt.setString(4, tb.getBookStatus());
 			pstmt.setString(5, tb.getContent());
-			pstmt.setInt(6, 1);
+			pstmt.setString(6, tb.getMemberNo());
 			pstmt.setInt(7, boardNo);
 			
 			

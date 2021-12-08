@@ -56,7 +56,7 @@
         <br>
         <h2 align="center">판매 등록</h2>
         <form action="<%= contextPath %>/insert.it" id="enroll-form" method="post" enctype="multipart/form-data">
-		
+		<input type="hidden" name="userNo" value="<%= loginMember.getMemberNo() %>">
   
             <table>
                 <tr>

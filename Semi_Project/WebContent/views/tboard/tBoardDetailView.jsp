@@ -59,7 +59,7 @@
 		<div class="outer">
 		<input type="hidden" name="bno" value="<%= b.gettNo() %>" >
 		<input type="hidden" name="category" value="<%= b.getCategoryNo() %>" >
-	    <h1 align="center">사용자 아이디님의 서점 </h1>
+	    <h1 align="center"><%= loginMember.getMemberName() %>님의 서점 </h1>
 	    
        
 	    <table align="center">
@@ -129,8 +129,15 @@
 	    </table>
 	
 	        <div align="center">
-	            <a href="<%= contextPath %>/modifyForm.it?bno=<%= b.gettNo() %>" class="btn btn-warning btn-sm">수정</a>
-	            <button name="deleteBtn" id="deleteBtn" class="btn btn-danger btn-sm">삭제</button>
+	        	<% if(loginMember != null &&(loginMember.getMemberNo() == Integer.parseInt(b.getMemberNo()))) { %>
+		            <a href="<%= contextPath %>/modifyForm.it?bno=<%= b.gettNo() %>" class="btn btn-warning btn-sm">수정</a>
+	            	<button name="deleteBtn" id="deleteBtn" class="btn btn-danger btn-sm">삭제</button>
+		        <% } else { %>	
+		        	
+		        <% } %>
+	        
+	        
+	            
 				
 	        </div>
 	

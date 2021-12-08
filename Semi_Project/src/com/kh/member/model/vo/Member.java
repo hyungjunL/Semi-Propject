@@ -13,18 +13,7 @@ public class Member {
 	private String phone; //    PHONE CHAR(13),
 	private String birth; //    BIRTH DATE,
 	private Date enrollDate; //    ENROLL_DATE DATE DEFAULT SYSDATE NOT NULL,
-	private String status; //    STATUS CHAR(1) DEFAULT 'Y' CHECK (STATUS IN('Y', 'N')) NOT NULL
 	
-	public Member() {
-		super();
-	}
-	
-
-	public Member(String memberId) {
-		super();
-		this.memberId = memberId;
-	}
-
 	public Member(int memberNo, String memberId, String memberPwd, String memberName, String email, String address,
 			String phone, String birth, Date enrollDate, String status) {
 		super();
@@ -40,6 +29,20 @@ public class Member {
 		this.status = status;
 	}
 
+	private String status; //    STATUS CHAR(1) DEFAULT 'Y' CHECK (STATUS IN('Y', 'N')) NOT NULL
+	
+	public Member() {
+		super();
+	}
+	
+
+	public Member(String memberId) {
+		super();
+		this.memberId = memberId;
+	}
+
+	
+
 	public Member(String memberId, String memberPwd, String memberName, String email, String address, String phone,
 			String birth) {
 		super();
@@ -51,6 +54,22 @@ public class Member {
 		this.phone = phone;
 		this.birth = birth;
 	}
+	
+
+	
+	
+	public Member(String memberId, String memberName, String email, String address, String phone, String birth) {
+		super();
+		this.memberId = memberId;
+		this.memberName = memberName;
+		this.email = email;
+		this.address = address;
+		this.phone = phone;
+		this.birth = birth;
+	}
+
+
+	
 
 	public int getMemberNo() {
 		return memberNo;

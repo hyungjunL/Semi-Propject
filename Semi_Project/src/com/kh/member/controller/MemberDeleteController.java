@@ -9,18 +9,19 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.kh.member.model.service.MemberService;
+import com.kh.member.model.vo.Member;
 
 /**
- * Servlet implementation class UpdatePasswordController
+ * Servlet implementation class MemberDeleteController
  */
-@WebServlet("/changePwd.me")
-public class UpdatePasswordController extends HttpServlet {
+@WebServlet("/delete.me")
+public class MemberDeleteController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UpdatePasswordController() {
+    public MemberDeleteController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,22 +30,28 @@ public class UpdatePasswordController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		// POST
 		request.setCharacterEncoding("UTF-8");
+		
+		String userPwd = request.getParameter("userPwd");
+		
 		HttpSession session = request.getSession();
+		String userId = ((Member)session.getAttribute("loginMember")).getMemberId();
 		
-		String pass = request.getParameter("pass");
-		String memberId = (String)session.getAttribute("memberId");
-		String email = (String)session.getAttribute("email");
+		int result = new MemberService().deleteMember(userId, userPwd);
 		
-		int result = new MemberService().updatePassword(memberId, email, pass);
-		
-		if(result > 0) {	
-			session.setAttribute("alertMsg", "비밀번호가 변경되었습니다.");
+		if(result > 0) {
+			
+			session.removeAttribute("loginMember");
 			response.sendRedirect(request.getContextPath());
+			
+		} else {
+			
+			request.setAttribute("errorMsg", "회원탈퇴에 실패했습니다.");
+			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 		}
-		else {
-			session.setAttribute("alertMsg", "비밀번호가 변경에 실패했습니다.");
-		}
+		
 	}
 
 	/**

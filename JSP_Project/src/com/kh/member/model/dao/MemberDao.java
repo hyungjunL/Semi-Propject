@@ -88,45 +88,7 @@ public class MemberDao {
 		return m;
 	}
 	
-	public int insertMember(Connection conn, Member m) {
-		
-		// INSERT 문 => 처리된 행의 갯수
-		
-		// 필요한 변수들 셋팅
-		int result = 0;
-		
-		PreparedStatement pstmt = null;
-		
-		String sql = prop.getProperty("insertMember");
-		
-		try {
-			// pstmt 객체 생성 (sql 미리 넘기기)
-			pstmt = conn.prepareStatement(sql);
-			
-			// 빵꾸 매꾸기
-			pstmt.setString(1, m.getUserId());
-			pstmt.setString(2, m.getUserPwd());
-			pstmt.setString(3, m.getUserName());
-			pstmt.setString(4, m.getPhone());
-			pstmt.setString(5, m.getEmail());
-			pstmt.setString(6, m.getAddress());
-			pstmt.setString(7, m.getInterest());
-			
-			// SQL 실행 및 결과 받기
-			// select => pstmt.executeQuery();
-			// insert/update/delete => pstmt.executeUpdate();
-			result = pstmt.executeUpdate();
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			// 자원반납
-			JDBCTemplate.close(pstmt);
-		}
-		
-		// 결과 리턴
-		return result;
-	}
+	
 	
 	public int updateMember(Connection conn, Member m) {
 		

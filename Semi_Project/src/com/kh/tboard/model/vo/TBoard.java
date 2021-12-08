@@ -64,6 +64,15 @@ public class TBoard {
 		this.bookStatus = bookStatus;
 		this.categoryName = categoryName;
 	}
+	
+	public TBoard(int tNo, String tTitle, int tPrice, Date createDate, String status) {
+		super();
+		this.tNo = tNo;
+		this.tTitle = tTitle;
+		this.tPrice = tPrice;
+		this.createDate = createDate;
+		this.status = status;
+	}
 
 	public String getCategoryName() {
 		return categoryName;

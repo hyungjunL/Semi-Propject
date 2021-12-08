@@ -41,6 +41,59 @@
 		FROM MEMBER
 		WHERE MEMBER_ID = ?
 	</entry>
+	<entry key="updateMember">
+		 UPDATE MEMBER 
+	   	   SET MEMBER_NAME = ?
+	         , EMAIL = ?
+	         , ADDRESS = ?
+	         , PHONE = ?
+	         , BIRTH = ?
+	     WHERE MEMBER_ID = ?
+	</entry>
 	
+	<entry key="selectMember">
+		SELECT *
+		  FROM MEMBER
+	 	 WHERE MEMBER_ID = ?
+	</entry>
+	
+	<entry key="updatePwdMember">
+		UPDATE MEMBER
+		   SET MEMBER_PWD = ?
+		 WHERE MEMBER_ID = ? 
+		   AND MEMBER_PWD = ?
+	</entry>
+	
+	<entry key="deleteMember">
+		UPDATE MEMBER
+		   SET STATUS = 'N'
+		 WHERE MEMBER_ID = ?
+		   AND MEMBER_PWD = ?
+	</entry>
+	
+	<entry key="selectHeartList">
+		SELECT ZZIM_NO,ZZIM_TNO,T_TITLE
+		FROM ZZIM Z
+		JOIN T_BOARD ON (ZZIM_TNO = T_NO)
+		JOIN MEMBER M ON (ZZIM_MEMBER = M.MEMBER_NO)
+		WHERE Z.STATUS ='Y' AND ZZIM_MEMBER = ?
+		ORDER BY Z.CREATE_DATE DESC
+	</entry>
+	
+	<entry key="selectZzim">
+            SELECT Z.ZZIM_NO, Z.ZZIM_MEMBER, Z.ZZIM_TNO, T.T_TITLE
+              FROM ZZIM Z, T_BOARD T
+             WHERE Z.ZZIM_MEMBER = ?
+               AND Z.ZZIM_TNO = T.T_NO(+)
+               AND Z.STATUS = 'Y'
+             ORDER BY Z.CREATE_DATE DESC
+	</entry>
+	
+	<entry key="searchMyTrade">
+		SELECT T_NO, T_TITLE, T_PRICE, CREATE_DATE, STATUS
+		FROM T_BOARD
+		WHERE MEMBER_NO = ?
+		ORDER BY T_NO DESC
+	</entry>
 	
 </properties>

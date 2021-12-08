@@ -1,6 +1,8 @@
 package com.kh.member.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,19 +10,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.kh.common.model.vo.PageInfo;
 import com.kh.member.model.service.MemberService;
+import com.kh.member.model.vo.Heart;
+import com.kh.member.model.vo.Member;
 
 /**
- * Servlet implementation class UpdatePasswordController
+ * Servlet implementation class MyJjimDetailController
  */
-@WebServlet("/changePwd.me")
-public class UpdatePasswordController extends HttpServlet {
+@WebServlet("/zzim.me")
+public class MyZzimDetailController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UpdatePasswordController() {
+    public MyZzimDetailController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,22 +34,18 @@ public class UpdatePasswordController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
+		
+		
+		// 로그인한 사용자의 회원번호 가져오기
 		HttpSession session = request.getSession();
+		int userNo = (Integer)((Member)session.getAttribute("loginMember")).getMemberNo();
+	
+		ArrayList<Heart> list = new MemberService().selectZzim(userNo);
 		
-		String pass = request.getParameter("pass");
-		String memberId = (String)session.getAttribute("memberId");
-		String email = (String)session.getAttribute("email");
+		request.setAttribute("list", list);
 		
-		int result = new MemberService().updatePassword(memberId, email, pass);
+		request.getRequestDispatcher("views/member/zzimPage.jsp").forward(request, response);
 		
-		if(result > 0) {	
-			session.setAttribute("alertMsg", "비밀번호가 변경되었습니다.");
-			response.sendRedirect(request.getContextPath());
-		}
-		else {
-			session.setAttribute("alertMsg", "비밀번호가 변경에 실패했습니다.");
-		}
 	}
 
 	/**

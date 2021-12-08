@@ -187,7 +187,7 @@
                 else {
                 	console.log(result);
                     if(confirm("사용 가능한 아이디입니다. 사용하시겠습니까?")) {
-                        $memberId.attr("disabled", true);
+                        $memberId.attr("readonly", true);
                     }
                     else {
                         $memberId.focus();
@@ -208,11 +208,11 @@
 			if($(this).val() == "1") {
 				$("#domain").val('');
 				$("#domain").focus();
-				$("#domain").removeAttr("disabled");
+				$("#domain").removeAttr("readonly");
 			}
 			else {
 				$("#domain").val($(this).text());
-				$("#domain").attr("disabled", true);
+				$("#domain").attr("readonly", true);
 			}
 		});
 	});
