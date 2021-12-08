@@ -45,11 +45,11 @@ public class TBoardService {
 		return list;
 	}
 
-	public int selectListCount() {
+	public int selectListCount(int category) {
 		
 		Connection conn = getConnection();
 		
-		int listCount = new TBoardDao().selectListCount(conn);
+		int listCount = new TBoardDao().selectListCount(conn, category);
 		// SELECT 문의 결과는 ResultSet 이 맞긴한데
 		// 상식적으로 생각해보면 게시글의 총 갯수는 정수형
 		
@@ -174,5 +174,5 @@ public class TBoardService {
 		
 		return result1 * result2;
 	}
-
+	
 }

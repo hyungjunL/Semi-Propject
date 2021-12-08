@@ -132,7 +132,7 @@ public class TBoardDao {
 		return list;
 	}
 
-	public int selectListCount(Connection conn) {
+	public int selectListCount(Connection conn, int category) {
 		
 		int listCount = 0;
 		
@@ -146,7 +146,7 @@ public class TBoardDao {
 			pstmt = conn.prepareStatement(sql);
 			
 			
-			
+			pstmt.setInt(1, category);
 			
 			rset = pstmt.executeQuery();
 			
@@ -180,10 +180,10 @@ public class TBoardDao {
 			
 			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
 			int endRow = startRow + pi.getBoardLimit() - 1;
+			pstmt.setInt(1, category);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
 			
-			pstmt.setInt(1, startRow);
-			pstmt.setInt(2, endRow);
-			pstmt.setInt(3, category);
 			
 			rset = pstmt.executeQuery();
 			
@@ -237,7 +237,8 @@ public class TBoardDao {
 							  rset.getString("MEMBER_NO"),
 							  rset.getInt("T_PRICE"),
 							  rset.getString("STATUS"),
-							  rset.getString("BOOK_STATUS"));
+							  rset.getString("BOOK_STATUS"),
+							  rset.getString("CATEGORY_NAME"));
 				
 			}
 			

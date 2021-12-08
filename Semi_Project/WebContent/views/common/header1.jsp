@@ -1,18 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
      
-<%@ page import="com.kh.member.model.vo.Member" %>
-<%
-	String contextPath = request.getContextPath(); // /jsp
 
-	Member loginUser = (Member)session.getAttribute("loginUser");
-	// 로그인 전 : menubar.jsp 가 로딩될때 null
-	// 로그인 후 : menubar.jsp 가 로딩될때 로그인한 회원의 정보가 담겨있음
-	
-	// 성공 / 경고 메시지 뽑기
+<%@ page import="com.kh.member.model.vo.Member" %>    
+<%
+	String contextPath = request.getContextPath();
+%>
+<%
+	Member loginMember = (Member)session.getAttribute("loginMember");
 	String alertMsg = (String)session.getAttribute("alertMsg");
-	// 서비스 요청 전 : alertMsg = null
-	// 서비스 요청 후 성공 시 : alertMsg = 메시지 문구
 %>
     
 <!DOCTYPE html>
@@ -105,7 +101,17 @@
     }
    
 </style>
-
+<script>
+	
+		var msg = "<%= alertMsg %>";
+		
+		if(msg != "null") { 
+			alert(msg);
+	
+			<% session.removeAttribute("alertMsg"); %>
+		}
+	
+	</script>
 
 
 </head>
@@ -113,8 +119,8 @@
 
   
         <div id="miniMenu">
-            <button>회원가입</button>
-            <button>로그인</button>
+            <button onclick="enrollForm();">회원가입</button>
+            <button onclick="login();"> 로그인</button>
             <button>마이페이지</button>
             <button type="button" onclick="enrollPage();">상품등록</button>
         </div>
@@ -152,6 +158,33 @@
             <hr>
    
     
+       <script>
+
+        function slideDown() {
+            var openState = $(".mainMenu").hasClass("open");
+            $(".mainMenu").animate({top : openState ? "5%" : "-100%"}, 400);
+        }
+
+        $("#menu-toggle").click(function() {
+            $(".mainMenu").toggleClass("open");
+            slideDown();
+        })
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            window.event.currentTarget.classList.toggle('active');
+        });
         
+	    function login() {
+	    	
+	        window.open("views/member/minilogin.jsp", "로그인", "width=700, height=400, status=0, toolbar=0, menubar='no'");
+	    }
+	    
+	    function logout() {
+	    	location.href = "<%= contextPath %>/logout.me";
+	    }
+	    
+	    function enrollForm() {
+	    	location.href = "<%= contextPath %>/enrollForm.me";
+	    }
+	</script> 
 </body>
 </html>

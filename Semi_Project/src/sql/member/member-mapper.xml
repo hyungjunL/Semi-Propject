@@ -4,7 +4,42 @@
 
 	<comment>회원 관련 쿼리문</comment>
 	
-	<entry key="">
+	<entry key="loginMember">
+		SELECT * FROM MEMBER
+		WHERE MEMBER_ID = ?
+		AND MEMBER_PWD = ?
+		AND STATUS = 'Y'
+	</entry>
+	
+	<entry key="insertMember">
+		INSERT INTO MEMBER(MEMBER_NO, MEMBER_ID, MEMBER_PWD, MEMBER_NAME, EMAIL, ADDRESS, PHONE, BIRTH)
+		VALUES (SEQ_UNO.NEXTVAL, ?, ?, ?, ?, ?, ?, ?)
+	</entry>
+	
+	<entry key="findId">
+		SELECT RPAD(SUBSTR(MEMBER_ID, 1, 4), LENGTH(MEMBER_ID), '*') "MEMBER_ID" FROM MEMBER 
+		WHERE EMAIL = ?
+		AND STATUS = 'Y'
+	</entry>
+	
+	<entry key="findPwd">
+		SELECT * FROM MEMBER
+		WHERE MEMBER_ID = ?
+		AND EMAIL = ?
+		AND STATUS = 'Y'
+	</entry>
+	
+	<entry key="updatePassword">
+		UPDATE MEMBER SET MEMBER_PWD = ?
+		WHERE MEMBER_ID = ?
+		AND EMAIL = ?
+		AND STATUS = 'Y'
+	</entry>
+	
+	<entry key="idCheck">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE MEMBER_ID = ?
 	</entry>
 	
 	
