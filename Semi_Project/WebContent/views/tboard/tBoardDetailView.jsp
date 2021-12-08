@@ -59,7 +59,7 @@
 		<div class="outer">
 		<input type="hidden" name="bno" value="<%= b.gettNo() %>" >
 		<input type="hidden" name="category" value="<%= b.getCategoryNo() %>" >
-	    <h1 align="center"><%= loginMember.getMemberName() %>님의 서점 </h1>
+	    <h1 align="center">상점<%= b.getMemberNo()  %>호  </h1>
 	    
        
 	    <table align="center">
@@ -131,7 +131,29 @@
 	        <div align="center">
 	        	<% if(loginMember != null &&(loginMember.getMemberNo() == Integer.parseInt(b.getMemberNo()))) { %>
 		            <a href="<%= contextPath %>/modifyForm.it?bno=<%= b.gettNo() %>" class="btn btn-warning btn-sm">수정</a>
-	            	<button name="deleteBtn" id="deleteBtn" class="btn btn-danger btn-sm">삭제</button>
+	            	<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">삭제</button>
+	            	<!-- The Modal -->
+					  <div class="modal fade" id="myModal">
+					    <div class="modal-dialog">
+					      <div class="modal-content">
+					      
+					        <!-- Modal body -->
+					        <div class="modal-body">
+					         	삭제된 데이터는 복구 할 수 없습니다. 정말 삭제하시겠습니까??
+					        </div>
+					        
+					        <!-- Modal footer -->
+					        <div class="modal-footer">
+					          <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">취소</button>
+					          <button name="deleteBtn" id="deleteBtn" type="button" class="btn btn-danger btn-sm" data-dismiss="modal">삭제</button>
+					        </div>
+					        
+					      </div>
+					    </div>
+					  </div>
+					  
+	            	
+	
 		        <% } else { %>	
 		        	
 		        <% } %>

@@ -113,7 +113,7 @@ public class TBoardModifiedController extends HttpServlet {
 			// 5) 결과에 따른 응답뷰 지정
 			if(result > 0) {
 				
-				request.setAttribute("errorMsg", "상품 정보 수정에 성공하셨습니다.");
+				request.getSession().setAttribute("alertMsg", "상품정보 수정에 성공하셨습니다.");
 				response.sendRedirect(request.getContextPath() + "/list.it?currentPage=1&category="+category);
 				
 			}

@@ -240,13 +240,6 @@
 					
 		            <div id="zzimList" class="myPage-jjim">
 		                    <table class="table" id="zzim-area">
-		                   		
-		                    <% if(list.isEmpty()) { %>
-		                    	<tr>
-		                    		<td colspan="3" align="center">존재하는 찜 내역이 없습니다.</td>
-		                    	</tr>
-		                    <% } else {%> <!-- list 값있으면 -->
-		                    	
 		                    	<thead>
 		                    		<th>NO</th>
 		                            <th>게시글 번호</th>
@@ -255,7 +248,6 @@
 		                        <tbody>
 		                        </tbody>    
 		                        </form> 
-							<% } %>
 
 			            </table>
 			          
@@ -273,16 +265,26 @@
 					   		
 					        // 찜 갯수만큼 반복 => 누적(문자열)
 					        var result = "";
-					        for(var i in list) { 
 					        
-					          result += "<tr><td>" 
-					          			+ (Number(i) + 1) + "</td><td class='bno'>"
-					          			+ list[i].heartBno +"</td><td><p onclick='clickHref(this);'>"
-					          			+ list[i].bookTitle + "</td><tr>"     	
+					        if(list == "") {
+					        	
+					        	result = "<td colspan='3' align='center'>" + '존재하는 찜 내역이 없습니다' + "</td>";
+					        	
+					        } else {
+						        for(var i in list) { 
+						        
+						        
+						          result += "<tr><td>" 
+						          			+ (Number(i) + 1) + "</td><td class='bno'>"
+						          			+ list[i].heartBno +"</td><td><p onclick='clickHref(this);'>"
+						          			+ list[i].bookTitle + "</td><tr>"     	
+						        }
+						        
 					        }
+						        
+						        $("#zzim-area tbody").html(result);
+						        console.log("찜 ajax 성공");
 					        
-					        $("#zzim-area tbody").html(result);
-					        console.log("찜 ajax 성공");
 					        
 					      },
 					      error : function() {

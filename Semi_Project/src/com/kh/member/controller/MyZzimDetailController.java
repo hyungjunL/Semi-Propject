@@ -41,7 +41,7 @@ public class MyZzimDetailController extends HttpServlet {
 		int userNo = (Integer)((Member)session.getAttribute("loginMember")).getMemberNo();
 	
 		ArrayList<Heart> list = new MemberService().selectZzim(userNo);
-		
+		System.out.println("찜 리그트 : " + list);
 		request.setAttribute("list", list);
 		
 		request.getRequestDispatcher("views/member/zzimPage.jsp").forward(request, response);

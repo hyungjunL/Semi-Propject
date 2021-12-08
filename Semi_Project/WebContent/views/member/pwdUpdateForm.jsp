@@ -62,7 +62,7 @@
 			  <div class="form-check-inline">
 			  </div>
 			  <br><br>
-			  <form id="findID" action="updatePwd.me" method="post">
+			  <form id="findID" action="changePwd.me" method="post">
 			  <div class="form-floating">
 				<input type="password" class="form-control" id="floatingPassword1" name="pass" placeholder="비밀번호" required>
 				<input type="password" class="form-control" id="floatingPassword2" placeholder="비밀번호 확인" required> 

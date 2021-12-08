@@ -38,7 +38,7 @@ public class TBoardDeleteController extends HttpServlet {
 		
 		if(result > 0) { // 성공 => /jsp/list.bo url 재요청 => 리스트페이지가 보여지도록
 			
-			
+			request.getSession().setAttribute("alertMsg", "상품을 삭제했습니다.");
 			response.sendRedirect(request.getContextPath() + "/list.it?currentPage=1&category="+category);
 		}
 		else { // 실패 => 에러페이지가 보여지도록 에러문구
