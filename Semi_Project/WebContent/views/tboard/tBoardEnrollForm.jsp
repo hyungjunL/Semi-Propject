@@ -8,13 +8,13 @@
 <style>
     #wrap {
         width: 1000px;
-        height: 1000px;
+        height: 1100px;
         margin: auto;
     }
 
      
 	.outer{
-        background: rgb(243, 245, 243);
+     
         color: black;
         width: 100%;
         height : 90%;
@@ -116,11 +116,16 @@
                 
                  
                                
-               
+              
                 
             </table>
-
-            <br><br>
+            <hr>
+            <br>
+ 			<div align="center">
+                <button type="submit" class="btn btn-secondary">판매 등록</button>
+                <button type="reset" class="btn btn-secondary btn-danger">초기화</button>
+            </div>
+            <br>
             
 
             <br><br>
@@ -131,7 +136,7 @@
             <input type="file" id="file3" name="file3" onchange="loadImg(this, 3);" required >
   
         </div>
-
+			
             <script>
                 $(function(){
 
@@ -181,10 +186,7 @@
 
                 }
             </script>
-            <div align="center">
-                <button type="submit" class="btn btn-secondary">판매 등록</button>
-                <button type="reset" class="btn btn-secondary btn-danger">초기화</button>
-            </div>
+            
         </form>
         
     </div>

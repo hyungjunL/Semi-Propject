@@ -249,6 +249,7 @@
 
 		
 		            <div id="bookListForm" class="myPage-bookList">
+		           
 		                    <table class="table" >
 		                        <tr>
 		                            <th>NO</th>
@@ -283,7 +284,7 @@
 		
 		                    </table>
 		            </div>
-		            
+		           
 		            <script>
 		         	// 링크 걸기 맵핑값확인
 				    $(function() {

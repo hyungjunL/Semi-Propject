@@ -24,7 +24,7 @@
 
      
 	.outer{
-        background: rgb(243, 245, 243);
+
         color: black;
         width: 100%;
         height : 90%;
@@ -74,13 +74,13 @@
                     <td></td>
                    
                 </tr>
-                <hr>
+              <hr>
                 <tr>
                     <th>거래 가격 : </th>
                     <td><input type="number"name="tPrice" value="<%= b.gettPrice() %>"></td>
                     <td></td>
                 </tr>
-                
+              
                 <tr>
                     <th>카테고리 :</th>
                     <td colspan="2">
@@ -102,7 +102,7 @@
                         </script>    
                     </td>
                 </tr>
-
+				
                 <tr>
                     <th>책 상태 :     </th>
                     <td> 
@@ -153,14 +153,14 @@
                 </tr>
    	
             </table>
-
-            <br><br>
+<hr>
+            <br>
             <div align="center">
     			<button type="submit" class="btn btn-secondary">수정 완료</button>
     			<button type="reset" class="btn btn-secondary btn-danger">초기화</button>
     		</div>
-
-            <br><br>
+			
+            <br>
             <div id="file-area">
            
             <input type="file" id="file1" name="file1" onchange="loadImg(this, 1);" >

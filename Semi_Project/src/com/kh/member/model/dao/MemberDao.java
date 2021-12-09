@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import com.kh.common.model.vo.PageInfo;
 import com.kh.member.model.vo.Heart;
 import com.kh.member.model.vo.Member;
 import com.kh.tboard.model.vo.TBoard;
@@ -469,4 +470,5 @@ public class MemberDao {
 		return list;
 		
 	}
+
 }

@@ -95,5 +95,26 @@
 		WHERE MEMBER_NO = ?
 		ORDER BY T_NO DESC
 	</entry>
+	<entry key="selectListCount">
+		SELECT COUNT(*) COUNT
+		FROM T_BOARD
+		WHERE STATUS = 'Y'
+		AND MEMBER_NO = ?
+	</entry>
 	
+	<entry key="selectList">
+		SELECT *
+		FROM (
+		    SELECT ROWNUM RNUM, A.*
+		    FROM (
+		            SELECT T_NO,T_TITLE, T_PRICE,CATEGORY_NO, CREATE_DATE, T_COUNT, MEMBER_NO, B.STATUS
+		            FROM T_BOARD B
+		            JOIN CATEGORY USING (CATEGORY_NO)
+		            JOIN MEMBER USING (MEMBER_NO)
+		            WHERE  B.STATUS = 'Y'
+                    AND MEMBER_NO = ?
+		            ORDER BY CREATE_DATE DESC) A)
+		WHERE RNUM BETWEEN ? AND ?
+		
+	</entry>
 </properties>

@@ -5,9 +5,11 @@ import static com.kh.common.JDBCTemplate.*;
 import java.sql.Connection;
 import java.util.ArrayList;
 
+import com.kh.common.model.vo.PageInfo;
 import com.kh.member.model.dao.MemberDao;
 import com.kh.member.model.vo.Heart;
 import com.kh.member.model.vo.Member;
+import com.kh.tboard.model.dao.TBoardDao;
 import com.kh.tboard.model.vo.TBoard;
 
 public class MemberService {
