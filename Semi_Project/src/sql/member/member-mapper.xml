@@ -81,25 +81,40 @@
 	</entry>
 	
 	<entry key="selectZzim">
-            SELECT Z.ZZIM_NO, Z.ZZIM_MEMBER, Z.ZZIM_TNO, T.T_TITLE
-              FROM ZZIM Z, T_BOARD T
-             WHERE Z.ZZIM_MEMBER = ?
-               AND Z.ZZIM_TNO = T.T_NO(+)
-               AND Z.STATUS = 'Y'
-             ORDER BY Z.CREATE_DATE DESC
+            SELECT *
+		 FROM (
+		    SELECT ROWNUM RNUM, A.*
+		      FROM (SELECT Z.ZZIM_NO, Z.ZZIM_MEMBER, Z.ZZIM_TNO, T.T_TITLE
+		              FROM ZZIM Z, T_BOARD T
+		             WHERE Z.ZZIM_MEMBER = ?
+		               AND Z.ZZIM_TNO = T.T_NO(+)
+		               AND Z.STATUS = 'Y'
+		             ORDER BY Z.CREATE_DATE DESC) A)
+		WHERE RNUM BETWEEN ? AND ?
 	</entry>
 	
 	<entry key="searchMyTrade">
-		SELECT T_NO, T_TITLE, T_PRICE, CREATE_DATE, STATUS
-		FROM T_BOARD
-		WHERE MEMBER_NO = ?
-		ORDER BY T_NO DESC
+		SELECT *
+		 FROM (
+		    SELECT ROWNUM RNUM, A.*
+		      FROM (SELECT T_NO, T_TITLE, T_PRICE, CREATE_DATE, STATUS
+                	  FROM T_BOARD
+              		 WHERE MEMBER_NO = ?
+              		 ORDER BY T_NO DESC) A)
+         WHERE RNUM BETWEEN ? AND ?
 	</entry>
 	<entry key="selectListCount">
 		SELECT COUNT(*) COUNT
-		FROM T_BOARD
+		 FROM ZZIM
 		WHERE STATUS = 'Y'
-		AND MEMBER_NO = ?
+		  AND ZZIM_MEMBER = ?
+	</entry>
+	
+	<entry key="TselectListCount">
+		SELECT COUNT(*) COUNT
+		 FROM T_BOARD
+		WHERE STATUS = 'Y'
+		  AND MEMBER_NO = ?
 	</entry>
 	
 	<entry key="selectList">

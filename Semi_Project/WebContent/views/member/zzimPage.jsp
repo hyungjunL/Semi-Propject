@@ -1,9 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.util.ArrayList, com.kh.member.model.vo.Heart" %>
+<%@ page import="java.util.ArrayList, com.kh.member.model.vo.Heart, com.kh.common.model.vo.PageInfo" %>
 <%
 	ArrayList<Heart> list = (ArrayList<Heart>)request.getAttribute("list");
 
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	
+	int currentPage = pi.getCurrentPage();
+	int startPage = pi.getStartPage();
+	int endPage = pi.getEndPage();
+	int maxPage = pi.getMaxPage();
 %>
 <!DOCTYPE html>
 <html>
@@ -22,49 +28,30 @@
         margin: auto;
     }
 
-    #banner {height: 15%;}
-
 	#content {
-		height:600px;
+		height:100%;
 	}
 	
+
+    #banner {height: 15%;}
+    
     #content>div {
         float: left;
     }
 
-    #content1 {
-        width: 100%;
-        height: 10%;
-    }
-
-    #content2 {
-        width: 20%;
-        height: 90%;
-    }
-
-    #content3 {
-        height: 90%;
-        width: 80%;
-    }
-
-    #content3-1, #content3-2 {
-        height: 50%;
-    }
-
-
     /* content 영역 */
     #content_1 {
         width: 100%;
-        height: 10%;
+        height: 15%;
     }
 
     #content_2 {
         width: 20%;
-        height: 90%;
+        height: 85%;
     }
 
     #content_3 {
-        height: 90%;
+        height: 85%;
         width: 80%;
     }
     
@@ -81,7 +68,6 @@
 
     .list-group-item:hover {
         font-size: 17px;
-        border: 1px solid rgb(67, 155, 68);
         font-weight: bold;
         cursor: pointer;
     }  
@@ -100,21 +86,26 @@
     #li-update:hover p{
         display: block;
     }
-    
-    .myPage-jjim p:hover {
-    	color: rgb(67, 155, 68);
-        font-weight: bold;
-        cursor : pointer;
+
+    #li-update>p:hover {
+        color: green;
     }
-    
+
     .myPage-update1, .myPage-update2, #bookListForm, #deleteRegister {
         display: none;
     }
-
+	
+    .hTitle:hover {
+    	color: rgb(67, 155, 68);
+        cursor : pointer;
+    }
 </style>
 </head>
 <body>
 	
+	
+
+
     <div id="wrap">
 
 
@@ -128,13 +119,15 @@
 			String userPwd = loginMember.getMemberPwd();
             String userName = loginMember.getMemberName();
 
+            String birth = (loginMember.getEmail() == null) ? "" : loginMember.getBirth();
 			String email = (loginMember.getEmail() == null) ? "" : loginMember.getEmail();
 			String address = (loginMember.getAddress() == null) ? "" : loginMember.getAddress();
 			String phone = (loginMember.getPhone() == null) ? "" : loginMember.getPhone();
 			
 		%>
-
-		     <div id="content" style="margin-bottom:50px" >
+		 
+		
+		    <div id="content" style="margin-bottom:50px" >
 		        <div id="content_1">
 		            <span style="font-size: 30px; font-weight: bold; margin-left: 5%;">마이페이지</span>
 		            <hr>
@@ -147,8 +140,8 @@
 		                    <p class="update1" style="font-size: 14px;">기본정보 변경</p>
 		                    <p class="update2" style="font-size: 14px">비밀번호 변경</p>
 		                </li>
-		                <li id="li-jjim" class="list-group-item list-group-item-success jjim" >찜 보기</li>
-		                <li id="li-bookList" class="list-group-item list-group-item-success bookList" onclick="location.href='<%= contextPath %>/myTrade.me'">판매내역</li>
+		                <li id="li-jjim" class="list-group-item list-group-item-success jjim" onclick="location.href='<%= contextPath %>/zzim.me?currentPage=1'">찜 보기</li>
+		                <li id="li-bookList" class="list-group-item list-group-item-success bookList" onclick="location.href='<%= contextPath %>/myTrade.me?currentPage=1'">판매내역</li>
 		                <li id="li-delete" class="list-group-item list-group-item-success delete">회원탈퇴</li>
 		            </ul>
 		        </div>
@@ -170,7 +163,7 @@
 		                        </tr>
 		                        <tr>
 		                            <th>생년월일</th>
-		                            <td><input type="date" id="userBirth" name="birth" value="<%= loginMember.getBirth() %>"></td>
+		                            <td><input type="text" id="userBirth" name="birth" value="<%= birth %>"></td>
 		                        </tr>
 		                        <tr>
 		                            
@@ -237,76 +230,76 @@
 		                </script>
 		            </div>
 
-					
-		            <div id="zzimList" class="myPage-jjim">
-		                    <table class="table" id="zzim-area">
-		                    	<thead>
-		                    		<th>NO</th>
+					<div id="zzimList" class="myPage-jjim">
+		                    <table class="table">
+		                        <tr>
 		                            <th>게시글 번호</th>
 		                            <th>게시글 제목</th>
-		                        </thead>
-		                        <tbody>
-		                        </tbody>    
-		                        </form> 
-
-			            </table>
-			          
+		                        </tr>
+		
+								<% if(list.isEmpty()) { %>
+									<tr>
+			                            <td colspan="2" align="center">
+			                            	찜 내역이 없습니다. 
+			                            </td>
+		                        	</tr>
+								<% } else { %>
+								<% for(Heart h : list) {%>
+		                        <tr>
+		                            <td class="bno"><%= h.getHeartBno() %></td>
+		                            <td><p class="hTitle"><%= h.getBookTitle() %></p></td>
+		                            
+		                        </tr>
+		                        
+								<% } %>
+							<% } %>
+		
+		                    </table>
+		                    
+		                <div align="center" class="paging-area">
+        	
+				        	<!-- 페이징바에서 < 를 담당 -->
+				        	<% if(currentPage != 1) { %>
+				        		<button onclick="location.href='<%= contextPath %>/zzim.me?currentPage=<%= currentPage - 1 %>'">&lt;</button>
+				        	<% } %>
+				        
+				        	<!--  페이징바에서 숫자를 담당 -->
+				            <% for(int i = startPage; i <= endPage; i++) {%>
+				            	<!-- 버튼이 눌렸을 때 해당 페이지로 이동하게끔 -->
+				            	<% if(i != currentPage) { %>
+				            	
+				            	<button onclick="location.href='<%= contextPath %>/zzim.me?currentPage=<%= i %>'"><%= i %></button>
+				            <% }  else {%>
+				            		<!-- 현재 내가 보고있는 페이지일 경우에는 클릭이 안되게끔 막고싶다 -->
+				            		<button disabled><%= i %></button>
+				            	<% } %>
+				            <%} %>
+				            <!-- 페이지바에서 > 를 담당 -->
+				            <% if(currentPage != maxPage && currentPage <= maxPage) { %>
+				            	<button onclick="location.href='<%= contextPath %>/zzim.me?currentPage=<%= currentPage + 1 %>'">&gt;</button>
+				            <% } %>
+				            
+				            
+				        </div>
 		            </div>
 		            
-		             <script>
-					
-					    //화면이 로딩되었을 때 곧바로 뿌려줘야 함 => window.onload => $(function)
-					    
-					    $(function() {
-					    
-					    $.ajax({
-					      url : "hlist.no", 
-					      success : function(list) {
-					   		
-					        // 찜 갯수만큼 반복 => 누적(문자열)
-					        var result = "";
-					        
-					        if(list == "") {
-					        	
-					        	result = "<td colspan='3' align='center'>" + '존재하는 찜 내역이 없습니다' + "</td>";
-					        	
-					        } else {
-						        for(var i in list) { 
-						        
-						        
-						          result += "<tr><td>" 
-						          			+ (Number(i) + 1) + "</td><td class='bno'>"
-						          			+ list[i].heartBno +"</td><td><p onclick='clickHref(this);'>"
-						          			+ list[i].bookTitle + "</td><tr>"     	
-						        }
-						        
-					        }
-						        
-						        $("#zzim-area tbody").html(result);
-						        console.log("찜 ajax 성공");
-					        
-					        
-					      },
-					      error : function() {
-					        console.log("찜 ajax 실패");
-					      }
-					    
-					    })
-					    
-					    });
-					    
-					    function clickHref(t) {
+		            <script>
+		            
+				    $(function() {
+				    	$(".hTitle").click(function() {
+								
+								var bno = $(this).parent().siblings().eq(0).text();
+			       				
+			       				// 맵핑값?bno=X
+			        			location.href = "<%= contextPath %>/detail.it?bno=" + bno;
 				    		
-							var bno = $(t).parent().siblings(".bno").text();
-		       				
-		       				// 맵핑값?bno=X
-		        			location.href = "<%= contextPath %>/detail.it?bno=" + bno;
-			    		
-					    }
-					    
-					   
-					</script>	
-  
+				    	}); 
+				    					
+				    })
+		         
+		            
+		            </script>
+
 		            <!-- 회원탈퇴 클릭시 -->
 		            <div id="deleteRegister" class="myPage-delete" style="width: 500px; height: 500px; margin-left: 100px;">
 		                <p style="font-weight: bold; font-size: 20px;">회원탈퇴</p>
@@ -411,28 +404,32 @@
             } else if ($(this).hasClass("jjim")) {
 
                 if($(".myPage-jjim").css("display") == "none") {
-                    $(".myPage-jjim").css("display", "block");
+                    $(".myPage-jjim").css("display", "block")
                     $(".contet_3-1").css("display", "block");
                     $(".myPage-update1").css("display", "none");
                     $(".myPage-update2").css("display", "none");
                     $(".myPage-bookList").css("display", "none");
                     $(".myPage-delete").css("display", "none");
+                   
+                   console.log("zzim");
                 }
             } else if ($(this).hasClass("bookList")) {
 
                 if($(".myPage-bookList").css("display") == "none") {
-                    $(".myPage-bookList").css("display", "block");
+                    $(".myPage-bookList").css("display", "block")
                     $(".contet_3-1").css("display", "block");
                     $(".myPage-jjim").css("display", "none");
                     $(".myPage-update1").css("display", "none");
                     $(".myPage-update2").css("display", "none");
                     $(".myPage-delete").css("display", "none");
 
-                } 
+                } else {
+                    
+                }
             } else if ($(this).hasClass("delete")) {
 
                 if($(".myPage-delete").css("display") == "none") {
-                    $(".myPage-delete").css("display", "block");
+                    $(".myPage-delete").css("display", "block")
                     $(".myPage-jjim").css("display", "none");
                     $(".myPage-update1").css("display", "none");
                     $(".myPage-update2").css("display", "none");
@@ -444,6 +441,8 @@
 
         });
 
+
+     
         function check() {
 
             if (!$(".checkDelete").is(":checked")) {
@@ -455,12 +454,7 @@
             }
         }
         
-        $(function() {
-            $("#zzim-area tbody").on("click", "button", function deleteZzimbtn() {
-
-            });
-        });
-
+        
 
         function postCode() {
 

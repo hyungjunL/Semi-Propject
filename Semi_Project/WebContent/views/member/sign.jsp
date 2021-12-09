@@ -135,6 +135,7 @@
             alert('아이디는 4자~12자리의 영문자, 숫자 로만 이루어져야 합니다.');
             document.getElementById('memberId').value = '';
             document.getElementById('memberId').focus();
+            document.getElementById('memberId').removeAttribute('readonly'); 
             return false;
         }
 

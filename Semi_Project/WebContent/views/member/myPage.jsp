@@ -22,33 +22,13 @@
     }
 
 	#content {
-		height:600px;
+		height:100%;
 	}
 	
-
     #banner {height: 15%;}
     
     #content>div {
         float: left;
-    }
-
-    #content1 {
-        width: 100%;
-        height: 10%;
-    }
-
-    #content2 {
-        width: 20%;
-        height: 90%;
-    }
-
-    #content3 {
-        height: 90%;
-        width: 80%;
-    }
-
-    #content3-1, #content3-2 {
-        height: 50%;
     }
 
     /* content 영역 */
@@ -80,7 +60,6 @@
 
     .list-group-item:hover {
         font-size: 17px;
-        border: 1px solid rgb(67, 155, 68);
         font-weight: bold;
         cursor: pointer;
     }  
@@ -102,18 +81,6 @@
 
     #li-update>p:hover {
         color: green;
-    }
-
-    .myPage-jjim tr a {
-        text-decoration: none;
-        color: black;
-
-    }
-
-    .myPage-jjim tr a:hover {
-        text-decoration: none;
-        color: rgb(67, 155, 68);
-
     }
 
     .myPage-update1, .myPage-update2, .myPage-jjim,#bookListForm, #deleteRegister {
@@ -140,6 +107,7 @@
 			String userPwd = loginMember.getMemberPwd();
             String userName = loginMember.getMemberName();
 
+            String birth = (loginMember.getEmail() == null) ? "" : loginMember.getBirth();
 			String email = (loginMember.getEmail() == null) ? "" : loginMember.getEmail();
 			String address = (loginMember.getAddress() == null) ? "" : loginMember.getAddress();
 			String phone = (loginMember.getPhone() == null) ? "" : loginMember.getPhone();
@@ -160,8 +128,8 @@
 		                    <p class="update1" style="font-size: 14px;">기본정보 변경</p>
 		                    <p class="update2" style="font-size: 14px">비밀번호 변경</p>
 		                </li>
-		                <li id="li-jjim" class="list-group-item list-group-item-success jjim" onclick="location.href='<%= contextPath %>/zzim.me?'">찜 보기</li>
-		                <li id="li-bookList" class="list-group-item list-group-item-success bookList" onclick="location.href='<%= contextPath %>/myTrade.me'">판매내역</li>
+		                <li id="li-jjim" class="list-group-item list-group-item-success jjim" onclick="location.href='<%= contextPath %>/zzim.me?currentPage=1'">찜 보기</li>
+		                <li id="li-bookList" class="list-group-item list-group-item-success bookList" onclick="location.href='<%= contextPath %>/myTrade.me?currentPage=1'">판매내역</li>
 		                <li id="li-delete" class="list-group-item list-group-item-success delete">회원탈퇴</li>
 		            </ul>
 		        </div>
@@ -183,7 +151,7 @@
 		                        </tr>
 		                        <tr>
 		                            <th>생년월일</th>
-		                            <td><input type="date" id="userBirth" name="birth" value="<%= loginMember.getBirth() %>"></td>
+		                            <td><input type="text" id="userBirth" name="birth" value="<%= birth%>"></td>
 		                        </tr>
 		                        <tr>
 		                            
@@ -303,7 +271,7 @@
 		
 		                    <br>
 		
-		                    <button type="submit" class="btn btn-danger btn-sm">탈퇴하기</button>
+		                    <button type="submit" class="btn btn-danger btn-sm" style="float:right;">탈퇴하기</button>
 		
 		                </form>
 		

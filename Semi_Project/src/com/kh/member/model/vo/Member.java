@@ -28,7 +28,19 @@ public class Member {
 		this.enrollDate = enrollDate;
 		this.status = status;
 	}
-
+	
+	public Member(int memberNo, String memberId, String memberName, String email, String address, String phone,
+			String birth, Date enrollDate) {
+		super();
+		this.memberNo = memberNo;
+		this.memberId = memberId;
+		this.memberName = memberName;
+		this.email = email;
+		this.address = address;
+		this.phone = phone;
+		this.birth = birth;
+		this.enrollDate = enrollDate;
+	}
 	private String status; //    STATUS CHAR(1) DEFAULT 'Y' CHECK (STATUS IN('Y', 'N')) NOT NULL
 	
 	public Member() {

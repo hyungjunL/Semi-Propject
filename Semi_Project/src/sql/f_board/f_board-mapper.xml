@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+	<comment>후기게시판 관련 쿼리문</comment>
+
+	<entry key="selectList">
+
+		SELECT *
+		FROM (
+		SELECT ROWNUM RNUM, A.*
+		FROM (
+		SELECT
+		F_NO, F_TITLE, MEMBER_ID, COUNT, CREATE_DATE
+		FROM F_BOARD F
+		JOIN
+		MEMBER M ON (F.BOARD_WRITER = M.MEMBER_NO)
+		WHERE F.STATUS = 'Y'
+		ORDER BY
+		CREATE_DATE DESC) A)
+		WHERE RNUM BETWEEN ? AND ?
+	</entry>
+
+	<entry key="selectListCount">
+		SELECT COUNT(*) COUNT
+		FROM F_BOARD
+		WHERE STATUS = 'Y'
+	</entry>
+
+	<entry key="increaseCount">
+		UPDATE F_BOARD
+		SET COUNT = COUNT + 1
+		WHERE F_NO = ?
+		AND STATUS = 'Y'
+	</entry>
+
+	<entry key="selectBoard">
+		SELECT F_NO, MEMBER_ID, COUNT, CREATE_DATE, F_TITLE,
+		CONTENT
+		FROM F_BOARD B
+		JOIN MEMBER M ON (B.BOARD_WRITER = M.MEMBER_NO)
+		WHERE B.F_NO = ?
+		AND B.STATUS = 'Y'
+	</entry>
+
+	<entry key="maxBoard">
+		SELECT MAX(F_NO) max_NO
+		FROM F_BOARD
+	</entry>
+
+	<entry key="insertBoard">
+		INSERT INTO F_BOARD(F_NO, F_TITLE, CONTENT, BOARD_WRITER, CREATE_DATE)
+		VALUES(BO_SEQ.NEXTVAL, ?, ?, ?, SYSDATE)
+	</entry>
+	
+	<entry key="insertAttachmentList">
+		INSERT INTO ATTACHMENT(FILE_NO, F_NO, ORIGIN_NAME, CHANGE_NAME, FILE_PATH)
+		VALUES(FILE_SEQ.NEXTVAL, BO_SEQ.CURRVAL, ?, ?, ?)
+	</entry>
+	
+	<entry key="selectAttachment">
+		SELECT FILE_NO, ORIGIN_NAME, CHANGE_NAME, FILE_PATH
+		FROM ATTACHMENT
+		WHERE F_NO = ?
+	</entry>
+	
+	<entry key="updateBoard">
+		UPDATE F_BOARD
+		SET F_TITLE = ?
+		, CONTENT = ?
+		WHERE F_NO = ?
+	</entry>
+	
+	<entry key="insertNewAttachment">
+		INSERT INTO ATTACHMENT(FILE_NO, F_NO, ORIGIN_NAME, CHANGE_NAME, FILE_PATH)
+		VALUES(SEQ_FNO.NEXTVAL, ?, ?, ?, ?)
+	</entry>
+	
+	<entry key="updateAttachment">
+		UPDATE ATTACHMENT
+		SET ORIGIN_NAME = ?
+		, CHANGE_NAME = ?
+		, FILE_PATH = ?
+		WHERE FILE_NO = ?
+	</entry>
+	
+	<entry key="deleteBoard"> 
+		UPDATE F_BOARD
+		   SET STATUS = 'N'
+		 WHERE F_NO = ?
+	</entry>
+	
+	<entry key="selectReplyList">
+		SELECT REPLY_NO, REPLY_CONTENT, MEMBER_ID, TO_CHAR(CREATE_DATE, 'YY/MM/DD HH:MI:SS') CREATE_DATE
+		FROM REPLY R
+		JOIN MEMBER ON (REPLY_WRITER = MEMBER_NO)
+		WHERE R.STATUS = 'Y'
+		  AND REF_BNO = ?
+		ORDER BY CREATE_DATE DESC
+	</entry>
+	
+	<entry key="insertReply">
+		INSERT INTO REPLY(REPLY_NO, REPLY_CONTENT, REF_BNO, REPLY_WRITER)
+		VALUES(SEQ_RNO.NEXTVAL, ?, ?, ?)
+	</entry>
+	
+
+</properties>

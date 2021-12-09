@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="com.kh.member.model.vo.Member" %>    
+
 <%
 	Member loginMember = (Member)session.getAttribute("loginMember");
 	String alertMsg = (String)session.getAttribute("alertMsg");
@@ -12,6 +13,16 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/sign-in/">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <style>
 	html,
 	body {
@@ -83,7 +94,7 @@
           
               <div class="checkbox mb-3">
                 <label>
-                  <input type="checkbox" value="remember-me"> 아이디 기억하기
+                  <input type="checkbox" id="idSave"> 아이디 기억하기
                 </label>
                 <hr>
                 <div id="find_idpwd">
@@ -105,6 +116,59 @@
 		function findIdPwd() {
 			window.opener.parent.location="<%= request.getContextPath() %>/findIDPWD.me";
 			window.close();
+		}
+		
+		$(document).ready(function() {
+			
+			var key = getCookie("key");
+			$("#floatingInput").val(key);
+			
+			if($("#floatingInput").val() != "") {
+				$("#idSave").attr("checked", true);
+			}
+			
+			$("#idSave").change(function() {
+				if($("#idSave").is(":checked")) {
+					setCookie("key", $("#floatingInput").val(), 7);
+				}
+				else {
+					deleteCookie("key");
+				}
+			});
+			
+			$("#floatingInput").keyup(function() {
+				if($("#idSave").is(":checked")) {
+					setCookie("key", $("#floatingInput").val(), 7);
+				}
+			});
+			
+		});
+		
+		function setCookie(cookieName, value, exdays){
+		    var exdate = new Date();
+		    exdate.setDate(exdate.getDate() + exdays);
+		    var cookieValue = escape(value) + ((exdays==null) ? "" : "; expires=" + exdate.toGMTString());
+		    document.cookie = cookieName + "=" + cookieValue;
+		}
+		 
+		function deleteCookie(cookieName){
+		    var expireDate = new Date();
+		    expireDate.setDate(expireDate.getDate() - 1);
+		    document.cookie = cookieName + "= " + "; expires=" + expireDate.toGMTString();
+		}
+		 
+		function getCookie(cookieName) {
+		    cookieName = cookieName + '=';
+		    var cookieData = document.cookie;
+		    var start = cookieData.indexOf(cookieName);
+		    var cookieValue = '';
+		    if(start != -1){
+		        start += cookieName.length;
+		        var end = cookieData.indexOf(';', start);
+		        if(end == -1)end = cookieData.length;
+		        cookieValue = cookieData.substring(start, end);
+		    }
+		    return unescape(cookieValue);
 		}
 	</script>
 </html>

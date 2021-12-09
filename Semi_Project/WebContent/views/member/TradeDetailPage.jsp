@@ -1,8 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.util.ArrayList, com.kh.tboard.model.vo.TBoard" %>
+<%@ page import="java.util.ArrayList, com.kh.tboard.model.vo.TBoard, com.kh.common.model.vo.PageInfo" %>
 <%
 	ArrayList<TBoard> list = (ArrayList<TBoard>)request.getAttribute("list");
+
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	
+	int currentPage = pi.getCurrentPage();
+	int startPage = pi.getStartPage();
+	int endPage = pi.getEndPage();
+	int maxPage = pi.getMaxPage();
 %>
 <!DOCTYPE html>
 <html>
@@ -11,7 +18,7 @@
 <title>Insert title here</title>
 <script src="http://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <style>
-    div {
+ div {
         box-sizing: border-box;
     }
     
@@ -22,33 +29,15 @@
     }
 
 	#content {
-		height:600px;
+		height:100%;
 	}
-	
-
-    #banner {height: 15%;}
+    
+    .content4 {
+    	heigth: 100%
+    }
     
     #content>div {
         float: left;
-    }
-
-    #content1 {
-        width: 100%;
-        height: 10%;
-    }
-
-    #content2 {
-        width: 20%;
-        height: 90%;
-    }
-
-    #content3 {
-        height: 90%;
-        width: 80%;
-    }
-
-    #content3-1, #content3-2 {
-        height: 50%;
     }
 
     /* content 영역 */
@@ -80,7 +69,6 @@
 
     .list-group-item:hover {
         font-size: 17px;
-        border: 1px solid rgb(67, 155, 68);
         font-weight: bold;
         cursor: pointer;
     }  
@@ -136,6 +124,7 @@
 			String userPwd = loginMember.getMemberPwd();
             String userName = loginMember.getMemberName();
 
+            String birth = (loginMember.getEmail() == null) ? "" : loginMember.getBirth();
 			String email = (loginMember.getEmail() == null) ? "" : loginMember.getEmail();
 			String address = (loginMember.getAddress() == null) ? "" : loginMember.getAddress();
 			String phone = (loginMember.getPhone() == null) ? "" : loginMember.getPhone();
@@ -157,8 +146,8 @@
 		                    <p class="update1" style="font-size: 14px;">기본정보 변경</p>
 		                    <p class="update2" style="font-size: 14px">비밀번호 변경</p>
 		                </li>
-		                <li id="li-jjim" class="list-group-item list-group-item-success jjim" onclick="location.href='<%= contextPath %>/zzim.me'">찜 보기</li>
-		                <li id="li-bookList" class="list-group-item list-group-item-success bookList">판매내역</li>
+		                <li id="li-jjim" class="list-group-item list-group-item-success jjim" onclick="location.href='<%= contextPath %>/zzim.me?currentPage=1'">찜 보기</li>
+		                <li id="li-bookList" class="list-group-item list-group-item-success bookList" onclick="location.href='<%= contextPath %>/myTrade.me?currentPage=1'">판매내역</li>
 		                <li id="li-delete" class="list-group-item list-group-item-success delete">회원탈퇴</li>
 		            </ul>
 		        </div>
@@ -180,7 +169,7 @@
 		                        </tr>
 		                        <tr>
 		                            <th>생년월일</th>
-		                            <td><input type="date" id="userBirth" name="birth" value="<%= loginMember.getBirth() %>"></td>
+		                            <td><input type="text" id="userBirth" name="birth" value="<%= birth %>"></td>
 		                        </tr>
 		                        <tr>
 		                            
@@ -249,10 +238,9 @@
 
 		
 		            <div id="bookListForm" class="myPage-bookList">
-		           
 		                    <table class="table" >
 		                        <tr>
-		                            <th>NO</th>
+		                            <th>게시글 번호</th>
 		                            <th>게시글 제목</th>
 		                            <th>등록날짜</th>
 		                            <th>거래상태</th>
@@ -268,7 +256,7 @@
 								<% for(TBoard tb : list) {%>
 		                        <tr>
 		                            <td class="bno"><%= tb.gettNo() %></td>
-		                            <td><p class="tbTitle"> <%= tb.gettTitle() %></p></td>
+		                            <td><p class="tbTitle"><%= tb.gettTitle() %></p></td>
 		                            <td><%= tb.getCreateDate() %></td>
 		                            <td id="tbStatus">
 		                            <% if(tb.getStatus().equals("Y")) {%>
@@ -283,8 +271,34 @@
 							<% } %>
 		
 		                    </table>
+		                    
+		                <div align="center" class="paging-area">
+        	
+				        	<!-- 페이징바에서 < 를 담당 -->
+				        	<% if(currentPage != 1) { %>
+				        		<button onclick="location.href='<%= contextPath %>/myTrade.me?currentPage=<%= currentPage - 1 %>'">&lt;</button>
+				        	<% } %>
+				        
+				        	<!--  페이징바에서 숫자를 담당 -->
+				            <% for(int i = startPage; i <= endPage; i++) {%>
+				            	<!-- 버튼이 눌렸을 때 해당 페이지로 이동하게끔 -->
+				            	<% if(i != currentPage) { %>
+				            	
+				            	<button onclick="location.href='<%= contextPath %>/myTrade.me?currentPage=<%= i %>'"><%= i %></button>
+				            <% }  else {%>
+				            		<!-- 현재 내가 보고있는 페이지일 경우에는 클릭이 안되게끔 막고싶다 -->
+				            		<button disabled><%= i %></button>
+				            	<% } %>
+				            <%} %>
+				            <!-- 페이지바에서 > 를 담당 -->
+				            <% if(currentPage != maxPage && currentPage <= maxPage) { %>
+				            	<button onclick="location.href='<%= contextPath %>/myTrade.me?currentPage=<%= currentPage + 1 %>'">&gt;</button>
+				            <% } %>
+				            
+				            
+				        </div>
 		            </div>
-		           
+		            
 		            <script>
 		         	// 링크 걸기 맵핑값확인
 				    $(function() {

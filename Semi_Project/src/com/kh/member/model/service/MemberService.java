@@ -1,19 +1,21 @@
 package com.kh.member.model.service;
 
 import static com.kh.common.JDBCTemplate.*;
-
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.kh.common.model.vo.PageInfo;
 import com.kh.member.model.dao.MemberDao;
 import com.kh.member.model.vo.Heart;
 import com.kh.member.model.vo.Member;
-import com.kh.tboard.model.dao.TBoardDao;
 import com.kh.tboard.model.vo.TBoard;
 
+
 public class MemberService {
-	
+
 	public Member loginMember(String memberId, String memberPwd) {
 		
 		Connection conn = getConnection();
@@ -24,7 +26,6 @@ public class MemberService {
 		
 		return m;
 	}
-
 	public int insertMember(Member m) {
 		
 		int result = 0;
@@ -92,6 +93,7 @@ public class MemberService {
 		return result;
 		
 	}
+	
 	public Member updateMember(Member m) {
 		
 		Connection conn = getConnection();
@@ -161,36 +163,38 @@ public class MemberService {
 		return result;
 	}
 	
-	public ArrayList<Heart> selectZzim(int userNo) {
+	public int selectListCount(int userNo) {
 		
 		Connection conn = getConnection();
 		
-		ArrayList<Heart> list = new MemberDao().selectZzim(conn, userNo);
+		int listCount = new MemberDao().selectListCount(conn, userNo);
+		
+		close(conn);
+		
+		return listCount;
+	}
+	
+	public ArrayList<Heart> selectZzim(PageInfo pi, int userNo) {
+		
+		Connection conn = getConnection();
+		
+		ArrayList<Heart> list = new MemberDao().selectZzim(conn, pi, userNo);
 		
 		close(conn);
 		
 		return list;
 	}
 	
-	 public ArrayList<Heart> selectHeartList(int userNo){
-		 Connection conn = getConnection();
-		 ArrayList<Heart> list = new MemberDao().selectHeartList(conn,userNo);
-		 
-		 close(conn);
-		 
-		 return list;
-		 
-	 }
 	
-	
-	public ArrayList<TBoard> searchMyTrade(int userNo) {
+	public ArrayList<TBoard> searchMyTrade(PageInfo pi, int userNo) {
 		
 		Connection conn = getConnection();
 		
-		ArrayList<TBoard> list = new MemberDao().searchMyTrade(conn, userNo);
+		ArrayList<TBoard> list = new MemberDao().searchMyTrade(conn, pi, userNo);
 		
 		close(conn);
 		
 		return list;
 	}
+
 }

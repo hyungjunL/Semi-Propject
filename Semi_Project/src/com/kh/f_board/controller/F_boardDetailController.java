@@ -1,27 +1,29 @@
-package com.kh.member.controller;
+package com.kh.f_board.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import com.kh.member.model.service.MemberService;
-import com.kh.member.model.vo.Member;
+import com.kh.f_board.model.service.BoardService;
+import com.kh.f_board.model.vo.Attachment;
+import com.kh.f_board.model.vo.Board;
 
 /**
- * Servlet implementation class FindPwdController
+ * Servlet implementation class F_boardDetailController
  */
-@WebServlet("/findPwd.me")
-public class FindPwdController extends HttpServlet {
+@WebServlet("/detail.fb")
+public class F_boardDetailController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public FindPwdController() {
+    public F_boardDetailController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,27 +32,40 @@ public class FindPwdController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		int boardNo = Integer.parseInt(request.getParameter("bno"));
 		
-		request.setCharacterEncoding("UTF-8");
 		
-		String memberId = request.getParameter("memberId");
-		String email = request.getParameter("email2");
+		BoardService bService = new BoardService();
 		
-		int result = new MemberService().findPwd(memberId, email);
+		int result = bService.increaseCount(boardNo);
 		
-		HttpSession session = request.getSession();
 		
-		session.setAttribute("memberId", memberId);
-		session.setAttribute("email", email);
 		
 		if(result > 0) {
-			request.getRequestDispatcher("views/member/pwdUpdateForm.jsp").forward(request, response);
-		}
-		else {
-			session.setAttribute("alertMsg", "해당 ID, Email 에 일치하는 회원이 없습니다.");
-			request.getRequestDispatcher("views/member/findIDPWD.jsp").forward(request, response);
+
 			
+			Board b = bService.selectBoard(boardNo);
+			
+			
+			ArrayList<Attachment> list = new BoardService().selectAttachmentList(boardNo);
+			
+			int m = bService.maxBoard();
+			
+			
+			request.setAttribute("b", b);
+			
+			request.setAttribute("m", m);
+			
+			request.setAttribute("list", list);
+			
+			
+			
+			
+			request.getRequestDispatcher("views/board/boardDetailView.jsp").forward(request, response);
 		}
+		
+		
 	}
 
 	/**

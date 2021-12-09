@@ -1,35 +1,40 @@
 package com.kh.member.model.dao;
 
+import static com.kh.common.JDBCTemplate.*;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.sql.Date;
 import java.util.Properties;
 
 import com.kh.common.model.vo.PageInfo;
 import com.kh.member.model.vo.Heart;
 import com.kh.member.model.vo.Member;
 import com.kh.tboard.model.vo.TBoard;
-import java.util.Date;
-import static com.kh.common.JDBCTemplate.*;
-
 
 public class MemberDao {
-	
+
 	private Properties prop = new Properties();
 	
 	public MemberDao() {
 		
 		String fileName = MemberDao.class.getResource("/sql/member/member-mapper.xml").getPath();
+		
 		try {
 			prop.loadFromXML(new FileInputStream(fileName));
+			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
+		
 	}
 	
 	public Member loginMember(Connection conn, String memberId, String memberPwd) {
@@ -219,10 +224,10 @@ public class MemberDao {
 		return count;
 		
 	}
+	
 	public int updateMember(Connection conn, Member m) {
 		
-	
-		
+		SimpleDateFormat fmt = new SimpleDateFormat("yyyy-mm-dd");
 		
 		int result = 0;
 		
@@ -353,7 +358,39 @@ public class MemberDao {
 		return result;
 	}
 	
-	public ArrayList<Heart> selectZzim(Connection conn, int userNo) {
+	public int selectListCount(Connection conn, int userNo) {
+		
+		int listCount = 0;
+		
+		PreparedStatement pstmt = null;
+		
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("TselectListCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, userNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt("COUNT");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return listCount;
+		
+	}
+	
+	public ArrayList<Heart> selectZzim(Connection conn, PageInfo pi, int userNo) {
 		
 		// SELECT 문 => ResultSet=> 여러 행 => ArrayList<Zzim>
 		ArrayList<Heart> list = new ArrayList<>();
@@ -366,20 +403,25 @@ public class MemberDao {
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
+
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
 			
 			pstmt.setInt(1, userNo);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			
 			
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
 				
-				Heart z = (new Heart(rset.getInt("ZZIM_NO"),
+				Heart h = (new Heart(rset.getInt("ZZIM_NO"),
 								  rset.getInt("ZZIM_MEMBER"),
 								  rset.getInt("ZZIM_TNO"),
 								  rset.getString("T_TITLE")));
 				
-				System.out.println(z);
-				list.add(z);
+				list.add(h);
 				
 			}
 			
@@ -393,7 +435,7 @@ public class MemberDao {
 		return list;	
 	}
 	
-	public ArrayList<TBoard> searchMyTrade(Connection conn, int userNo) {
+	public ArrayList<TBoard> searchMyTrade(Connection conn, PageInfo pi, int userNo) {
 		
 		ArrayList<TBoard> list = new ArrayList<>();
 		
@@ -406,7 +448,12 @@ public class MemberDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
 			pstmt.setInt(1, userNo);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
 			
 			rset = pstmt.executeQuery();
 			
@@ -430,45 +477,7 @@ public class MemberDao {
 		return list;
 
 	}
-	public ArrayList<Heart> selectHeartList(Connection conn, int userNo) {
-		
-		ArrayList<Heart> list = new ArrayList<>();
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		String sql = prop.getProperty("selectHeartList");
-		
-		try {
-			pstmt = conn.prepareStatement(sql);
-			
-			pstmt.setInt(1, userNo);
-		
-			
-			rset = pstmt.executeQuery();
-			
-			while(rset.next()) {
-				
-				
-				Heart h = new Heart(rset.getInt("ZZIM_NO"),rset.getInt("ZZIM_TNO"),rset.getString("T_TITLE"));
-				
-			    list.add(h);
-				
-				
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		 
-		
-		finally {
-			
-			
-			close(rset);
-			close(pstmt);
-		}
+	
 
-		return list;
-		
-	}
-
+	
 }
