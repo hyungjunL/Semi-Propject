@@ -3,7 +3,7 @@ package com.kh.member.controller;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.sql.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -44,11 +44,11 @@ public class MemberUpdateController extends HttpServlet {
 		String address = request.getParameter("address1");
 		String phone = request.getParameter("phone1") + "-" + request.getParameter("phone2") + "-" + request.getParameter("phone3");
 
-		String birth = request.getParameter("birth");
+		String birth = request.getParameter("birth").substring(0,10);
 		
-		//System.out.println(date); // 문자열 "2021-12-03"
+		System.out.println(birth); // 문자열 "2021-12-03"
 		
-		SimpleDateFormat fm = new SimpleDateFormat("yyyy-MM-dd");
+		
 		
 		
 		//Date birth = null;
@@ -64,7 +64,6 @@ public class MemberUpdateController extends HttpServlet {
 		Member m = new Member(userId, userName, email, address, phone, birth);
 		Member updateMem = new MemberService().updateMember(m);
 
-		System.out.println(m);
 		
 		if(updateMem == null) {
 			

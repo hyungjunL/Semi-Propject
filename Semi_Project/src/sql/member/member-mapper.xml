@@ -47,7 +47,7 @@
 	         , EMAIL = ?
 	         , ADDRESS = ?
 	         , PHONE = ?
-	         , BIRTH = ?
+	         , BIRTH = TO_DATE( ?, 'YYYY/MM/DD')
 	     WHERE MEMBER_ID = ?
 	</entry>
 	

@@ -223,7 +223,7 @@
 							class="btn btn-secondary btn-sm">글작성</a> <br>
 						<br>
 					</div>
-<%@include file = "../common/footer.jsp" %>
+					<%@include file = "../common/footer.jsp" %>
 				</div>
 			</div>
 		</div>

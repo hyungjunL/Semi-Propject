@@ -107,7 +107,7 @@
 			String userPwd = loginMember.getMemberPwd();
             String userName = loginMember.getMemberName();
 
-            String birth = (loginMember.getEmail() == null) ? "" : loginMember.getBirth();
+            String birth = loginMember.getBirth().substring(0, 10);
 			String email = (loginMember.getEmail() == null) ? "" : loginMember.getEmail();
 			String address = (loginMember.getAddress() == null) ? "" : loginMember.getAddress();
 			String phone = (loginMember.getPhone() == null) ? "" : loginMember.getPhone();
@@ -151,7 +151,7 @@
 		                        </tr>
 		                        <tr>
 		                            <th>생년월일</th>
-		                            <td><input type="text" id="userBirth" name="birth" value="<%= birth%>"></td>
+		                            <td><input type="text" id="userBirth" name="birth" value="<%= birth %>"></td>
 		                        </tr>
 		                        <tr>
 		                            

@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 import java.sql.Date;
 import java.util.Properties;
@@ -227,7 +228,7 @@ public class MemberDao {
 	
 	public int updateMember(Connection conn, Member m) {
 		
-		SimpleDateFormat fmt = new SimpleDateFormat("yyyy-mm-dd");
+		
 		
 		int result = 0;
 		
@@ -235,7 +236,8 @@ public class MemberDao {
 		
 		String sql = prop.getProperty("updateMember");
 		
-		try {
+		try {	
+			
 			
 			pstmt = conn.prepareStatement(sql);
 			
