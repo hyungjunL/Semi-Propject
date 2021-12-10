@@ -99,6 +99,10 @@
     #cat a:hover {
         color: white;
     }
+    .board{
+    	text-decoration : none;
+    	color : white;
+    }
    
 </style>
 <script>
@@ -125,9 +129,9 @@
 	            <button class="btn btn-success btn-sm" onclick="enrollForm()">회원가입</button>
 	            <button class="btn btn-success btn-sm" onclick="login();">로그인</button>
 	        <% } else if(loginMember != null && loginMember.getMemberNo() == 1){ %>
-	       		<button class="btn btn-success btn-sm"><a href="/javajo/list.ad?currentPage=1">관리자</a></button>
+	       		<button class="btn btn-success btn-sm"><a class="board" href="/javajo/list.ad?currentPage=1">관리자</a></button>
 	        	<button class="btn btn-success btn-sm">고객센터</button>
-	        	<button type="button" class="btn btn-success btn-sm" ><a href="/javajo/list.fb?currentPage=1">게시판</a></button>
+	        	<button type="button" class="btn btn-success btn-sm" ><a class="board"  href="/javajo/list.fb?currentPage=1">게시판</a></button>
 	            <button onclick="location.href='<%= contextPath%>/myPage.me'"class="btn btn-success btn-sm">마이페이지</button>
 	            <button type="button" class="btn btn-success btn-sm" onclick="enrollPage();">상품등록</button>
 	            <button class="btn btn-success btn-sm" onclick="logout();">로그아웃</button>
@@ -135,6 +139,7 @@
 	        	<button class="btn btn-success btn-sm">고객센터</button>
 	            <button onclick="location.href='<%= contextPath%>/myPage.me'"class="btn btn-success btn-sm">마이페이지</button>
 	            <button type="button" class="btn btn-success btn-sm" onclick="enrollPage();">상품등록</button>
+	            <button type="button" class="btn btn-success btn-sm" ><a class="board" href="/javajo/list.fb?currentPage=1">게시판</a></button>
 	            <button class="btn btn-success btn-sm" onclick="logout();">로그아웃</button>
 	        <%} %>
         

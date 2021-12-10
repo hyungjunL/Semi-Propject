@@ -36,9 +36,9 @@ public class ChatSubmitController extends HttpServlet {
 	       int fromNo = ((Member)request.getSession().getAttribute("loginMember")).getMemberNo();
 		   int toNo =  Integer.parseInt(request.getParameter("toNo"));
 	       String chatContent = request.getParameter("chatContent");
-	       
+	       int memberNo =  Integer.parseInt(request.getParameter("memberNo"));
 	       //System.out.println(fromNo);
-		   //System.out.println(toNo);
+		   System.out.println(memberNo);
 		   //System.out.println(chatContent);
 	       
 	       //VO가공
@@ -46,7 +46,9 @@ public class ChatSubmitController extends HttpServlet {
 			c.setFromNo(fromNo);
 			c.setToNo(toNo);
 			c.setChatContent(chatContent);
+			c.setMemberNo(memberNo);
 			
+		
 			// Service 단 호출
 			int result = new ChatService().submitChat(c);
 	       
@@ -55,6 +57,8 @@ public class ChatSubmitController extends HttpServlet {
 			response.setContentType("text/html; charset=UTF-8");
 			
 			response.getWriter().print(result);
+			
+			
 			
 	       
 	}

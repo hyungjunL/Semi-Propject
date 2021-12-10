@@ -1,4 +1,4 @@
-package com.kh.chat.controller;
+	package com.kh.chat.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -34,7 +34,6 @@ public class ChatController extends HttpServlet {
 		//int fromNo = ((Member)request.getSession().getAttribute("loginUser")).getUserNo();
 		int toNo =  Integer.parseInt(request.getParameter("toNo"));
 		request.setAttribute("toNo", toNo);
-		//System.out.println(toNo); 잘 넘어옴
 		
 		
 		

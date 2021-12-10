@@ -319,8 +319,9 @@
 						
 				// X 먼저 구하기
 				var toNo = $(this).val();
+				var memberNo = <%= loginMember.getMemberNo() %>
 						
-				window.open("<%=contextPath %>/chat.no?toNo=" + toNo , "chat", "height = 550,width = 500");
+				window.open("<%=contextPath %>/chat.no?toNo=" + toNo +"&memberNo=" + memberNo , "chat", "height = 550,width = 500");
 			});
 		});
 	   

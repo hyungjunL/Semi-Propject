@@ -216,7 +216,7 @@ int maxPage = pi.getMaxPage();
         			// X 먼저 구하기
         			var bno = $(this).children().eq(0).val();
         					
-        			location.href = "<%=contextPath %>/detail.bo?bno=" + bno;
+        			location.href = "<%=contextPath %>/detail.it?bno=" + bno;
         		});
         	});
         </script>

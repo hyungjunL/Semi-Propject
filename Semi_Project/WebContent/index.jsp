@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="com.kh.f_board.model.vo.Board, com.kh.tboard.model.vo.TBoard, java.util.ArrayList, com.kh.member.model.vo.Member" %>
+<% 
+	ArrayList<Board> fList = (ArrayList<Board>)request.getAttribute("list");
+	ArrayList<TBoard> tList = (ArrayList<TBoard>)request.getAttribute("pageList");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,9 +30,6 @@
          width: 90%;
          height: 90%;
      }
-     #content1 {height: 20%;}
-    #content2 {height: 20%;}
-    #banner {height: 15%;}
      .contain {
          position:absolute;
          transition: all 0.4s;
@@ -49,22 +51,13 @@
 <div id="wrap">
  <!-- 상단에는 header1.jsp가 보이게 해줌 -->
 <%@include file = "views/common/header1.jsp" %>
-	<div id="content1">
-    <a href="<%= contextPath %>/booklist.no?currentPage=1"><b>추천도서</b></a>     
-</div>
-<hr>
 
-<div id="content2">
- 
- <a href=""><b>채팅목록</b></a>
-    
-</div>
         <div id="content1">
             <div class="contain" style="width: 100%; height: 100%; opacity: 1">
                 <div class="koreabook" style="float: left; width: 25%; height: 100%;"><a><img src="resources/koreabook1.PNG"></a></div>
-                <div class="koreabook" style="float: left; width: 25%; height: 100%;"><img src="resources/koreabook2.PNG"></a></div>
-                <div class="koreabook" style="float: left; width: 25%; height: 100%;"><img src="resources/koreabook3.PNG"></a></div>
-                <div class="koreabook" style="float: left; width: 25%; height: 100%;"><img src="resources/koreabook4.PNG"></a></div>
+                <div class="koreabook" style="float: left; width: 25%; height: 100%;"><a><img src="resources/koreabook2.PNG"></a></div>
+                <div class="koreabook" style="float: left; width: 25%; height: 100%;"><a><img src="resources/koreabook3.PNG"></a></div>
+                <div class="koreabook" style="float: left; width: 25%; height: 100%;"><a><img src="resources/koreabook4.PNG"></a></div>
             </div>
             <div class="contain" style="width: 100%; height: 100%;">
                 <div class="globalbook" style="float: left; width: 25%; height: 100%;"><a><img src="resources/globalbook1.PNG"></a></div>
@@ -101,45 +94,28 @@
                             <thead>
                                 <tr>
                                   <th colspan="2" style="font-size: 20px;" width="87%">거래게시판</th>
-                                  <th style="font-size: 10px;"><a href="#">+더보기</a></th>
+                                  <th style="font-size: 10px;"><a href="<%= contextPath %>/list.it?currentPage=1&category=1">+더보기</a></th>
                                 </tr>
                               </thead>
-                              <tbody>
-                                <tr>
-                                  <td colspan="3"><a href="#">거래게시글1</a></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3"><a href="#">거래게시글2</a></td>
-                                </tr>
-                                <tr>
-                                  <td colspan="3"><a href="#">거래게시글3</a></td>
-                                </tr>
+                              <tbody id="indexTList">
+                          
                               </tbody>
                         </table>
                     </td>
                     <td>
-                        <table class="table table-striped">
+                        <table class="table table-striped" style="width=50%">
                             <thead>
                                 <tr>
                                   <th colspan="2" style="font-size: 20px;" width="87%">자유게시판</th>
-                                  <th style="font-size: 10px;"><a href="#">+더보기</a></th>
+                                  <th style="font-size: 10px;"><a href="<%= contextPath %>/list.fb?currentPage=1">+더보기</a></th>
                                 </tr>
                               </thead>
-                              <tbody>
-                                <tr>
-                                  <td colspan="3"><a href="#">자유게시글1</a></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3"><a href="#">자유게시글1</a></td>
-                                </tr>
-                                <tr>
-                                  <td colspan="3"><a href="#">자유게시글1</a></td>
-                                </tr>
+                              <tbody id="indexFList">
+                              
                               </tbody>
                         </table>
-                    </td>
-                </tr>
-
+					</td>
+				</tr>
             </table>
         </div>
         <hr>
@@ -152,7 +128,7 @@
 </div>
 </body>
 <script>
-    
+
 $(function() {
    $("#cat1").hover(function() {
         $(".contain:eq(0)").css('opacity', '1');
@@ -181,6 +157,35 @@ $(function() {
    }, function() {
     $(".contain:eq(4)").css('opacity', '0');
    });
+   
+   $.ajax({
+	   url : "Fboard.if",
+	   success : function(indexFList) {
+		   
+		   var fList = "";
+		   if(indexFList.length == 0) {
+			   fList += '<tr><td colspan="3"><b>게시글이 존재하지 않습니다.</b></td></tr>';
+		   }
+		   else {
+			   for(var i = 0; i < indexFList.length; i++) {
+				   
+				  	fList += '<tr>';
+				  	fList += 	'<td colspan="3">';
+				 	fList += 		'<a href = "<%= contextPath %>/detail.fb?bno=' + indexFList[i].F_NO + '">';
+				 	fList +=			indexFList[i].F_TITLE;
+				 	fList += 		'</a>'
+				 	fList += 	'</td>';
+				 	fList += '</tr>';
+			   }
+		   }
+		   
+		   $("#indexFList").html(fList);
+
+	   }
+   });
+   
 })
+
+
 </script>
 </html>

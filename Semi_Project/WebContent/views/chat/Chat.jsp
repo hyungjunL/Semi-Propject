@@ -52,8 +52,17 @@ int toNo = (Integer)request.getAttribute("toNo");
         <!-- 메세지 -->
         
         <table id ="chatbox" align="center">
-        		<thead></thead>
+        		<thead >
+        			<tr>
+                		<td><strong>보낸 사람</strong></td>
+                		<td><strong>내용</strong></td>
+                		<td><strong>날짜</strong></td>
+                	</tr>
+                	<hr>
+        		</thead>
+        			
                 <tbody>
+                
                 </tbody>
             </table>
         
@@ -83,7 +92,7 @@ function submitFunction() {
 		type: "POST",
 		
 		data: {
-		
+			memberNo:   <%= loginMember.getMemberNo() %>,
 			toNo:   <%= toNo %>,
 			chatContent: $('#chatContent').val(),
 		},
@@ -95,9 +104,9 @@ function submitFunction() {
             			}
         				
         			},
-        			error : function() {
-        				console.log(" ajax 실패");
-        			}
+			error : function() {
+				console.log(" ajax 실패");
+			}
 		});
 }
 
@@ -113,7 +122,7 @@ function selectChatlist() {
 		type: "POST",
 		
 		data: {
-		
+			
 			toNo: <%= toNo %>,
 		},
 		success: function(list) {
@@ -122,9 +131,9 @@ function selectChatlist() {
 		        var result = "";
 		        for(var i in list) { 
 		          result += "<tr>"
-		        	   			   + "<td>" + list[i].fromNo + "번책장" + "</td>"
+		        	   			   + "<td>" + list[i].fromNo + "서점" + "</td>"
 		        	               + "<td>" + list[i].chatContent + "</td>"
-		        	               + "<td>" + list[i].createDate + "</td>"
+		        	               + "<td>" +list[i].createDate + "</td>"
 		                      + "</tr>";
 		        }
 		        
@@ -138,6 +147,7 @@ function selectChatlist() {
 			
 		})
 };
+
 
 
 

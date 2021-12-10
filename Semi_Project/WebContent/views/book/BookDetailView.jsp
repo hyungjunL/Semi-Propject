@@ -161,8 +161,9 @@ Book b = (Book)request.getAttribute("b");
 					
 			// X 먼저 구하기
 			var toNo = $(this).val();
+			var bno = <%= b.getBookNo() %>
 					
-			window.open("<%=contextPath %>/chat.no?toNo=" + toNo , "chat", "height = 550,width = 500");
+			window.open("<%=contextPath %>/chat.no?toNo=" + toNo +"&bno="+ bno , "chat", "height = 550,width = 500");
 		});
 	});
    

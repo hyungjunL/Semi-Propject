@@ -9,13 +9,23 @@ public class Chat {
 	  private int toNo;//TO_ID NUMBER NOT NULL,
 	  private String chatContent;//CHAT_CONTENT VARCHAR2(100) NOT NULL,
 	  private Date createDate;//CHAT_TIME DATE DEFAULT SYSDATE
-	
+	  private int memberNo;
 	  
 	  public Chat() {
 		super();
 	}
 
 
+	public Chat(int chatNo, int fromNo, int toNo, String chatContent, Date createDate, int memberNo) {
+		super();
+		this.chatNo = chatNo;
+		this.fromNo = fromNo;
+		this.toNo = toNo;
+		this.chatContent = chatContent;
+		this.createDate = createDate;
+		this.memberNo = memberNo;
+	}
+	
 	public Chat(int chatNo, int fromNo, int toNo, String chatContent, Date createDate) {
 		super();
 		this.chatNo = chatNo;
@@ -23,9 +33,18 @@ public class Chat {
 		this.toNo = toNo;
 		this.chatContent = chatContent;
 		this.createDate = createDate;
+		
 	}
-	
-	
+
+	public int getMemberNo() {
+		return memberNo;
+	}
+
+
+	public void setMemberNo(int memberNo) {
+		this.memberNo = memberNo;
+	}
+
 
 	public Chat(int toNo) {
 		super();

@@ -25,9 +25,9 @@ public class ChatService {
 		return result;
 	}
 	
-	 public ArrayList<Chat> selectChatList(int fromNo, int toNo){
+	 public ArrayList<Chat> selectChatList(int fromNo, int toNo, int memberNo){
 		 Connection conn = getConnection();
-		 ArrayList<Chat> list = new ChatDao().selectChatList(conn,fromNo, toNo);
+		 ArrayList<Chat> list = new ChatDao().selectChatList(conn,fromNo, toNo, memberNo);
 		 
 		 close(conn);
 		 
