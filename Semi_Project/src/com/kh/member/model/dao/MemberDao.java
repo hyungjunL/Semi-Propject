@@ -36,7 +36,7 @@ public class MemberDao {
 			e.printStackTrace();
 		}
 		
-	}
+	}	
 	
 	public Member loginMember(Connection conn, String memberId, String memberPwd) {
 		

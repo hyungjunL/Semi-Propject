@@ -107,7 +107,7 @@
 			String userPwd = loginMember.getMemberPwd();
             String userName = loginMember.getMemberName();
 
-            String birth = loginMember.getBirth().substring(0, 10);
+            String birth = (loginMember.getBirth() == null) ? "" :loginMember.getBirth().substring(0, 10); 
 			String email = (loginMember.getEmail() == null) ? "" : loginMember.getEmail();
 			String address = (loginMember.getAddress() == null) ? "" : loginMember.getAddress();
 			String phone = (loginMember.getPhone() == null) ? "" : loginMember.getPhone();
