@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+	<comment>판매도서 관련 쿼리문</comment>
+	
+	<entry key="selectListCount">
+		SELECT COUNT(*) COUNT
+		FROM T_BOARD
+		WHERE STATUS ='Y' 
+		
+	</entry>
+	
+	<entry key="selectBookList">
+		SELECT *
+		FROM(
+		
+		SELECT ROWNUM RNUM, A.*
+		FROM(
+		
+		SELECT T_NO,T_TITLE,T_PRICE 
+				FROM T_BOARD 
+				WHERE STATUS ='Y' 
+				ORDER BY CREATE_DATE DESC) A)
+		WHERE RNUM BETWEEN ? AND ?       
+	</entry>
+	
+	
+	<entry key="searchListCount">
+		 SELECT COUNT(*) COUNT
+		FROM T_BOARD
+		WHERE STATUS ='Y'  AND T_TITLE LIKE '%' || ? || '%'
+	</entry>
+	
+	<entry key="selectByTitle">
+		SELECT *
+		FROM(
+		
+		SELECT ROWNUM RNUM, A.*
+		FROM(
+		
+		SELECT T_NO,T_TITLE,T_PRICE 
+				FROM T_BOARD 
+				WHERE STATUS ='Y'  AND T_TITLE LIKE '%' || ? || '%'
+				ORDER BY CREATE_DATE DESC) A)
+		WHERE RNUM BETWEEN ? AND ?       
+	</entry>
+	
+	<entry key="selectHeartList">
+		SELECT ZZIM_NO,ZZIM_TNO,T_TITLE
+		FROM ZZIM Z
+		JOIN T_BOARD ON (ZZIM_TNO = T_NO)
+		JOIN MEMBER M ON (ZZIM_MEMBER = M.MEMBER_NO)
+		WHERE Z.STATUS ='Y' AND ZZIM_MEMBER = ?
+		ORDER BY Z.CREATE_DATE DESC
+				       
+	</entry>
+	
+	
+	<entry key="selectHeartCount">
+	
+	
+	SELECT COUNT(*) COUNT 
+	FROM ZZIM Z
+	JOIN T_BOARD ON (ZZIM_TNO = T_NO)
+	WHERE ZZIM_TNO = ? AND Z.STATUS = 'Y' 
+		
+				       
+	</entry>
+	
+	
+	<entry key="selectHeartCheck">
+	
+	
+	SELECT COUNT(*) COUNT 
+	FROM ZZIM Z
+	JOIN T_BOARD ON (ZZIM_TNO = T_NO)
+	JOIN MEMBER M ON (ZZIM_MEMBER = M.MEMBER_NO)
+	WHERE ZZIM_TNO = ? AND ZZIM_MEMBER = ? AND Z.STATUS = 'Y'
+		
+				       
+	</entry>
+
+	
+	<entry key="insertHeart">
+	
+	INSERT INTO ZZIM(ZZIM_NO,ZZIM_MEMBER,ZZIM_TNO)
+	VALUES(SEQ_ZNO.NEXTVAL,?,?) 
+				     
+	</entry>
+	
+	
+	
+	<entry key="deletetHeart">
+	
+	DELETE FROM ZZIM
+	WHERE ZZIM_MEMBER = ? AND ZZIM_TNO = ?
+				     
+	</entry>
+	
+	
+	<entry key="selectBook">
+	
+	SELECT T_NO, T_TITLE, T_PRICE, MEMBER_NO
+	FROM T_BOARD T
+	WHERE T_NO = ? AND T.STATUS = 'Y' 
+				     
+	</entry>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</properties>

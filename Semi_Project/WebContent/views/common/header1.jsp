@@ -149,9 +149,10 @@
         <div id="header">
             <div id="img"><a href="http://localhost:8888/javajo/"><img src="resources\mainImage.png" style="width:100%; height: 100%;"></a></div>
             <div id="search">
-                <form id="search_form" action="search.do" method="post">
+                <form id="search_form" action="<%= contextPath %>/search.no" method="get">
+                	<input type = "hidden" name = "currentPage" value = "1">
                     <div id="search_text">
-                        <input type="text" placeholder="내용을 입력해주세요">
+                        <input type="text" name="keyword" placeholder="검색어를 입력하세요.">
                     </div>
                     <div id="search_btn">
                         <input type="submit" value="검색">

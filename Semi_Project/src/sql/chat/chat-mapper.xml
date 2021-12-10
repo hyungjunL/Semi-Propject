@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+	<comment>채팅 관련 쿼리문</comment>
+	
+	<entry key="submitChat">
+	
+	
+	INSERT INTO CHAT(CHAT_ID,FROM_ID,TO_ID,CHAT_CONTENT)
+    VALUES(SEQ_CCNO.NEXTVAL,?,?,?) 
+	
+	</entry>
+	
+	
+	<entry key="selectChatList">
+	
+	SELECT * FROM CHAT 
+	WHERE ((FROM_ID= ? AND TO_ID =?) OR (FROM_ID = ? AND TO_ID = ?))
+	ORDER BY CHAT_TIME
+	
+	
+	</entry>
+	
+	
+
+	
+</properties>

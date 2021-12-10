@@ -174,6 +174,18 @@ public class MemberService {
 		return listCount;
 	}
 	
+	public int TselectListCount(int userNo) {
+		
+		Connection conn = getConnection();
+		
+		int listCount = new MemberDao().TselectListCount(conn, userNo);
+		
+		close(conn);
+		
+		return listCount;
+	}
+	
+	
 	public ArrayList<Heart> selectZzim(PageInfo pi, int userNo) {
 		
 		Connection conn = getConnection();

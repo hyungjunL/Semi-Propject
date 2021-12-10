@@ -47,14 +47,14 @@
 	         , EMAIL = ?
 	         , ADDRESS = ?
 	         , PHONE = ?
-	         , BIRTH = TO_DATE( ?, 'YYYY/MM/DD')
+	         , BIRTH = TO_DATE( ?, 'YYYY/MM/DD HH:MI:SS')
 	     WHERE MEMBER_ID = ?
 	</entry>
 	
 	<entry key="selectMember">
 		SELECT *
-		  FROM MEMBER
-	 	 WHERE MEMBER_ID = ?
+        FROM MEMBER
+        WHERE MEMBER_ID = ?
 	</entry>
 	
 	<entry key="updatePwdMember">

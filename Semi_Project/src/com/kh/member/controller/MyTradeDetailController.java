@@ -47,7 +47,7 @@ public class MyTradeDetailController extends HttpServlet {
 		int startPage;
 		int endPage;
 		
-		listCount = new MemberService().selectListCount(userNo);
+		listCount = new MemberService().TselectListCount(userNo);
 		
 		currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		
