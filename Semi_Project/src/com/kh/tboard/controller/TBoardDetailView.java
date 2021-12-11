@@ -48,6 +48,8 @@ public class TBoardDetailView extends HttpServlet {
 	
 			request.setAttribute("b", b);
 			request.setAttribute("list", list);
+			System.out.println("b : " + b);
+			System.out.println("list : " + list);
 			
 			
 			request.getRequestDispatcher("views/tboard/tBoardDetailView.jsp").forward(request, response);

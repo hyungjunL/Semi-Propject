@@ -17,11 +17,10 @@ public class Attachment {
 	}
 
 
-	public Attachment(int fileNo, int fNo, String fileName, String changeName, String filePath, String fileLevel,
+	public Attachment(int fileNo, String fileName, String changeName, String filePath, String fileLevel,
 			String status) {
 		super();
 		this.fileNo = fileNo;
-		this.fNo = fNo;
 		this.fileName = fileName;
 		this.changeName = changeName;
 		this.filePath = filePath;

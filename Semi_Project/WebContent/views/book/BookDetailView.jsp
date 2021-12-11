@@ -3,7 +3,7 @@
 <%@ page import="com.kh.book.model.vo.*" %>
     
 <% 
-Book b = (Book)request.getAttribute("b");
+	Book b = (Book)request.getAttribute("b");
 %> 
 <!DOCTYPE html>
 <html>

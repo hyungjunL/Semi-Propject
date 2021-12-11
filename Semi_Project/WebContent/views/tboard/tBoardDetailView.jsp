@@ -46,50 +46,6 @@
 	table{
 		font-size: large;
 	}
-	
-	    .btn-heart:hover {
-    text-shadow: 0 0 0 red;
-    }
-    
-    .btn-heart{
-      color:red;
-      font-size: 30px;
-      border:0;
-      outline: 0;
-      text-shadow: 0;
-      background-color: transparent;
-      margin-left : 40px;
-     
-    }
-    
-    .heart_count{
-    
-    font-size: 15px;
-    }
-    
-    
-    .btn-chat  {
-      color: gray;
-      font-size: 25px;
-      border:0;
-      outline: 0;
-      background-color:transparent;
-       margin-left : 20px;
-    }
-    .btn-chat:hover {
-      text-shadow: 0 0 0 black;
-      background-color:transparent;
-      border:0;
-      outline: 0;
-    }
-   
-    .btn-page{
-
-      outline:0;
-      color : black;
-      
-    }
-	
 </style>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -147,9 +103,12 @@
 	                        
 	                    </div>
 	                    <br>
-	                    <div id="btn">
-	                        
-	                         <% if(loginMember != null) { %>
+	                   	<div class="contentwrap">
+    
+    
+    
+    
+                         <% if(loginMember != null) { %>
 	                    <!-- 로그인이 되어있을 경우 : 찜 가능 -->
                         
                           <button onclick="updateHeart();" class="btn-heart" id ="heart_update">♥<span class="heart_count"> </span></button>
@@ -185,9 +144,12 @@
 					       </script>
 	                    
                     <% } %>
-	                    
-	
-	                    </div>
+                    
+                   
+    
+              
+ 
+    </div>
 	                    
 	                    
 	                </div>
@@ -295,96 +257,96 @@
 	<script>
         $("#slideshow > div:gt(0)").hide();
 
-		setInterval(function() {
-		  $('#slideshow > div:first')
-		    .fadeOut(1000)
-		    .next()
-		    .fadeIn(1000)
-		    .end()
-		    .appendTo('#slideshow');
-		}, 2000);
+setInterval(function() {
+  $('#slideshow > div:first')
+    .fadeOut(1000)
+    .next()
+    .fadeIn(1000)
+    .end()
+    .appendTo('#slideshow');
+}, 2000);
 
     </script>
     
     <script>
-	   
-	   
-	 
-	   
-	   $(function(){
-			$("#chat").click(function(){
-				
-				// 클릭될때마다 채팅 url 요청 => location.href
-				// /javajo/chat.no?toNo=X
-						
-				// X 먼저 구하기
-				var toNo = $(this).val();
-				var memberNo = <%= loginMember.getMemberNo() %>
-						
-				window.open("<%=contextPath %>/chat.no?toNo=" + toNo +"&memberNo=" + memberNo , "chat", "height = 550,width = 500");
-			});
+   
+   
+ 
+   
+   $(function(){
+		$("#chat").click(function(){
+			
+			// 클릭될때마다 채팅 url 요청 => location.href
+			// /javajo/chat.no?toNo=X
+					
+			// X 먼저 구하기
+			var toNo = $(this).val();
+			var bno = <%= b.gettNo() %>
+					
+			window.open("<%=contextPath %>/chat.no?toNo=" + toNo +"&bno="+ bno , "chat", "height = 550,width = 500");
 		});
-	   
-	   
-	   
-	  
-	   $(function() {
-	       selectHeartCount();})
-	       
-	       
-	       
-	    
-	   
-	   function updateHeart(){
-	
-	   $.ajax({
-	       url : "heartupdate.bo",
-	       data : { bno : <%= b.gettNo() %> }, 
-	       success : function(heartCheck) {
-						
-	    	     if(heartCheck > 0){
-	    	    	   
-	    	    	selectHeartCount();
-	    	    	   alert("찜 삭제");
-	    	     }
-	    	     
-	    	     else{
-	    	    	 
-	    	    	 selectHeartCount();
-	  	    	     alert("찜 목록 추가");
-	    	     }
-				
-			},
-			error : function() {
-				console.log("ajax 실패");
-			}
-	   })
-	};
-	   
-	   			
-	 							
-	    function selectHeartCount() {
-	         
-	    
-	        $.ajax({
-	            url : "heartcount.bo", 
-	            data : { bno : <%= b.gettNo() %> }, 
-	            success : function(heartCount) {
-	            
-	                $(".heart_count").html(heartCount);
-	               // console.log("ajax 성공");
-	              
-	            },
-	            error : function() {
-	                //console.log("ajax 실패");
-	            }
-	        })
-	    };
-	    
-	  
-	  
-	   
-	 
-	</script>
+	});
+   
+   
+   
+  
+   $(function() {
+       selectHeartCount();})
+       
+       
+       
+    
+   
+   function updateHeart(){
+
+   $.ajax({
+       url : "heartupdate.bo",
+       data : { bno : <%= b.gettNo() %> }, 
+       success : function(heartCheck) {
+					
+    	     if(heartCheck > 0){
+    	    	   
+    	    	selectHeartCount();
+    	    	   alert("찜 삭제");
+    	     }
+    	     
+    	     else{
+    	    	 
+    	    	 selectHeartCount();
+  	    	     alert("찜 목록 추가");
+    	     }
+			
+		},
+		error : function() {
+			console.log("ajax 실패");
+		}
+   })
+};
+   
+   			
+ 							
+    function selectHeartCount() {
+         
+    
+        $.ajax({
+            url : "heartcount.bo", 
+            data : { bno : <%= b.gettNo() %> }, 
+            success : function(heartCount) {
+            
+                $(".heart_count").html(heartCount);
+               // console.log("ajax 성공");
+              
+            },
+            error : function() {
+                //console.log("ajax 실패");
+            }
+        })
+    };
+    
+  
+  
+   
+ 
+</script>
 </body>
 </html>
