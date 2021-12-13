@@ -20,11 +20,18 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
+#wrap{
+	width:1000px;
+	height:1500px;
+	margin: auto;
+	
+	}
 .wrap {
-	width: 1200px;
+	width: 1000px;
 	height : 1000px;
 	margin: 0px auto;
 	text-align: center;
+	
 }
 
 #board-side {
@@ -89,8 +96,9 @@
 
 <body>
 
-	<%@ include file = "../common/header1.jsp" %>
-
+	
+	<div id="wrap">
+		<%@ include file = "../common/header1.jsp" %>
 	<div class="wrap">
 
 		<div id="board-body">
@@ -164,20 +172,19 @@
 							$(".t-body>tbody>tr").click(function() {
 								var bno = $(this).children().eq(0).text();
 
-								location.href = "/javajo/detail.fb?bno=" + bno;
+								location.href = "<%=contextPath%>/detail.fb?bno=" + bno;
 							});
 						});
 					</script>
 
 					<br> <br>
-					<div align="center" id="pagenation">
+					<div align="center" id="pagenation" >
 
 						
 						<%
 						if (currentPage != 1) {
 						%>
-						<button
-							onclick="location.href='/javajo/list.fb?currentPage=<%=currentPage - 1%>'">&lt;</button>
+						<button style="display:inline;" class="page-link" onclick="location.href='<%= contextPath %>/list.fb?currentPage=<%=currentPage - 1%>'">&lt;</button>
 						<%
 						}
 						%>
@@ -190,13 +197,12 @@
 						<%
 						if (i != currentPage) {
 						%>
-						<button
-							onclick="location.href='/javajo/list.fb?currentPage=<%=i%>'"><%=i%></button>
+						<button style="display:inline;" class="page-link" onclick="location.href='<%= contextPath %>/list.fb?currentPage=<%=i%>'"><%=i%></button>
 						<%
 						} else {
 						%>
 						
-						<button disabled><%=i%></button>
+						<button style="display:inline;" class="page-link" disabled><%=i%></button>
 						<%
 						}
 						%>
@@ -208,8 +214,7 @@
 						<%
 						if (currentPage != maxPage) {
 						%>
-						<button
-							onclick="location.href='/javajo/list.fb?currentPage=<%=currentPage + 1%>'">&gt;</button>
+						<button style="display:inline;" class="page-link" onclick="location.href='<%= contextPath %>/list.fb?currentPage=<%=currentPage + 1%>'">&gt;</button>
 						<%
 						}
 						%>
@@ -219,7 +224,7 @@
 					<br>
 
 					<div align="right" style="width: 850px;">
-						<a href="/javajo/enroll.fd"
+						<a href="<%= contextPath %>/enroll.fd"
 							class="btn btn-secondary btn-sm">글작성</a> <br>
 						<br>
 					</div>
@@ -227,7 +232,7 @@
 				</div>
 			</div>
 		</div>
-		
+		</div>
 </body>
 
 </html>

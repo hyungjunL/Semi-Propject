@@ -25,8 +25,15 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 <style>
+
+#wrap{
+	width:1000px;
+	height:1500px;
+	margin: auto;
+	
+	}
 .wrap {
-	width: 1200px;
+	width: 1000px;
 	margin: 0px auto;
 }
 
@@ -101,11 +108,12 @@
 </head>
 
 <body>
+<div id="wrap">
 
 <%@ include file="../common/header1.jsp"%>
 	<div class="wrap">
 
-		<form action="/javajo/insert.fb" id="enroll-form" method="post"
+		<form action="<%= contextPath %>/insert.fb" id="enroll-form" method="post"
 			enctype="multipart/form-data">
 
 			<input type="hidden" name="userNo" value="1">
@@ -136,8 +144,7 @@
 					</div>
 					<hr class="hr1">
 					<div id="in_title">
-						<input type="text" name="title" id="title" placeholder="제목"
-							required>
+						<input type="text" name="title" id="title" placeholder="제목" required>
 					</div>
 
 					<div id="in_content">
@@ -149,10 +156,10 @@
 						
 						<tr>
 							
-							<td><img id="contentImg1" width="223" height="160"></td>
-							<td><img id="contentImg2" width="223" height="160"></td>
-							<td><img id="contentImg3" width="223" height="160"></td>
-							<td><img id="contentImg4" width="223" height="160" ></td>
+							<td><img id="contentImg1" width="183" height="150"></td>
+							<td><img id="contentImg2" width="183" height="150"></td>
+							<td><img id="contentImg3" width="183" height="150"></td>
+							<td><img id="contentImg4" width="183" height="150" ></td>
 						</tr>
 					</table>
 
@@ -261,6 +268,7 @@
 				</div>
 			</div>
 		</form>
+	</div>
 	</div>
 </body>
 

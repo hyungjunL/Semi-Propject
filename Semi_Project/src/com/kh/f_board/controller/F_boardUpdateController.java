@@ -17,6 +17,7 @@ import com.kh.common.MyFileRenamePolicy;
 import com.kh.f_board.model.service.BoardService;
 import com.kh.f_board.model.vo.Attachment;
 import com.kh.f_board.model.vo.Board;
+import com.kh.tboard.model.service.TBoardService;
 import com.oreilly.servlet.MultipartRequest;
 
 /**
@@ -25,95 +26,81 @@ import com.oreilly.servlet.MultipartRequest;
 @WebServlet("/update.fb")
 public class F_boardUpdateController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public F_boardUpdateController() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		
-	
+	public F_boardUpdateController() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		request.setCharacterEncoding("UTF-8");
-		
-		
-		if(ServletFileUpload.isMultipartContent(request)) {
-			
+
+		if (ServletFileUpload.isMultipartContent(request)) {
 			
 			int maxSize = 1024 * 1024 * 10;
-			
-			
+
 			String savePath = request.getSession().getServletContext().getRealPath("/resources/f_board_upfiles/");
-			
-			
+
 			MultipartRequest multiRequest = new MultipartRequest(request, savePath, maxSize, "UTF-8", new MyFileRenamePolicy());
-			
-			
+
 			int boardNo = Integer.parseInt(multiRequest.getParameter("bno"));
 			String boardTitle = multiRequest.getParameter("title");
 			String boardContent = multiRequest.getParameter("content");
-			
-			
+
 			Board b = new Board();
 			b.setF_NO(boardNo);
 			b.setF_TITLE(boardTitle);
 			b.setCONTENT(boardContent);
-			
-			
-			Attachment at = null;
-			
-			
-			if(multiRequest.getOriginalFileName("reUpfile") != null) {
-				
-				
-				at = new Attachment();
-				at.setOriginName(multiRequest.getOriginalFileName("reUpfile"));
-				at.setChangeName(multiRequest.getFilesystemName("reUpfile"));
-				at.setFilePath("resources/f_board_upfiles/");
-				
-				if(multiRequest.getParameter("originFileNo") != null) {
-					
-					
-					at.setFileNo(Integer.parseInt(multiRequest.getParameter("originFileNo")));
-					
-					
-					new File(savePath + multiRequest.getParameter("originFileName")).delete();
-				}
-				else {
-					
-					
-					at.setRefNo(boardNo);
-				}
+
+			ArrayList<Attachment> list = new ArrayList<>();
+
+			for (int i = 1; i < 5; i++) {
+
+				String key = "file" + i;			
+				if (multiRequest.getOriginalFileName(key) != null) {
+
+					Attachment at = new Attachment();
+					at.setOriginName(multiRequest.getOriginalFileName(key));
+					System.out.println("변화된 파일명 : " + multiRequest.getFilesystemName(key));
+					at.setFilePath("resources/f_board_upfiles/");
+					at.setChangeName(multiRequest.getFilesystemName(key));
+					at.setStatus("Y");
+
+					list.add(at);
+				}System.out.println(list);
+
 			}
-			
-		
-			int result = new BoardService().updateBoard(b, at);
-			
-		
-			
-			
-			if(result > 0) { 
-				
-				
-				
+
+			int result = new BoardService().updateBoard(b, list);
+
+			if (result > 0) {
+				request.getSession().setAttribute("alertMsg", "게시글 수정에 성공했습니다.");
 				response.sendRedirect(request.getContextPath() + "/detail.fb?bno=" + boardNo);
-				
+
+			}else { 
+				request.setAttribute("errorMsg", "게시글 수정에 실패했습니다.");
+				response.sendRedirect(request.getContextPath() + "/detail.fb?bno=" + boardNo);
 			}
+			
 		}
-		
+
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}

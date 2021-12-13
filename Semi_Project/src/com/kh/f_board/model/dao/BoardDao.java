@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import com.kh.common.model.vo.PageInfo;
@@ -83,7 +84,7 @@ public class BoardDao {
 
 			if (rset.next()) {
 				listCount = rset.getInt("COUNT");
-				System.out.println(listCount);
+
 			}
 
 		} catch (SQLException e) {
@@ -167,7 +168,7 @@ public class BoardDao {
 
 			if (rset.next()) {
 				m = rset.getInt("max_NO");
-				System.out.println(m);
+
 			}
 
 		} catch (SQLException e) {
@@ -285,33 +286,6 @@ public class BoardDao {
 			pstmt.setString(1, b.getF_TITLE());
 			pstmt.setString(2, b.getCONTENT());
 			pstmt.setInt(3, b.getF_NO());
-
-			result = pstmt.executeUpdate();
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(pstmt);
-		}
-
-		return result;
-	}
-
-	public int updateAttachment(Connection conn, Attachment at) {
-
-		int result = 0;
-
-		PreparedStatement pstmt = null;
-
-		String sql = prop.getProperty("updateAttachment");
-
-		try {
-			pstmt = conn.prepareStatement(sql);
-
-			pstmt.setString(1, at.getOriginName());
-			pstmt.setString(2, at.getChangeName());
-			pstmt.setString(3, at.getFilePath());
-			pstmt.setInt(4, at.getFileNo());
 
 			result = pstmt.executeUpdate();
 
@@ -465,6 +439,145 @@ public class BoardDao {
 		}
 
 		return result;
+	}
+
+	public int prevCount(Connection conn, int boardNo) {
+		int plist = 0;
+
+		PreparedStatement pstmt = null;
+
+		ResultSet rset = null;
+
+		String sql = prop.getProperty("prevCount");
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setInt(1, boardNo);
+
+			rset = pstmt.executeQuery();
+
+			while (rset.next()) {
+
+				plist = rset.getInt("PREV");
+			}
+			System.out.println("이전글" + plist);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+
+		return plist;
+	}
+
+	public int nextCount(Connection conn, int boardNo) {
+		int nlist = 0;
+
+		PreparedStatement pstmt = null;
+
+		ResultSet rset = null;
+
+		String sql = prop.getProperty("nextCount");
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setInt(1, boardNo);
+
+			rset = pstmt.executeQuery();
+
+			while (rset.next()) {
+
+				nlist = rset.getInt("NEXT");
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+
+		return nlist;
+	}
+
+	public ArrayList<Attachment> selectOriginAttachmentList(Connection conn, int boardNo) {
+		ArrayList<Attachment> origin_list = new ArrayList<>();
+
+		PreparedStatement pstmt = null;
+
+		ResultSet rset = null;
+
+		String sql = prop.getProperty("selectAttachment"); // 재활용
+
+		try {
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setInt(1, boardNo);
+
+			rset = pstmt.executeQuery();
+
+			while (rset.next()) {
+
+				Attachment at = new Attachment();
+
+				at.setFileNo(rset.getInt("FILE_NO"));
+				at.setOriginName(rset.getString("ORIGIN_NAME"));
+				at.setChangeName(rset.getString("CHANGE_NAME"));
+				at.setFilePath(rset.getString("FILE_PATH"));
+
+				origin_list.add(at);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+
+		return origin_list;
+	}
+
+	public int updateAttachment(Connection conn, ArrayList<Attachment> list, Board b) {
+		System.out.println(list);
+		int result = 0;
+
+		PreparedStatement pstmt = null;
+
+		String sql = prop.getProperty("updateAttachment");
+
+		
+		try {
+			for (int i = 0; i < 4; i++) {
+				try {
+					
+					pstmt = conn.prepareStatement(sql);
+
+					pstmt.setString(1, list.get(i).getOriginName());
+					pstmt.setString(2, list.get(i).getChangeName());
+					pstmt.setString(3, list.get(i).getFilePath());
+					pstmt.setInt(4, b.getF_NO());
+					
+
+					result = pstmt.executeUpdate();
+				} catch (IndexOutOfBoundsException e) {
+
+				}
+
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+
+		return result;
+
 	}
 
 }

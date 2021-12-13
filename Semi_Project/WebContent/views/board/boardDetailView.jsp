@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="com.kh.f_board.model.vo.*, java.util.ArrayList"%>
+<%@ page import="com.kh.f_board.model.vo.*, java.util.ArrayList, java.util.List"%>
 <%
 Board b = (Board) request.getAttribute("b");
 
@@ -10,7 +10,13 @@ Attachment at = (Attachment) request.getAttribute("at");
 
 ArrayList<Attachment> list = (ArrayList<Attachment>)request.getAttribute("list");
 
+int plist = (int)request.getAttribute("plist");
+int nlist = (int)request.getAttribute("nlist");
+
+
+
 %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,25 +24,17 @@ ArrayList<Attachment> list = (ArrayList<Attachment>)request.getAttribute("list")
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>자유게시판</title>
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
-<!-- jQuery library -->
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-<!-- Popper JS -->
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-
-<!-- Latest compiled JavaScript -->
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 <style>
+#wrap{
+	width:1000px;
+	height:1500px;
+	margin: auto;
+	
+	}
 .wrap {
-	width: 1200px;
+	width: 1000px;
 	margin: 0px auto;
 	position: relative
 }
@@ -48,7 +46,7 @@ ArrayList<Attachment> list = (ArrayList<Attachment>)request.getAttribute("list")
 
 #board-side {
 	float: left;
-	width: 20%;
+	width: 200px;
 }
 
 #board-title {
@@ -108,22 +106,29 @@ ArrayList<Attachment> list = (ArrayList<Attachment>)request.getAttribute("list")
 	border-bottom: 1px solid lightgray;
 	color: gray;
 }
+#rewrap td{padding-bottom:10px; height:50px;}
+
+#rewrap td:nth-of-type(2n){color:lightgray; font-size:0.8em; text-align:right;}
+#rewrap tr:nth-of-type(1n){font-weight:bold}
+#rewrap tr:nth-of-type(2n){border-bottom:0.5px solid lightgray; font-weight:normal}
+
 </style>
 
 </head>
 
 <body>
 
+	
+	<div id="wrap">
 	<%@ include file="../common/header1.jsp"%>
-
-
 	<div class="wrap">
+	
 
 		<div id="board-body">
 			<div id="board-side">
 				<div id="board-title" onclick="location.href=''"
 					style="cursor: pointer;">
-					<span>자유게시판</span><br>COMUUNITY
+					<span>자유게시판</span><br>COMUNITY
 				</div>
 				<table class="table-side">
 					<tr>
@@ -173,7 +178,7 @@ ArrayList<Attachment> list = (ArrayList<Attachment>)request.getAttribute("list")
 									<div>
 										<% for(int i = 0; i < list.size(); i++) { %>
 										<img
-											src="/javajo/<%=list.get(i).getFilePath() + list.get(i).getChangeName() %>"
+											src="<%= contextPath %>/<%=list.get(i).getFilePath() + list.get(i).getChangeName() %>"
 											style="margin: 10px" width="400" height="300">
 										<%} %>
 									</div>
@@ -186,124 +191,100 @@ ArrayList<Attachment> list = (ArrayList<Attachment>)request.getAttribute("list")
 
 					<br>
 					<table style="width: 100%;">
-						<%
-						if (b.getF_NO() < m) {
-						%>
+						
 						<tr class="next-content">
 							<td class="next-content1" id="nextBoard">다음 게시물</td>
 							<td class="next-content2"></td>
 						</tr>
-						<%
-						}
-						%>
-						<%
-						if (b.getF_NO() != 1) {
-						%>
+						
 						<tr class="next-content">
 							<td class="next-content1" id="prevBoard">이전 게시물</td>
-							<td class="next-content2">2021-11-01</td>
+							<td class="next-content2"></td>
 						</tr>
-						<%
-						}
-						%>
+						
 					</table>
 
 					<script>
 						$(function() {
-							$("#nextBoard")
-									.click(
-											function() {
-												function getParameterByName(
-														name) {
-													name = name.replace(/[\[]/,
-															"\\[").replace(
-															/[\]]/, "\\]");
-													var regex = new RegExp(
-															"[\\?&]"
-																	+ name
-																	+ "=([^&#]*)"), results = regex
-															.exec(location.search);
-													return results == null ? ""
-															: decodeURIComponent(results[1]
-																	.replace(
-																			/\+/g,
-																			" "));
-												}
-
-												var bno = getParameterByName('bno');
-												var bno2 = 1;
-												var bno3 = +bno + bno2
-
-												location.href = "/javajo/detail.fb?bno="
-														+ bno3;
-											});
+							$("#nextBoard").click(function() {
+								<%if(nlist == 0){%>
+								alert("다음글이 없습니다.");
+								
+								<%}else{%>
+								location.href = "<%= contextPath %>/detail.fb?bno=" + <%=nlist%>;
+								<%}%>
+							});
 						});
 					</script>
 					<script>
 						$(function() {
-							$("#prevBoard")
-									.click(
-											function() {
-												function getParameterByName(
-														name) {
-													name = name.replace(/[\[]/,
-															"\\[").replace(
-															/[\]]/, "\\]");
-													var regex = new RegExp(
-															"[\\?&]"
-																	+ name
-																	+ "=([^&#]*)"), results = regex
-															.exec(location.search);
-													return results == null ? ""
-															: decodeURIComponent(results[1]
-																	.replace(
-																			/\+/g,
-																			" "));
-												}
-
-												var bno = getParameterByName('bno');
-												var bno2 = -1;
-												var bno3 = +bno + bno2
-
-												location.href = "/javajo/detail.fb?bno="
-														+ bno3;
-											});
+							$("#prevBoard").click(function() {
+							<%if(plist == 0){%>
+								alert("이전글이 없습니다.");
+								
+								<%}else{%>
+								location.href = "<%= contextPath %>/detail.fb?bno=" + <%=plist%>;
+								<%}%>
+							});
 						});
+						
+						
 					</script>
+					
 					<br>
 					<!-- 댓글 영역-->
-					<div id="reply-area">
-						<table border="1" width=100%>
-						<thead>
-							<tr>
-								<td width="3%">1.</td>
-								<td width="10%">작성자</td>
-								<td align="right">2021-11-29</td>
-							</tr>
-						</thead>
-						<tbody>
+					<div id="reply-area" >
+					
+					<div class="card mt-2">
+						<div class="card-header p-2">
 							
-						</tbody>
+						</div>
+						<div class="card-body" >
+							<table width=100% id="rewrap">
+						
+						
 						</table>
+						</div>
+					</div>
+						
 					</div>
 					<br>
-
+					<%if(loginMember!=null){ %>
 					<div class="reply">
+						<div class="card-header">
+							<i class="fa fa-comment fa"></i> REPLY 
+						</div>
+						<br>
+
+						
+						<div>
+							<tr>
+	                            <td>
+	                                <textarea class="form-control" id="replyContent" cols="50" rows="3" style="resize:none;"></textarea>
+	                            </td>
+	                            <td>
+	                            	<button onclick="insertReply();" class="btn btn-dark mt-3 btn-sm" style="float:right">등록</button>
+	                            </td>
+                        	</tr>
+						</div>
+						
+					</div>
+					<%} else{%>
+						<div class="reply">
 						<div class="card-header">
 							<i class="fa fa-comment fa"></i> REPLY
 						</div>
-
-						<div class="card-body">
-							<ul class="list-group list-group-flush" align="right">
-								<li class="list-group-item"><textarea class="form-control"
-										id="exampleFormControlTextarea1 replyContent" rows="3"
-										style="resize: none;">
-									</textarea>
-									<button type="button" class="btn btn-dark mt-3 btn-sm"
-										onclick="insertReply();">등록</button></li>
-							</ul>
+						<br>
+						<div>
+							<tr>
+	                            <td>
+	                                <textarea disabled class="form-control" id="replyContent" cols="50" rows="3" placeholder="로그인한 이용자만 사용 가능합니다." style="resize:none;" ></textarea>
+	                            </td>   
+                        	</tr>
 						</div>
+						
 					</div>
+					<%} %>
 					<!-- 댓글 -->
 
 					<script>
@@ -331,6 +312,7 @@ ArrayList<Attachment> list = (ArrayList<Attachment>)request.getAttribute("list")
         				
         			},
         			error : function() {
+        				alert("댓글내용을 작성해주세요.");
         				console.log("댓글 삽입용 ajax 실패");
         			}
         		});
@@ -345,14 +327,16 @@ ArrayList<Attachment> list = (ArrayList<Attachment>)request.getAttribute("list")
         				// 댓글갯수만큼 반복 => 누적(문자열)
         				var result = "";
         				for(var i in list) { // for in
-        					result += "<tr>"
+        					result += "<tbody><tr>"
 		                               + "<td>" + list[i].replyWriter + "</td>"
-		                               + "<td>" + list[i].replyContent + "</td>"
 		                               + "<td>" + list[i].createDate + "</td>"
-			                        + "</tr>";
+			                        + "</tr>"
+			                        + "<tr>"
+			                        + "<td>" + list[i].replyContent + "</td>"
+			                        + "</tr></tbody>";
         				}
         				
-        				$("#reply-area tbody").html(result);
+        				$("#rewrap").html(result);
         				
         			},
         			error : function() {
@@ -368,13 +352,18 @@ ArrayList<Attachment> list = (ArrayList<Attachment>)request.getAttribute("list")
         		selectReplyList(); 
         		
         	});
+        	
+        	 $('.replyWriter').html(data).trigger("create");
+        	 
+        	 
         	</script>
 					
 					
 					<br> <br>
 					<!-- 로그인 시-->
+					<% if(loginMember.getMemberId().equals(b.getMEMBER_ID())) { %>
 					<div align="center">
-						<button type="button" class="btn btn-dark btn-sm" onclick="location.href='/javajo/updateForm.fb?bno=<%= b.getF_NO() %>'">게시글 수정</button>
+						<button type="button" class="btn btn-dark btn-sm" onclick="location.href='<%= contextPath %>/updateForm.fb?bno=<%= b.getF_NO() %>'">게시글 수정</button>
 						
 						<button class="btn btn-dark btn-sm" onclick="test()">게시글 삭제</button>
   
@@ -382,11 +371,12 @@ ArrayList<Attachment> list = (ArrayList<Attachment>)request.getAttribute("list")
 						    function test() {
 						        if (confirm("정말 게시글을 삭제하시겠습니까?")) {
 						        	alert("삭제되었습니다");
-						        	location.href="/javajo/delete.fb?bno=<%= b.getF_NO() %>";
+						        	location.href="<%= contextPath %>/delete.fb?bno=<%= b.getF_NO() %>";
 						        }
 						    }
 						</script>
-				</div>
+					</div>
+					<%} %>
 			</div>
 		</div>
 
@@ -394,8 +384,8 @@ ArrayList<Attachment> list = (ArrayList<Attachment>)request.getAttribute("list")
 
 	</div>
 
-	</div>
-
+	
+</div>
 </body>
 
 </html>

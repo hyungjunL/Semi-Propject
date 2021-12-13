@@ -509,7 +509,6 @@ public class TBoardDao {
 				}
 				catch(IndexOutOfBoundsException e){
 					
-					
 				}
 				
 			}

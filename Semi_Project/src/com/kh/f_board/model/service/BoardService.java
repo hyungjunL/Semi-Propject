@@ -3,12 +3,14 @@ package com.kh.f_board.model.service;
 import static com.kh.common.JDBCTemplate.*;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.kh.common.model.vo.PageInfo;
 import com.kh.f_board.model.dao.BoardDao;
 import com.kh.f_board.model.vo.Attachment;
 import com.kh.f_board.model.vo.Board;
 import com.kh.f_board.model.vo.Reply;
+import com.kh.tboard.model.dao.TBoardDao;
 
 public class BoardService {
 
@@ -96,38 +98,6 @@ public class BoardService {
 		return list;
 	}
 
-	public int updateBoard(Board b, Attachment at) {
-		Connection conn = getConnection();
-
-		
-		int result1 = new BoardDao().updateBoard(conn, b);
-
-		int result2 = 1;
-
-		
-		if (at != null) {
-
-		
-			if (at.getFileNo() != 0) {
-				result2 = new BoardDao().updateAttachment(conn, at);
-			} else {
-				
-				result2 = new BoardDao().insertNewAttachment(conn, at); 
-			}
-		}
-		
-
-		if (result1 > 0 && result2 > 0) {
-			commit(conn);
-		} else {
-			rollback(conn);
-		}
-
-		close(conn);
-
-		return (result1 * result2);
-	}
-
 	public Attachment selectAttachment(int boardNo) {
 		Connection conn = getConnection();
 
@@ -157,28 +127,74 @@ public class BoardService {
 	}
 
 	public ArrayList<Reply> selectReplyList(int boardNo) {
-Connection conn = getConnection();
-		
+		Connection conn = getConnection();
+
 		ArrayList<Reply> list = new BoardDao().selectReplyList(conn, boardNo);
-		
+
 		close(conn);
-		
+
 		return list;
 	}
 
 	public int insertReply(Reply r) {
-Connection conn = getConnection();
-		
+		Connection conn = getConnection();
+
 		int result = new BoardDao().insertReply(conn, r);
-		
-		if(result > 0) {
+
+		if (result > 0) {
 			commit(conn);
-		}
-		else {
+		} else {
 			rollback(conn);
 		}
-		
+
 		return result;
+	}
+
+	public int prevCount(int boardNo) {
+		Connection conn = getConnection();
+
+		int plist = new BoardDao().prevCount(conn, boardNo);
+
+		close(conn);
+
+		return plist;
+	}
+
+	public int nextCount(int boardNo) {
+		Connection conn = getConnection();
+
+		int nlist = new BoardDao().nextCount(conn, boardNo);
+
+		close(conn);
+
+		return nlist;
+	}
+
+	public ArrayList<Attachment> selectOriginAttachmentList(int boardNo) {
+		Connection conn = getConnection();
+
+		ArrayList<Attachment> origin_list = new BoardDao().selectOriginAttachmentList(conn, boardNo);
+
+		close(conn);
+
+		return origin_list;
+	}
+
+	public int updateBoard(Board b, ArrayList<Attachment> list) {
+		Connection conn = getConnection();
+
+		int result1 = new BoardDao().updateBoard(conn, b);
+		int result2 = new BoardDao().updateAttachment(conn, list, b);
+
+		if (result1 > 0 && result2 > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+
+		close(conn);
+
+		return result1 * result2;
 	}
 
 }

@@ -46,6 +46,10 @@
 	table{
 		font-size: large;
 	}
+	#review{
+		textdecoration : none;
+		color : black;
+	}
 </style>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -76,7 +80,9 @@
 						<div>
 						  <img src="<%= contextPath %>/<%= list.get(2).getFilePath() + list.get(2).getChangeName() %>" alt="none" width="100%" height="100%">
 						</div>
+						<div>
 						<img src="<%= contextPath %>/<%= list.get(0).getFilePath() + list.get(0).getChangeName() %>" alt="none" width="100%" height="100%">
+					 	</div>
 					 </div>
 	                
 					
@@ -94,9 +100,6 @@
 	                        <strong>*카테고리: <%= b.getCategoryName() %></strong> 
 	                    </p>
 	
-	                    <p>
-	                        <a href="">*리뷰: ★★★★★</a>
-	                    </p>
                        
 	                    <div id="count">
 	                        <strong>거래 가능 <%= b.getStatus() %></strong>
@@ -203,7 +206,7 @@
 	        </div>
 	
 	    <hr>
-	
+		<br>
 	    <div class="bottom" align="center" >
 	        <table border="1">
 	            <tr>
@@ -217,13 +220,26 @@
 	        </table>
 	    </div>
 		<br>
+		<hr>
+		<br>
 	    <div class="bottom" align="center">
 	        <table border="1">
 	            <tr>
-	                <th height="200">거래 장소 : </th>
-	                <td width="500">
-	                    <img src="" alt="">
-	                    지도
+	                <th height="200">이미지 : </th>
+	                <td width="500" align="center">
+	                	<br>
+	                    <div>
+						  <img src="<%= contextPath %>/<%= list.get(1).getFilePath() + list.get(1).getChangeName() %>" alt="none" width="70%" height="80%">
+						</div>
+						<br>
+						<div>
+						  <img src="<%= contextPath %>/<%= list.get(2).getFilePath() + list.get(2).getChangeName() %>" alt="none" width="70%" height="80%">
+						</div>
+						<br>
+						<div>
+						<img src="<%= contextPath %>/<%= list.get(0).getFilePath() + list.get(0).getChangeName() %>" alt="none" width="70%" height="80%">
+					 	</div>
+					 	<br>
 	                </td>
 	            </tr>
 	        </table>
@@ -256,20 +272,20 @@
 	</script>
 	<script>
         $("#slideshow > div:gt(0)").hide();
-
-setInterval(function() {
-  $('#slideshow > div:first')
-    .fadeOut(1000)
-    .next()
-    .fadeIn(1000)
-    .end()
-    .appendTo('#slideshow');
-}, 2000);
-
-    </script>
-    
-    <script>
-   
+		
+		setInterval(function() {
+		  $('#slideshow > div:first')
+		    .fadeOut(1000)
+		    .next()
+		    .fadeIn(1000)
+		    .end()
+		    .appendTo('#slideshow');
+		}, 2000);
+		
+		    </script>
+		    
+		    <script>
+		   
    
  
    

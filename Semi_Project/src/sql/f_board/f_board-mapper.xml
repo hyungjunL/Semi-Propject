@@ -14,7 +14,8 @@
 		F_NO, F_TITLE, MEMBER_ID, COUNT, CREATE_DATE
 		FROM F_BOARD F
 		JOIN
-		MEMBER M ON (F.BOARD_WRITER = M.MEMBER_NO)
+		MEMBER M
+		ON (F.BOARD_WRITER = M.MEMBER_NO)
 		WHERE F.STATUS = 'Y'
 		ORDER BY
 		CREATE_DATE DESC) A)
@@ -27,11 +28,14 @@
 		WHERE STATUS = 'Y'
 	</entry>
 
+
+
 	<entry key="increaseCount">
 		UPDATE F_BOARD
 		SET COUNT = COUNT + 1
 		WHERE F_NO = ?
-		AND STATUS = 'Y'
+		AND
+		STATUS = 'Y'
 	</entry>
 
 	<entry key="selectBoard">
@@ -49,60 +53,85 @@
 	</entry>
 
 	<entry key="insertBoard">
-		INSERT INTO F_BOARD(F_NO, F_TITLE, CONTENT, BOARD_WRITER, CREATE_DATE)
+		INSERT INTO F_BOARD(F_NO, F_TITLE, CONTENT,
+		BOARD_WRITER, CREATE_DATE)
 		VALUES(BO_SEQ.NEXTVAL, ?, ?, ?, SYSDATE)
 	</entry>
-	
+
 	<entry key="insertAttachmentList">
-		INSERT INTO ATTACHMENT(FILE_NO, F_NO, ORIGIN_NAME, CHANGE_NAME, FILE_PATH)
-		VALUES(FILE_SEQ.NEXTVAL, BO_SEQ.CURRVAL, ?, ?, ?)
+		INSERT INTO ATTACHMENT(FILE_NO, F_NO, ORIGIN_NAME,
+		CHANGE_NAME, FILE_PATH)
+		VALUES(FILE_SEQ.NEXTVAL, BO_SEQ.CURRVAL, ?, ?,
+		?)
 	</entry>
-	
+
 	<entry key="selectAttachment">
 		SELECT FILE_NO, ORIGIN_NAME, CHANGE_NAME, FILE_PATH
 		FROM ATTACHMENT
 		WHERE F_NO = ?
 	</entry>
-	
+
 	<entry key="updateBoard">
 		UPDATE F_BOARD
 		SET F_TITLE = ?
 		, CONTENT = ?
-		WHERE F_NO = ?
+		WHERE F_NO =
+		?
 	</entry>
-	
+
 	<entry key="insertNewAttachment">
-		INSERT INTO ATTACHMENT(FILE_NO, F_NO, ORIGIN_NAME, CHANGE_NAME, FILE_PATH)
+		INSERT INTO ATTACHMENT(FILE_NO, F_NO, ORIGIN_NAME,
+		CHANGE_NAME, FILE_PATH)
 		VALUES(SEQ_FNO.NEXTVAL, ?, ?, ?, ?)
 	</entry>
-	
+
 	<entry key="updateAttachment">
 		UPDATE ATTACHMENT
 		SET ORIGIN_NAME = ?
 		, CHANGE_NAME = ?
 		, FILE_PATH = ?
-		WHERE FILE_NO = ?
+		WHERE F_NO = ?
 	</entry>
-	
-	<entry key="deleteBoard"> 
+
+	<entry key="deleteBoard">
 		UPDATE F_BOARD
-		   SET STATUS = 'N'
-		 WHERE F_NO = ?
+		SET STATUS = 'N'
+		WHERE F_NO = ?
 	</entry>
-	
+
 	<entry key="selectReplyList">
-		SELECT REPLY_NO, REPLY_CONTENT, MEMBER_ID, TO_CHAR(CREATE_DATE, 'YY/MM/DD HH:MI:SS') CREATE_DATE
+		SELECT REPLY_NO, REPLY_CONTENT, MEMBER_ID,
+		TO_CHAR(CREATE_DATE, 'YY/MM/DD HH:MI:SS') CREATE_DATE
 		FROM REPLY R
-		JOIN MEMBER ON (REPLY_WRITER = MEMBER_NO)
+		JOIN
+		MEMBER ON (REPLY_WRITER = MEMBER_NO)
 		WHERE R.STATUS = 'Y'
-		  AND REF_BNO = ?
+		AND REF_BNO =
+		?
 		ORDER BY CREATE_DATE DESC
 	</entry>
-	
+
 	<entry key="insertReply">
-		INSERT INTO REPLY(REPLY_NO, REPLY_CONTENT, REF_BNO, REPLY_WRITER)
+		INSERT INTO REPLY(REPLY_NO, REPLY_CONTENT, REF_BNO,
+		REPLY_WRITER)
 		VALUES(SEQ_RNO.NEXTVAL, ?, ?, ?)
 	</entry>
-	
+
+	<entry key="prevCount">
+		SELECT PREV
+		FROM
+		(select F_NO, lag(F_NO,1) over(order by F_NO) PREV
+		from (SELECT F_NO FROM F_BOARD WHERE STATUS='Y'))
+		WHERE F_NO=?
+	</entry>
+
+	<entry key="nextCount">
+		SELECT NEXT
+		FROM
+		(select F_NO, lead(F_NO,1) over(order by F_NO) NEXT
+		from (SELECT F_NO FROM F_BOARD WHERE STATUS='Y'))
+		WHERE F_NO=?
+	</entry>
+
 
 </properties>
