@@ -1,29 +1,30 @@
-package com.kh.member.controller;
+package com.kh.service.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import com.kh.member.model.service.MemberService;
+import com.google.gson.Gson;
 import com.kh.member.model.vo.Member;
+import com.kh.service.model.service.ServiceService;
+import com.kh.service.model.vo.Service;
 
 /**
- * Servlet implementation class loginController
+ * Servlet implementation class AjaxServiceOnelistController
  */
-@WebServlet("/login.me")
-public class loginController extends HttpServlet {
+@WebServlet("/servicelist")
+public class AjaxServiceOnelistController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public loginController() {
+    public AjaxServiceOnelistController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,27 +33,16 @@ public class loginController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int userNo = ((Member)request.getSession().getAttribute("loginMember")).getMemberNo();
 		
-		request.setCharacterEncoding("UTF-8");
-		HttpSession session = request.getSession();
-		String memberId = request.getParameter("memberId");
-		String memberPwd = request.getParameter("memberPwd");
+		ArrayList<Service> list = new ServiceService().selectInqList(userNo);
 		
-		Member loginMember = new MemberService().loginMember(memberId, memberPwd);
+		request.setAttribute("list", list);
 		
-		if(loginMember != null) {
-			
-			
-			session.setAttribute("loginMember", loginMember);
-			session.setAttribute("alertMsg", "로그인에 성공했습니다.");
-
-			response.sendRedirect("views/member/loginOk.jsp");
-		}
-		else {
-			
-			session.setAttribute("alertMsg", "로그인에 실패했습니다.");
-			response.sendRedirect("views/member/loginFail.jsp");
-		}
+		//형식,인코딩 지정
+				response.setContentType("application/json; charset=UTF-8");
+				
+				new Gson().toJson(list, response.getWriter());
 	}
 
 	/**

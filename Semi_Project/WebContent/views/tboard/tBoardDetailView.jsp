@@ -26,6 +26,47 @@
         /*border: 1px solid black;*/
         box-sizing: border-box;
     }
+     .btn-heart:hover {
+    text-shadow: 0 0 0 red;
+    }
+    
+    .btn-heart{
+      color:red;
+      font-size: 30px;
+      border:0;
+      outline: 0;
+      text-shadow: 0;
+      background-color: transparent;
+     
+    }
+    
+    .heart_count{
+    
+    font-size: 15px;
+    }
+    
+    
+    .btn-chat  {
+      color: gray;
+      font-size: 25px;
+      border:0;
+      outline: 0;
+      background-color:transparent;
+    }
+    .btn-chat:hover {
+      text-shadow: 0 0 0 black;
+      background-color:transparent;
+      border:0;
+      outline: 0;
+    }
+   
+    .btn-page{
+
+      outline:0;
+      color : black;
+      
+    }
+    
     
 	#slideshow {
 		margin: 80px auto;

@@ -3,7 +3,6 @@
 <%@ page import="java.util.ArrayList, com.kh.tboard.model.vo.TBoard, com.kh.common.model.vo.PageInfo" %>
 <%
 	ArrayList<TBoard> list = (ArrayList<TBoard>)request.getAttribute("list");
-
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
 	
 	int currentPage = pi.getCurrentPage();
@@ -27,7 +26,6 @@
         height: 1000px;
         margin: auto;
     }
-
 	#content {
 		height:100%;
 	}
@@ -39,18 +37,15 @@
     #content>div {
         float: left;
     }
-
     /* content 영역 */
     #content_1 {
         width: 100%;
         height: 15%;
     }
-
     #content_2 {
         width: 20%;
         height: 85%;
     }
-
     #content_3 {
         height: 85%;
         width: 80%;
@@ -60,25 +55,21 @@
         align-items: center;
         width: 90%;
     }
-
     .list-group-item {
         margin-bottom: 40px;
         width: 130px;
         border: 1px solid white;
     }
-
     .list-group-item:hover {
         font-size: 17px;
         font-weight: bold;
         cursor: pointer;
     }  
-
     .update1, .update2 {
         margin-top: 20px;
         color: rgb(67, 155, 68);
         font-weight: bold;
     }
-
     #li-update>p {
         display: none;
         height: 10px;
@@ -87,26 +78,20 @@
     #li-update:hover p{
         display: block;
     }
-
     #li-update>p:hover {
         color: green;
     }
-
     .myPage-bookList tr p {
         text-decoration: none;
         color: black;
-
     }
-
     .myPage-bookList tr p:hover {
         color: rgb(67, 155, 68);
 		cursor : pointer;
     }
-
     .myPage-update1, .myPage-update2, .myPage-jjim, #deleteRegister {
         display: none;
     }
-
 </style>
 </head>
 <body>
@@ -123,8 +108,7 @@
 			String userId = loginMember.getMemberId();
 			String userPwd = loginMember.getMemberPwd();
             String userName = loginMember.getMemberName();
-
-            String birth = (loginMember.getEmail() == null) ? "" : loginMember.getBirth();
+            String birth = (loginMember.getBirth() == null) ? "" :loginMember.getBirth().substring(0, 10);
 			String email = (loginMember.getEmail() == null) ? "" : loginMember.getEmail();
 			String address = (loginMember.getAddress() == null) ? "" : loginMember.getAddress();
 			String phone = (loginMember.getPhone() == null) ? "" : loginMember.getPhone();
@@ -168,8 +152,8 @@
 		                            <td><input type="text" id="userName" name="userName" value="<%= userName %>" required></td>
 		                        </tr>
 		                        <tr>
-		                            <th>생년월일</th>
-		                            <td><input type="text" id="userBirth" name="birth" value="<%= birth %>"></td>
+		                            <th>생년월일 (예: 19XX-XX-XX)</th> 
+		                            <td><input type="text" id="userBirth" name="birth" value="<%= birth%>"></td>
 		                        </tr>
 		                        <tr>
 		                            
@@ -190,12 +174,12 @@
 		                            <td><input type="text" id="userEmail" name="email" value="<%= loginMember.getEmail() %>"></td>
 		                        </tr>
 		                    </table>
-		                <button type="submit" name="" value="수정하기" style="margin-left: 650px; font-size: 20px; width: 120px; height: 40px; font-weight: bold;" class="btn btn-outline-success">수정하기</button>
+		                <button type="submit" onclick="return validateForm();" value="수정하기" style="margin-left: 650px; font-size: 20px; width: 120px; height: 40px; font-weight: bold;" class="btn btn-outline-success">수정하기</button>
 		                </form>
 		            </div>
 		
 		            <div id="myPage-update" class="myPage-update2" >
-		                <form method="post" action="<%= contextPath%>/updatePwd.me">
+		                <form method="post" action="<%= contextPath%>/updatePwd.me" onsubmit="return validate();">
 		                    <input type="hidden" name="userId" value="<%= userId %>">
 		                    <input type="hidden" name="hiddenPwd" value="<%= loginMember.getMemberPwd() %>" >
 		                    <table class="table">
@@ -218,21 +202,51 @@
 		                </form>
 		                
 		                <script>
-			                function validatePwd() {
+			                
+							function validatePwd() {
+			                	
+			                	if ($("input[name=userPwd]").val() == "" || $("input[name=updatePwd]").val() == "" || $("input[name=hiddenPwd]").val() == "") {
+	                        	 
+	                        		alert("비밀번호를 다 입력하세요.");                            	
+	                        		
+	                        		return false;
+	                        		
+	                        	} else if ($("input[name=userPwd]").val() != "" && $("input[name=updatePwd]").val() != "" && $("input[name=hiddenPwd]").val() != "") {
+	    
+			                	    if($("input[name=updatePwd]").val() != $("input[name=checkPwd]").val() || $("input[name=hiddenPwd]").val() != $("input[name=userPwd]").val()) {
 	
-			                    if($("input[name=updatePwd]").val() != $("input[name=checkPwd]").val() || $("input[name=hiddenPwd]").val() != $("input[name=userPwd]").val()) {
-	
-			                                alert("비밀번호가 일치하지 않습니다.");
-			                               
-			                                return false;
-			                               
-			                            } else {
-			                            	
-			                        		return true;
-			                    }
+				                                alert("비밀번호가 일치하지 않습니다.");
+				                               
+				                                return false;
+				                               
+				                            } 
+				                            	
+				                  return true;
+				                    
+			                  }
 			                    
 			                };
 
+			                
+							function validate() {
+			                	
+			                	var updatePwd = document.getElementById('updatePwd').value;
+                        		var checkPwd = document.getElementById('checkPwd').value;
+			                	var regExp = /^[a-z\d!@#$%^]{8,20}$/i;
+                        		
+                                
+                            	if(!regExp.test(updatePwd)) {
+                                	alert('비밀번호는 8~20자리의 영문자/숫자/특수문자(!@#$%^) 로 이루어져야 합니다.');
+                                	document.getElementById('updatePwd').value = "";
+                                	document.getElementById('checkPwd').value = "";
+                                	document.getElementById('updatePwd').focus();
+                                	
+                            	    return false;
+			                	}
+                            	
+                            	                           	
+                            	return true;
+			                };
 		                </script>
 		            </div>
 
@@ -248,7 +262,7 @@
 		
 								<% if(list.isEmpty()) { %>
 									<tr>
-			                            <td colspan="3">
+			                            <td colspan="3" align="center">
 			                            	판매내역이 없습니다. 
 			                            </td>
 		                        	</tr>
@@ -303,7 +317,6 @@
 		         	// 링크 걸기 맵핑값확인
 				    $(function() {
 				    	$(".tbTitle").click(function() {
-
 				    		if ($(this).parent().siblings().eq(2).text().includes("판매중")) {
 				    			
 								var bno = $(this).parent().siblings().eq(0).text();
@@ -395,11 +408,8 @@
 
     <script>
         $("#content_2 li, #li-update>p").on("click",function(e) {
-
             // var getclass = $(this).attr("class");
-
             if($(this).hasClass("update1")) {
-
                 if($(".myPage-update1").css("display") == "none") {
                     $(".myPage-update1").css("display", "block");
                     $(".contet_3-1").css("display", "block");
@@ -408,11 +418,8 @@
                     $(".myPage-bookList").css("display", "none");
                     $(".myPage-delete").css("display", "none");
                     
-
                 } 
-
             } else if($(this).hasClass("update2")) {
-
                 if($(".myPage-update2").css("display") == "none") {
                     $(".myPage-update2").css("display", "block");
                     $(".contet_3-1").css("display", "block");
@@ -420,12 +427,9 @@
                     $(".myPage-update1").css("display", "none");
                     $(".myPage-bookList").css("display", "none");
                     $(".myPage-delete").css("display", "none");
-
-                    console.log("update");
+     
                 } 
-
             } else if ($(this).hasClass("jjim")) {
-
                 if($(".myPage-jjim").css("display") == "none") {
                     $(".myPage-jjim").css("display", "block")
                     $(".contet_3-1").css("display", "block");
@@ -435,7 +439,6 @@
                     $(".myPage-delete").css("display", "none");
                 }
             } else if ($(this).hasClass("bookList")) {
-
                 if($(".myPage-bookList").css("display") == "none") {
                     $(".myPage-bookList").css("display", "block")
                     $(".contet_3-1").css("display", "block");
@@ -443,10 +446,8 @@
                     $(".myPage-update1").css("display", "none");
                     $(".myPage-update2").css("display", "none");
                     $(".myPage-delete").css("display", "none");
-
                 } 
             } else if ($(this).hasClass("delete")) {
-
                 if($(".myPage-delete").css("display") == "none") {
                     $(".myPage-delete").css("display", "block")
                     $(".myPage-jjim").css("display", "none");
@@ -456,17 +457,11 @@
                     $(".contet_3-1").css("display", "none");
                 }
             } 
-
-
         });
-
-
      
         function check() {
-
             if (!$(".checkDelete").is(":checked")) {
                 alert("안내사항에 동의 하세요.");
-
             } else {
             	
                 $("#deleteForm").modal('show');
@@ -474,59 +469,61 @@
         }
         
         
-
         function postCode() {
-
         	new daum.Postcode({
                 oncomplete: function(data) {
                     // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
                     var fullAddr = "";
                     
                     if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-
                     fullAddr = data.roadAddress;
-
 	                } else { // 사용자가 지번 주소를 선택했을 경우(J)
 	
 	                    fullAddr = data.roadAddress;
 	
 	                }
-
                      document.getElementById("address1").value = fullAddr; // 주소 넣기
                      
                 }
             }).open({
             	autoClose : true
             });
+        };
+        function validateForm() {
 
+            var userName = document.getElementById('userName').value;
+
+            var userBirth = document.getElementById('userBirth').value;
+            
+            var regExp = /^[가-힣]{2,}$/;
+   
+            
+                           
+               if(!regExp.test(userName)) {
+                   alert('유효한 이름을 입력해주세요.');
+                   
+                   document.getElementById('userName').value = "";
+                   document.getElementById('userName').focus();
+      
+                   return false;             
+               
+               }
+              
+            if(userBirth != "") {
+               
+               regExp =/^(19[0-9][0-9]|20\d{2})-(0[0-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/;
+               if(!regExp.test(userBirth)) {
+                   alert('유효한 생년월일을 입력해주세요.');
+                   
+                   document.getElementById('userBirth').value = "";
+                   document.getElementById('userBirth').focus();
+      
+                   return false;
+               }
+            }
+            return true;
         };
 
-        // 정규표현식
-        function validate() {
-
-            var updatePwd = document.getElementById('updatePwd').value();
-            var userName = document.getElementById('userName').value();
-            // 비밀번호
-            regExp =  /^[a-z\d!@#$%^]{4,15}$/;
-            if(!regExp.test(updatePwd)) {
-                alert('유효한 비밀번호를 입력해주세요');
-
-                document.getElementById('updatePwd').value = "";
-                document.getElementById('upadtePwd').focus();
-            }
-
-            // 이름
-            regExp = /^[가-힣]{2,}$/;
-            if(!regExp.test(userName)) {
-                alert('유효한 이름을 입력해주세요.');
-
-                document.getElementById('userName').focus();
-
-                return false;
-            }
-            
-            return true;
-        }
 
     </script>
 </body>
