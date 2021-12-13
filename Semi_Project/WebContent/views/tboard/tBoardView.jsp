@@ -99,6 +99,9 @@
       color : black;
       
     }
+    .thumbnamil{
+     	textdecoration : none;
+     	color : black;}
 
    
     
@@ -127,7 +130,7 @@
                             <br><br>
                             <p><strong><%= b.gettTitle() %></strong></p>
                             
-                                가격: <%= b.gettPrice() %>
+                                	가격: <%= b.gettPrice() %>
                         </a>
                             
                                 

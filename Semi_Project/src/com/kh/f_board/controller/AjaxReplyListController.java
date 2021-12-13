@@ -14,7 +14,7 @@ import com.kh.f_board.model.service.BoardService;
 import com.kh.f_board.model.vo.Reply;
 
 /**
- * Servlet implementation class AjaxReplyController
+ * Servlet implementation class AjaxReplyListController
  */
 @WebServlet("/rlist.fb")
 public class AjaxReplyListController extends HttpServlet {
@@ -34,7 +34,6 @@ public class AjaxReplyListController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
 		int boardNo = Integer.parseInt(request.getParameter("bno"));
 
 		// VO 가공
@@ -48,7 +47,7 @@ public class AjaxReplyListController extends HttpServlet {
 		response.setContentType("application/json; charset=UTF-8");
 
 		new Gson().toJson(list, response.getWriter());
-
+		// => Gson 에서 키값 지정 안하면 필드명 == 키값
 	}
 
 	/**

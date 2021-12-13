@@ -10,6 +10,7 @@ import com.kh.f_board.model.dao.BoardDao;
 import com.kh.f_board.model.vo.Attachment;
 import com.kh.f_board.model.vo.Board;
 import com.kh.f_board.model.vo.Reply;
+import com.kh.f_board.model.vo.yList;
 import com.kh.tboard.model.dao.TBoardDao;
 
 public class BoardService {
@@ -195,6 +196,16 @@ public class BoardService {
 		close(conn);
 
 		return result1 * result2;
+	}
+
+	public ArrayList<Board> indexSelectFBoard() {
+		Connection conn = getConnection();
+		
+		ArrayList<Board> indexFList = new BoardDao().indexSelectFBoard(conn);
+		
+		close(conn);
+		
+		return indexFList;
 	}
 
 }

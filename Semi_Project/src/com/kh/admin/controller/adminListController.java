@@ -44,7 +44,7 @@ public class adminListController extends HttpServlet {
 		int startPage; 
 		int endPage; 
 
-		listCount = new BoardService().selectListCount();
+		listCount = new AdminService().selectListMemberCount();
 
 		
 		currentPage = Integer.parseInt(request.getParameter("currentPage"));

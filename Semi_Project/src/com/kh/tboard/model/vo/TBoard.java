@@ -37,6 +37,22 @@ public class TBoard {
 		this.memberNo = memberNo;
 		this.status = status;
 	}
+	public TBoard(int tNo, String tTitle,int tPrice, Date createDate, int tCount, String memberNo,String status,String titleImg) {
+		super();
+		this.tNo = tNo;
+		this.tTitle = tTitle;
+		this.tPrice = tPrice;
+		this.createDate = createDate;
+		this.tCount = tCount;
+		this.memberNo = memberNo;
+		this.status = status;
+		this.titleImg = titleImg;
+	}
+	public TBoard(int tNo, String tTitle) {
+		super();
+		this.tNo = tNo;
+		this.tTitle = tTitle;
+	}
 	public TBoard(int tNo, String tTitle,int tPrice, int categoryNo, Date createDate, int tCount, String memberNo,String status,String titleImg) {
 		super();
 		this.tNo = tNo;

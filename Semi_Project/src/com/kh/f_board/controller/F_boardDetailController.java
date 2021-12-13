@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.kh.f_board.model.service.BoardService;
 import com.kh.f_board.model.vo.Attachment;
 import com.kh.f_board.model.vo.Board;
+import com.kh.f_board.model.vo.yList;
 
 /**
  * Servlet implementation class F_boardDetailController

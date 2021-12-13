@@ -18,7 +18,7 @@
 		SELECT ROWNUM RNUM, A.*
 		FROM(
 		
-		SELECT T_NO,T_TITLE,T_PRICE 
+		SELECT T_NO,T_TITLE,T_PRICE
 				FROM T_BOARD 
 				WHERE STATUS ='Y' 
 				ORDER BY CREATE_DATE DESC) A)
@@ -33,17 +33,21 @@
 	</entry>
 	
 	<entry key="selectByTitle">
-		SELECT *
+	SELECT *
 		FROM(
 		
 		SELECT ROWNUM RNUM, A.*
 		FROM(
 		
-		SELECT T_NO,T_TITLE,T_PRICE 
-				FROM T_BOARD 
-				WHERE STATUS ='Y'  AND T_TITLE LIKE '%' || ? || '%'
+		SELECT T_NO,T_TITLE,T_PRICE , FILE_PATH || CHANGE_NAME "TITLEIMG"
+				FROM T_BOARD T 
+				JOIN ATTACHMENT2 USING (T_NO)
+				WHERE T.STATUS ='Y'  
+                AND T_TITLE LIKE '%' || ? || '%'
+                AND FILE_LEVEL = 1
 				ORDER BY CREATE_DATE DESC) A)
-		WHERE RNUM BETWEEN ? AND ?       
+		WHERE RNUM BETWEEN ? AND ? 
+		      
 	</entry>
 	
 	<entry key="selectHeartList">

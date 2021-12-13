@@ -7,22 +7,28 @@
 	<entry key="submitChat">
 	
 	
-	INSERT INTO CHAT(CHAT_ID,FROM_ID,TO_ID,CHAT_CONTENT,MEMBER_NO)
-    VALUES(SEQ_CCNO.NEXTVAL,?,?,?,?) 
+	INSERT INTO CHAT(CHAT_ID,FROM_ID,TO_ID,CHAT_CONTENT)
+    VALUES(SEQ_CCNO.NEXTVAL,?,?,?) 
 	
 	</entry>
 	
 	
 	<entry key="selectChatList">
 	
-	
-	SELECT CHAT_ID,FROM_ID, TO_ID,CHAT_CONTENT,CHAT_TIME
-	FROM CHAT C  
-	JOIN MEMBER M ON (TO_ID = M.MEMBER_NO)
-	WHERE FROM_ID= ?
-    AND TO_ID = ?
-	AND C.MEMBER_NO = ?
+	SELECT * FROM CHAT 
+	WHERE ((FROM_ID= ? AND TO_ID =?) OR (FROM_ID = ? AND TO_ID = ?))
 	ORDER BY CHAT_TIME
+	
+	
+	</entry>
+	
+	
+	<entry key="selectMyList">
+	
+	SELECT * FROM CHAT 
+	WHERE TO_ID = ? OR FROM_ID = ?
+	ORDER BY CHAT_TIME
+	
 	
 	</entry>
 	

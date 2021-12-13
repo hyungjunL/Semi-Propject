@@ -50,7 +50,6 @@ public int submitChat(Connection conn, Chat c) {
 				pstmt.setInt(1, c.getFromNo());
 				pstmt.setInt(2, c.getToNo());
 				pstmt.setString(3, c.getChatContent());
-				pstmt.setInt(4, c.getMemberNo());
 
 				result = pstmt.executeUpdate();
 				
@@ -65,7 +64,7 @@ public int submitChat(Connection conn, Chat c) {
 
 
 
-public ArrayList<Chat> selectChatList(Connection conn, int fromNo, int toNo, int memberNo){
+public ArrayList<Chat> selectChatList(Connection conn, int fromNo, int toNo){
 	
 	ArrayList<Chat> list = new ArrayList<>();
 	PreparedStatement pstmt = null;
@@ -77,7 +76,8 @@ public ArrayList<Chat> selectChatList(Connection conn, int fromNo, int toNo, int
 		
 		pstmt.setInt(1,fromNo);
 		pstmt.setInt(2,toNo);
-		pstmt.setInt(3, memberNo);
+		pstmt.setInt(3,toNo);
+		pstmt.setInt(4,fromNo);
 		
 		
 		rset = pstmt.executeQuery();
@@ -85,11 +85,7 @@ public ArrayList<Chat> selectChatList(Connection conn, int fromNo, int toNo, int
 		while(rset.next()) {
 			
 			
-			Chat c = new Chat(rset.getInt("CHAT_ID"),
-							  rset.getInt("FROM_ID"),
-							  rset.getInt("TO_ID"),
-							  rset.getString("CHAT_CONTENT"),
-							  rset.getDate("CHAT_TIME"));
+			Chat c = new Chat(rset.getInt("CHAT_ID"),rset.getInt("FROM_ID"),rset.getInt("TO_ID"),rset.getString("CHAT_CONTENT"),rset.getDate("CHAT_TIME"));
 			
 		    list.add(c);
 			
@@ -102,12 +98,59 @@ public ArrayList<Chat> selectChatList(Connection conn, int fromNo, int toNo, int
 	 
 	
 	finally {
+		
+		
 		close(rset);
 		close(pstmt);
 	}
 
-
 	return list;
+	
+	
+	
+}
+
+
+public ArrayList<Chat> selectMyList(Connection conn, int userNo){
+	
+	ArrayList<Chat> mylist = new ArrayList<>();
+	PreparedStatement pstmt = null;
+	ResultSet rset = null;
+	String sql = prop.getProperty("selectMyList");
+	
+	try {
+		pstmt = conn.prepareStatement(sql);
+		
+		pstmt.setInt(1,userNo);
+		pstmt.setInt(2,userNo);
+		
+		
+		
+		rset = pstmt.executeQuery();
+		
+		while(rset.next()) {
+			
+			
+			Chat c = new Chat(rset.getInt("CHAT_ID"),rset.getInt("FROM_ID"),rset.getInt("TO_ID"),rset.getString("CHAT_CONTENT"),rset.getDate("CHAT_TIME"));
+			
+		    mylist.add(c);
+			
+			
+		}
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	 
+	
+	finally {
+		
+		
+		close(rset);
+		close(pstmt);
+	}
+
+	return mylist;
 	
 	
 	

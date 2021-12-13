@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-     
-
 <%@ page import="com.kh.member.model.vo.Member" %>    
 <%
 	String contextPath = request.getContextPath();
@@ -10,13 +8,11 @@
 	Member loginMember = (Member)session.getAttribute("loginMember");
 	String alertMsg = (String)session.getAttribute("alertMsg");
 %>
-    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>고정헤더</title>
-
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
@@ -28,19 +24,15 @@
 
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
 <style>
-
-
-    div, form{
-        /*border: 1px solid black;*/
-        box-sizing: border-box;
+    #wrap {
+        width: 1000px;
+        height: 1000px;
+        margin: auto;
     }
-    #miniMenu { height:3%;} 
-    #miniMenu>button {
-        float: right;
-        border-radius: 5px;
-    }
+    #miniMenu { height:3%; position: relative;} 
+    #miniMenu>button { float: right; }
+    #miniMenu>label { float: right; margin-right:10px;}
     #header {height: 15%;}
     #header>div {
         float: left;
@@ -75,7 +67,6 @@
         margin: 0px;
         padding: 0px;
         height: 100%;
-        margin-bottom: 0px;
     }
     #cat>li {
         float: left;
@@ -99,11 +90,8 @@
     #cat a:hover {
         color: white;
     }
-    .board{
-    	text-decoration : none;
-    	color : white;
-    }
-     #menu-toggle, #menu-toggle span {
+
+    #menu-toggle, #menu-toggle span {
         display: inline-block;
         transition: all 0.4s;
         box-sizing: border-box;
@@ -174,13 +162,17 @@
     overflow-y: auto;
     overflow-x: auto;
    }
+   .board{
+   		textdecoration : none;
+   		color : white;
+   }
    
    #tList {
   		display: none;
   	}
-   
 </style>
-<script>
+
+	<script>
 	
 		var msg = "<%= alertMsg %>";
 		
@@ -191,12 +183,26 @@
 		}
 	
 	</script>
-
-
 </head>
 <body>
+	<div id="menu-toggle" class="open">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div><br>
+    <div class="list-group mainMenu">
+    	<a class="list-group-item list-group-item-action tradeList">거래 게시판</a>
+       <div class="list-group" id="tList">
+       		 <a href="<%= contextPath %>/list.it?currentPage=1&category=1" class="list-group-item list-group-item-action">국내도서</a>
+       		 <a href="<%= contextPath %>/list.it?currentPage=1&category=2" class="list-group-item list-group-item-action">해외도서</a>
+       		 <a href="<%= contextPath %>/list.it?currentPage=1&category=3" class="list-group-item list-group-item-action">초/중/고 참고서</a>
+       		 <a href="<%= contextPath %>/list.it?currentPage=1&category=4" class="list-group-item list-group-item-action">대학교재</a>
+       		 <a href="<%= contextPath %>/list.it?currentPage=1&category=5" class="list-group-item list-group-item-action">수험서/자격증</a>     
+       </div>
+        <a href="<%= contextPath %>/list.fb?currentPage=1" class="list-group-item list-group-item-action">자유 게시판</a>
+        <a href="<%=contextPath%>/" class="list-group-item list-group-item-action">1:1 문의</a>
+    </div>
 
-  
         <div id="miniMenu">
             
 	        <% if(loginMember == null) { %>
@@ -209,26 +215,18 @@
 	        	<button class="btn btn-success btn-sm" onclick = "location.href ='<%= contextPath %>/center.se'">고객센터</button>
 	        	<button type="button" class="btn btn-success btn-sm" ><a class="board"  href="/javajo/list.fb?currentPage=1">게시판</a></button>
 	            <button onclick="location.href='<%= contextPath%>/myPage.me'"class="btn btn-success btn-sm">마이페이지</button>
-	            <button type="button" class="btn btn-success btn-sm" onclick="enrollPage();">상품등록</button>
+	            
 	            <button class="btn btn-success btn-sm" onclick="logout();">로그아웃</button>
 	        <% } else {%>
 	        	<button class="btn btn-success btn-sm" onclick = "location.href ='<%= contextPath %>/center.se'">고객센터</button>
 	            <button onclick="location.href='<%= contextPath%>/myPage.me'"class="btn btn-success btn-sm">마이페이지</button>
-	            <button type="button" class="btn btn-success btn-sm" onclick="enrollPage();">상품등록</button>
+	            
 	            <button type="button" class="btn btn-success btn-sm" ><a class="board" href="/javajo/list.fb?currentPage=1">게시판</a></button>
 	            <button class="btn btn-success btn-sm" onclick="logout();">로그아웃</button>
 	        <%} %>
         
         </div>
-        <script>
-	        	function enrollPage() {
-	        	
-	        		location.href = "<%= contextPath %>/enrollForm.it";
-	        		
-	        	}
-	        </script>
-       
-         <div id="header">
+        <div id="header">
             <div id="img"><a href="<%= contextPath %>"><img src="resources\mainImage.png" style="width:100%; height: 100%;"></a></div>
             <div id="search">
                 <form id="search_form" action="search.bo?currentPage=1" method="post">
@@ -298,5 +296,4 @@
 	    	location.href = "<%= contextPath %>/myPage.me";
 	    }
 	</script>
-</body>
 </html>

@@ -177,9 +177,8 @@ int nlist = (int)request.getAttribute("nlist");
 								<td colspan="4">
 									<div>
 										<% for(int i = 0; i < list.size(); i++) { %>
-										<img
-											src="<%= contextPath %>/<%=list.get(i).getFilePath() + list.get(i).getChangeName() %>"
-											style="margin: 10px" width="400" height="300">
+										<img src="<%= contextPath %>/<%=list.get(i).getFilePath() + list.get(i).getChangeName() %>"
+											style="margin: 10px" width="300" height="200">
 										<%} %>
 									</div>
 								</td>

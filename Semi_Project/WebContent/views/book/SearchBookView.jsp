@@ -126,11 +126,12 @@ int maxPage = pi.getMaxPage();
                     <div class= "content" >
                     <div class = "thumbnail" align = "center">
                       <input type="hidden" value="<%=b.getBookNo() %>"> 
-                        <img src="resources\mainImage.png"  width = "140px" height="140px"> 
-            
-                            <p><strong>No.<%= b.getBookNo() %> <%= b.getBookTitle() %></strong></p>
+                        <img src="<%= contextPath %>/<%= b.getTitleImg() %>"  width = "140px" height="140px"> 
+            				<br>
+            				<br>
+                            <p><strong><%= b.getBookTitle() %></strong></p>
                             
-                            <br>
+	
                                 	가격: <%= b.getBookPrice() %> 
                                 	
                             </div>   	

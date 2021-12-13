@@ -131,7 +131,7 @@ int maxPage = pi.getMaxPage();
                     <div class= "content" >
                     <div class = "thumbnail" align = "center">
                       <input type="hidden" value="<%=b.getBookNo() %>"> 
-                        <img src="resources\mainImage.png"  width = "140px" height="140px"> 
+                        <img src="<%=  %>"  width = "140px" height="140px"> 
             
                             <p><strong>No.<%= b.getBookNo() %> <%= b.getBookTitle() %></strong></p>
                             
@@ -216,7 +216,7 @@ int maxPage = pi.getMaxPage();
         			// X 먼저 구하기
         			var bno = $(this).children().eq(0).val();
         					
-        			location.href = "<%=contextPath %>/detail.it?bno=" + bno;
+        			location.href = "<%=contextPath %>/detail.bo?bno=" + bno;
         		});
         	});
         </script>

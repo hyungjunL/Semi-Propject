@@ -3,7 +3,7 @@
 <%@ page import="com.kh.book.model.vo.*" %>
     
 <% 
-	Book b = (Book)request.getAttribute("b");
+Book b = (Book)request.getAttribute("b");
 %> 
 <!DOCTYPE html>
 <html>
@@ -98,7 +98,7 @@
     
     
     
-                         <% if(loginMember != null) { %>
+                         <% if(loginUser != null) { %>
 	                    <!-- 로그인이 되어있을 경우 : 찜 가능 -->
                         
                           <button onclick="updateHeart();" class="btn-heart" id ="heart_update">♥<span class="heart_count"> </span></button>
@@ -116,7 +116,7 @@
                     <% } %>
                     
                     
-                    <% if(loginMember != null) { %>
+                    <% if(loginUser != null) { %>
 	                    <!-- 로그인이 되어있을 경우 : 채팅 가능 -->
                         
                    <button onclick = "" class="btn-chat" id = "chat" value = "<%=b.getMemNO() %>">✉</button>
@@ -161,9 +161,8 @@
 					
 			// X 먼저 구하기
 			var toNo = $(this).val();
-			var bno = <%= b.getBookNo() %>
 					
-			window.open("<%=contextPath %>/chat.no?toNo=" + toNo +"&bno="+ bno , "chat", "height = 550,width = 500");
+			window.open("<%=contextPath %>/chat.no?toNo=" + toNo , "chat", "height = 550,width = 500");
 		});
 	});
    

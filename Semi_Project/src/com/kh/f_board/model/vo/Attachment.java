@@ -27,6 +27,16 @@ public class Attachment {
 		this.uploadDate = uploadDate;
 		this.status = status;
 	}
+	
+	
+
+	public Attachment(String originName, String changeName, String filePath, String status) {
+		super();
+		this.originName = originName;
+		this.changeName = changeName;
+		this.filePath = filePath;
+		this.status = status;
+	}
 
 	public int getFileNo() {
 		return fileNo;

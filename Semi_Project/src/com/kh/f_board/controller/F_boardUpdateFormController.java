@@ -1,6 +1,8 @@
 package com.kh.f_board.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.kh.f_board.model.service.BoardService;
 import com.kh.f_board.model.vo.Attachment;
 import com.kh.f_board.model.vo.Board;
+import com.kh.tboard.model.service.TBoardService;
 
 /**
  * Servlet implementation class F_boardUpdateformController
@@ -39,11 +42,15 @@ public class F_boardUpdateFormController extends HttpServlet {
 		Board b = new BoardService().selectBoard(boardNo);
 
 	
-		Attachment at = new BoardService().selectAttachment(boardNo);
+		
+		
+		ArrayList<Attachment> origin_list = new BoardService().selectOriginAttachmentList(boardNo);
 
 	
 		request.setAttribute("b", b);
-		request.setAttribute("at", at);
+		
+		request.setAttribute("origin_list", origin_list);
+	
 
 		request.getRequestDispatcher("views/board/boardUpdateView.jsp").forward(request, response);
 

@@ -13,7 +13,7 @@ private Date createDate;//	  CREATE_DATE DATE DEFAULT SYSDATE,
 private int count;//	  T_COUNT NUMBER NOT NULL,
 private int memNO;//MEMBER_NO NUMBER NOT NULL,
 private char status;//	  STATUS CHAR(1) DEFAULT 'Y' CHECK (STATUS IN('Y', 'N'))
-
+private String titleImg;
 
 public Book() {
 	super();
@@ -37,12 +37,18 @@ public Book(int bookNo, String bookTitle, int bookPrice, int bookCate, char book
 
 
 
-
 public Book(int bookNo, String bookTitle, int bookPrice) {
 	super();
 	this.bookNo = bookNo;
 	this.bookTitle = bookTitle;
 	this.bookPrice = bookPrice;
+}
+public Book(int bookNo, String bookTitle, int bookPrice, String titleImg) {
+	super();
+	this.bookNo = bookNo;
+	this.bookTitle = bookTitle;
+	this.bookPrice = bookPrice;
+	this.titleImg = titleImg;
 }
 
 
@@ -53,6 +59,16 @@ public Book(int bookNo, String bookTitle, int bookPrice, int memNO) {
 	this.bookTitle = bookTitle;
 	this.bookPrice = bookPrice;
 	this.memNO = memNO;
+}
+
+
+public String getTitleImg() {
+	return titleImg;
+}
+
+
+public void setTitleImg(String titleImg) {
+	this.titleImg = titleImg;
 }
 
 

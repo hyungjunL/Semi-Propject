@@ -14,20 +14,21 @@ public class Board {
 	private int FILE_NO;
 	private String STATUS;
 	private String BOARD_WRITER;
-	private int max_NO; 
+	private int max_NO;
 
 	public Board() {
 		super();
 	}
-	
-	
 
+	public Board(int f_NO, String f_TITLE) {
+		super();
+		F_NO = f_NO;
+		F_TITLE = f_TITLE;
+	}
 	public Board(int max_NO) {
 		super();
 		this.max_NO = max_NO;
 	}
-
-
 
 	public Board(int f_NO, String f_TITLE, String mEMBER_ID, String cOUNT, Date cREATE_DATE) {
 		super();
@@ -38,7 +39,7 @@ public class Board {
 		CREATE_DATE = cREATE_DATE;
 	}
 
-	public Board(int f_NO, String mEMBER_ID, String t_COUNT, Date cREATE_DATE, String f_TITLE,  String cONTENT ) {
+	public Board(int f_NO, String mEMBER_ID, String t_COUNT, Date cREATE_DATE, String f_TITLE, String cONTENT) {
 		super();
 		F_NO = f_NO;
 		MEMBER_ID = mEMBER_ID;
@@ -132,18 +133,18 @@ public class Board {
 		return max_NO;
 	}
 
-
-
 	public void setMax_NO(int max_NO) {
 		this.max_NO = max_NO;
 	}
 
 
-
 	@Override
 	public String toString() {
-		return "Board [F_NO=" + F_NO + ", F_TITLE=" + F_TITLE + ", MEMBER_ID=" + MEMBER_ID + ", COUNT=" + T_COUNT
-				+ ", CREATE_DATE=" + CREATE_DATE + "]";
+		return "Board [F_NO=" + F_NO + ", F_TITLE=" + F_TITLE + ", MEMBER_ID=" + MEMBER_ID + ", CONTENT=" + CONTENT
+				+ ", T_COUNT=" + T_COUNT + ", CREATE_DATE=" + CREATE_DATE + ", MEMBER_NO=" + MEMBER_NO + ", FILE_NO="
+				+ FILE_NO + ", STATUS=" + STATUS + ", BOARD_WRITER=" + BOARD_WRITER + ", max_NO=" + max_NO + "]";
 	}
+
+	
 
 }

@@ -34,7 +34,7 @@ public class AjaxHeartUpdateController extends HttpServlet {
 		//Get 방식
 		//값뽑기
 		int bno = Integer.parseInt(request.getParameter("bno"));
-		int userNo = ((Member)request.getSession().getAttribute("loginMember")).getMemberNo();
+		int userNo = ((Member)request.getSession().getAttribute("loginUser")).getUserNo();
 		
 		
 		int heartCheck = new BookService().selectUpdateHeart(bno,userNo); // 찜 체크 /찜등록/ 찜 삭제

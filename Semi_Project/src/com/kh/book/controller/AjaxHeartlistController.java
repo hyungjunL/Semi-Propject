@@ -38,7 +38,7 @@ public class AjaxHeartlistController extends HttpServlet {
 		//값뽑기
 		//int userNo = Integer.parseInt(request.getParameter("userNo"));
 		
-		int userNo = ((Member)request.getSession().getAttribute("loginMember")).getMemberNo();
+		int userNo = ((Member)request.getSession().getAttribute("loginUser")).getUserNo();
 	
 		//System.out.println(userNo);  
 		//VO가공

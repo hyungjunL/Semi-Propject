@@ -1,7 +1,5 @@
 package com.kh.f_board.controller;
 
-
-
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -43,47 +41,36 @@ public class F_boardInsertController extends HttpServlet {
 
 		request.setCharacterEncoding("UTF-8");
 
-		
 		if (ServletFileUpload.isMultipartContent(request)) {
 
-		
 			int maxSize = 1024 * 1024 * 10;
 
-			
 			String savePath = request.getServletContext().getRealPath("/resources/f_board_upfiles/");
 
-			
 			MultipartRequest multiRequest = new MultipartRequest(request, savePath, maxSize, "UTF-8",
 					new MyFileRenamePolicy());
 
-			
 			String boardTitle = multiRequest.getParameter("title");
 			String boardContent = multiRequest.getParameter("content");
 			String userNo = multiRequest.getParameter("userNo");
 
-			
 			Board b = new Board();
 			b.setF_TITLE(boardTitle);
 			b.setCONTENT(boardContent);
 			b.setBOARD_WRITER(userNo);
 
-			
 			ArrayList<Attachment> list = new ArrayList<>();
 
-			
 			for (int i = 1; i < 5; i++) {
 
-				
 				String key = "file" + i;
 
-				
-				if (multiRequest.getOriginalFileName(key) != null) { 
+				if (multiRequest.getOriginalFileName(key) != null) {
 
-					
 					Attachment at = new Attachment();
-					at.setOriginName(multiRequest.getOriginalFileName(key)); 
-					at.setChangeName(multiRequest.getFilesystemName(key)); 
-					at.setFilePath("resources/f_board_upfiles/"); 
+					at.setOriginName(multiRequest.getOriginalFileName(key));
+					at.setChangeName(multiRequest.getFilesystemName(key));
+					at.setFilePath("resources/f_board_upfiles/");
 
 					list.add(at);
 
@@ -91,22 +78,17 @@ public class F_boardInsertController extends HttpServlet {
 
 			}
 
-			
 			int result = new BoardService().insertBoard(b, list);
 
-			
-			
-			if(result > 0) {
+			if (result > 0) {
 				request.getSession().setAttribute("alertMsg", "성공적으로 업로드 되었습니다.");
 				response.sendRedirect(request.getContextPath() + "/list.fb?currentPage=1");
 
 				request.setAttribute(boardTitle, boardTitle);
-			}else {
-				request.getSession().setAttribute("alertMsg", "실패 했습니다.");
+			} else {
+				request.getSession().setAttribute("alertMsg", "업로드 실패");
 			}
-			
 
-		
 		}
 
 	}

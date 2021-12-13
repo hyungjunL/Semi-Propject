@@ -3,7 +3,8 @@
 
 <%@ page
 	import="java.util.ArrayList, com.kh.member.model.vo.Member, com.kh.common.model.vo.PageInfo"%>
-<%
+
+<% String alertMsg = (String)session.getAttribute("alertMsg");
 String contextPath = request.getContextPath();
 ArrayList<Member> list = (ArrayList<Member>) request.getAttribute("list");
 PageInfo pi = (PageInfo) request.getAttribute("pi");
@@ -40,22 +41,20 @@ int maxPage = pi.getMaxPage();
 
 
 <style>
-.header {
-	width: 1200px;
+.wrap {
+	width: 1500px;
+	margin: 0 auto;
+	position: relative
 }
+
+
 
 #body-center {
 	text-align: left;
 	float: left;
-	padding-top: 20px;
-	width: 70%;
-	margin: 20px;
-}
-
-.wrap {
-	width: 1200px;
-	margin: 0 auto;
-	position: relative
+	padding-top: 50px;
+	width: 80%;
+	margin: 0px;
 }
 
 div#pagination {
@@ -75,7 +74,7 @@ div#pagination {
 .side-bar {
 	float: left;
 	width: 20%;
-	margin-top: 50px;
+	margin-top: 40px;
 }
 
 .table-side td {
@@ -97,15 +96,14 @@ div#pagination {
 </head>
 
 <body>
-	<div class="wrap">
-		<div class="header">
+	<div class="wrap" align="center">
+		<div class="header" align="center">
 			<nav class="navbar navbar-expand-lg navbar-dark "
 				style="background: green;">
 				<div class="container-fluid">
-					<a class="navbar-brand" href="#" style="font-size: 25px;">관리자 페이지</a>
-					<form class="d-flex" action="/javajo/select.ad">
-						<input class="form-control me-sm-2" type="text"	placeholder="회원 아이디 검색" name="search">
-						<button id="search"class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+					<a class="navbar-brand" href="<%= contextPath %>/list.ad?currentPage=1" style="font-size: 25px;">관리자 페이지</a>
+					<form class="d-flex">
+						<input id="search" class="form-control me-sm-2" type="text" placeholder="회원 아이디로 검색" name="search">
 					</form>
 				</div>
 			</nav>
@@ -113,22 +111,17 @@ div#pagination {
 
 		<div class="body">
 			<div class="side-bar">
-				
+
 
 				<table class="table-side">
 					<p style="margin-top: 15px;">고객 센터</p>
 					<tr>
-						<td>1:1 문의</td>
+						<td><a href="<%= contextPath %>/list.on?currentPage=1">1:1 문의</a></td>
 					</tr>
 					<tr>
 						<td>FAQ 답변</td>
 					</tr>
-					<table class="table-side">
-						<p style="margin-top: 15px;">추천 도서</p>
-						<tr>
-							<td>찜 통계조회</td>
-						</tr>
-					</table>
+					
 				</table>
 
 
@@ -136,9 +129,7 @@ div#pagination {
 
 			<div id="body-center">
 				<table class="table table-hover list-area">
-					<h3
-						style="font-weight: bold; text-indent: 50px; padding-bottom: 30px;">전체
-						회원</h3>
+					<h3	style="font-weight: bold; text-indent: 50px; padding-bottom: 30px;">전체	회원</h3>
 					<thead style="text-align: center;">
 						<tr>
 							<th scope="col">회원번호</th>
@@ -158,14 +149,16 @@ div#pagination {
 						%>
 
 						<tr>
-							<td colspan="5">조회된 리스트가 없습니다.</td>
+							<td colspan="8" style="text-align: center">조회된 리스트가 없습니다.</td>
 						</tr>
 						<%
 						} else {
 						%>
 
 						<%
+						
 						for (Member m : list) {
+							
 						%>
 						<tr style="text-align: center">
 							<td><%=m.getMemberNo()%></td>
@@ -192,8 +185,7 @@ div#pagination {
 					<%
 					if (currentPage != 1) {
 					%>
-					<button
-						onclick="location.href='/javajo/list.ad?currentPage=<%=currentPage - 1%>'">&lt;</button>
+					<button style="display:inline;" class="page-link" onclick="location.href='/javajo/list.ad?currentPage=<%=currentPage - 1%>'">&lt;</button>
 					<%
 					}
 					%>
@@ -206,13 +198,12 @@ div#pagination {
 					<%
 					if (i != currentPage) {
 					%>
-					<button
-						onclick="location.href='/javajo/list.ad?currentPage=<%=i%>'"><%=i%></button>
+					<button style="display:inline;" class="page-link" onclick="location.href='/javajo/list.ad?currentPage=<%=i%>'"><%=i%></button>
 					<%
 					} else {
 					%>
 
-					<button disabled><%=i%></button>
+					<button style="display:inline;" class="page-link" disabled><%=i%></button>
 					<%
 					}
 					%>
@@ -224,8 +215,7 @@ div#pagination {
 					<%
 					if (currentPage != maxPage) {
 					%>
-					<button
-						onclick="location.href='/javajo/list.ad?currentPage=<%=currentPage + 1%>'">&gt;</button>
+					<button style="display:inline;" class="page-link" onclick="location.href='/javajo/list.ad?currentPage=<%=currentPage + 1%>'">&gt;</button>
 					<%
 					}
 					%>
@@ -241,29 +231,28 @@ div#pagination {
 				<div class="modal-header">
 					<h5 class="modal-title">회원정보 관리</h5>
 				</div>
-				<form action="/javajo/update.ad" >
-				<div class="modal-body">
-					<hr>
-					회원 번호 : <span id="test1"> </span> <br>
-					<br> 회원 ID : <span id="test2"> </span> <br>
-					<br> 회원 이름 : <span id="test3"> </span> <br>
-					<br> Email : <span id="test4"> </span> <input type="text" name="me"> <br>
-					<br> 주소 : <span id="test5"> </span> <input type="text" name="ma"> <br>
-					<br> 전화번호 : <span id="test6"> </span> <input type="text" name="mp"> <br>
-					<br> 생일 : <span id="test7"> </span> <input type="text" name="mb"> <br>
-					<br> 가입일 : <span id="test8"> </span> <br>
-					<br>
+				<form action="/javajo/update.ad">
+					<div class="modal-body">
+						<hr>
+						회원 번호 : <span id="test1"> </span> <br> <br> 
+						회원 ID : <span 	id="test2"> </span> <br> <br> 
+						회원 이름 : <span id="test3">	</span> <br> <br> 
+						Email : <span id="test4"> </span> <br><input type="text" name="me" style="float: right; width:100%" required> <br> <br>
+						주소 : <span id="test5"> </span> <br>	<input type="text" name="ma"	style="float: right; width:100%" required> <br> <br> 
+						전화번호 : <span id="test6"> </span> <br><input type="text" name="mp"style="float: right; width:100%" required> <br> <br> 
+						생일 : <span	id="test7"> </span> <br><input type="text" name="mb"style="float: right; width:100%" required> <br> <br> 
+						가입일 : <span id="test8"> </span> <br> <br>
 
-					<hr>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-danger" id="delete">회원정보삭제</button>
-					<input type="submit" class="btn btn-primary" id="insert" value="회원정보수정">
-					<button type="button" class="btn btn-secondary"	data-bs-dismiss="modal" id="modal-close">닫기</button>
-				</div>
-				
-				<input type="hidden" name="mno" id="mno" value="">
-					</form>
+						<hr>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger" id="delete">회원정보삭제</button>
+						<input type="submit" class="btn btn-primary" id="insert"value="회원정보수정">
+						<button type="button" class="btn btn-secondary"	data-bs-dismiss="modal" id="modal-close">닫기</button>
+					</div>
+
+					<input type="hidden" name="mno" id="mno" value="">
+				</form>
 			</div>
 		</div>
 	</div>
@@ -293,15 +282,15 @@ div#pagination {
 			$("#mno").val(mno);
 			
 			$("#delete").click(function() {
-    			
-    			$("#mno").val(mno);
-    			// /jsp/detail.bo?bno=X
-    			location.href = "<%= contextPath %>/delete.ad?mno=" + mno;
+				
+				 if (!confirm("회원정보를 삭제하시겠습니까?")) {
+			            alert("취소했습니다.");
+			        } else {
+			        	$("#mno").val(mno);
+		    			// /jsp/detail.bo?bno=X
+		    			location.href = "<%= contextPath %>/delete.ad?mno=" + mno;
+			        }
     		});
-			
-			
-			
-
 		});
 		
 		$('#modal-close').click(function() {
@@ -309,12 +298,17 @@ div#pagination {
 
 		});
 		
-	</script>
-	
-	
-	
-	
-	
+		  $(document).ready(function() {
+	            $("#search").keyup(function() {
+	                var k = $(this).val();
+	                $(".list-area>tbody>tr").hide();
+	                var temp = $(".list-area>tbody>tr > td:nth-child(5n+2):contains('" + k + "')");
+
+	                $(temp).parent().show();
+	            })
+	        })
+		</script>
+
 </body>
 
 </html>

@@ -174,5 +174,35 @@ public class TBoardService {
 		
 		return result1 * result2;
 	}
+
+	public int selectAllListCount() {
+		Connection conn = getConnection();
+		
+		int listCount = new TBoardDao().selectAllListCount(conn);
+		// SELECT 臾몄쓽 寃곌낵�뒗 ResultSet �씠 留욊릿�븳�뜲
+		// �긽�떇�쟻�쑝濡� �깮媛곹빐蹂대㈃ 寃뚯떆湲��쓽 珥� 媛��닔�뒗 �젙�닔�삎
+		
+		close(conn);
+		
+		return listCount;
+	}
+
+	public ArrayList<TBoard> selectAllList(PageInfo pi) {
+		Connection conn = getConnection();
+		ArrayList<TBoard> indexAllList = new TBoardDao().selectAllList(conn, pi);
+		
+		close(conn);
+		return indexAllList;
+	}
+
+	public ArrayList<TBoard> indexSelectTBoard() {
+		Connection conn = getConnection();
+		
+		ArrayList<TBoard> indexTList = new TBoardDao().indexSelectTBoard(conn);
+		
+		close(conn);
+		
+		return indexTList;
+	}
 	
 }

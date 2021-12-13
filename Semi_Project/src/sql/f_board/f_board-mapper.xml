@@ -132,6 +132,14 @@
 		from (SELECT F_NO FROM F_BOARD WHERE STATUS='Y'))
 		WHERE F_NO=?
 	</entry>
+	<entry key="indexSelectFBoard">
+		SELECT ROWNUM, F.F_NO, F.F_TITLE
+		FROM (SELECT F_NO, F_TITLE
+			  FROM F_BOARD 
+		  	  WHERE STATUS = 'Y' 
+			  ORDER BY CREATE_DATE DESC) F
+		WHERE ROWNUM &lt; 4
+	</entry>
 
 
 </properties>

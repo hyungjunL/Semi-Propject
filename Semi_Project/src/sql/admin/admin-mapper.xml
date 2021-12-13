@@ -3,13 +3,25 @@
 <properties>
 
 	<comment>후기게시판 관련 쿼리문</comment>
-	
+
 	<entry key="deleteMember">
 		UPDATE MEMBER
 		SET STATUS = 'N'
 		WHERE MEMBER_NO = ?
 	</entry>
 	
+	<entry key="selectListCount">
+		SELECT COUNT(*) COUNT
+		FROM ONE_VS_ONE
+	</entry>
+	
+	<entry key="selectListMemberCount">
+		SELECT COUNT(*) COUNT
+		FROM MEMBER
+		WHERE STATUS = 'Y'
+	</entry>
+	
+
 	<entry key="selectList">
 
 		SELECT *
@@ -17,7 +29,7 @@
 		SELECT ROWNUM RNUM, A.*
 		FROM (
 		SELECT
-		MEMBER_NO, MEMBER_ID, MEMBER_NAME, EMAIL, ADDRESS, PHONE, BIRTH, ENROLL_DATE
+		MEMBER_NO, MEMBER_ID, MEMBER_NAME, EMAIL, ADDRESS, PHONE,TO_CHAR(BIRTH, 'YYYY/MM/DD') BIRTH,ENROLL_DATE
 		FROM MEMBER M
 		WHERE STATUS = 'Y'
 		ORDER BY
@@ -25,21 +37,42 @@
 		WHERE RNUM BETWEEN ? AND ?
 	</entry>
 	
+
+
 	<entry key="updateMember">
 		UPDATE MEMBER
 		SET EMAIL = ?
-		,	ADDRESS = ?
-		,	PHONE = ?
-		, 	BIRTH = ?
+		, ADDRESS = ?
+		, PHONE = ?
+		, BIRTH = TO_DATE( ?, 'YYYY/MM/DD')
 		WHERE MEMBER_NO = ?
 	</entry>
-	
+
 	<entry key="selectMember">
 
-		SELECT MEMBER_NO, MEMBER_ID, MEMBER_NAME, EMAIL, ADDRESS, PHONE, BIRTH, ENROLL_DATE
+		SELECT MEMBER_NO, MEMBER_ID, MEMBER_NAME, EMAIL,
+		ADDRESS, PHONE, BIRTH, ENROLL_DATE
 		FROM MEMBER
 		WHERE MEMBER_ID = ?
-        AND STATUS = 'Y'
+		AND STATUS = 'Y'
+	</entry>
+
+	<entry key="updateAnswer">
+		UPDATE ONE_VS_ONE
+		SET ANSWER = ?
+		WHERE O_ID = ?
+	</entry>
+
+	<entry key="selectOneList">
+		SELECT *
+		FROM (
+		SELECT ROWNUM RNUM, A.*
+		FROM (
+		SELECT MEMBER_NO, MEMBER_ID, O_ID, O_TITLE, O_CONTENT, O_CREATE_DATE
+		FROM ONE_VS_ONE O
+        JOIN MEMBER M USING (MEMBER_NO)
+		ORDER BY O_CREATE_DATE DESC) A)
+		WHERE RNUM BETWEEN ? AND ?
 	</entry>
 
 </properties>

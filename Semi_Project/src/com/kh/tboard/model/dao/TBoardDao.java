@@ -59,7 +59,34 @@ public class TBoardDao {
 		
 		return result;
 	}
-
+public int selectAllListCount(Connection conn) {
+		
+		int listCount = 0;
+		
+		PreparedStatement pstmt = null;
+		
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectAllListCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				listCount = rset.getInt("COUNT");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return listCount;
+	}
 	public int insertAttachmentList(Connection conn, ArrayList<Attachment> list) {
 		
 		int result = 0;
@@ -522,5 +549,78 @@ public class TBoardDao {
 		
 		return result;
 	}
+
+	public ArrayList<TBoard> selectAllList(Connection conn, PageInfo pi) {
+		ArrayList<TBoard> indexAllList = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectAllList");
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			int startRow = (pi.getCurrentPage() - 1) * pi.getBoardLimit() + 1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				
+				indexAllList.add(new TBoard(rset.getInt("T_NO"),
+										rset.getString("T_TITLE"),
+										rset.getInt("T_PRICE"),
+										rset.getDate("CREATE_DATE"), 
+										rset.getInt("T_COUNT"),
+										rset.getString("MEMBER_NO"),
+										rset.getString("STATUS"),
+										rset.getString("TITLEIMG")));
+			}
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return indexAllList;
+	}
+
+	public ArrayList<TBoard> indexSelectTBoard(Connection conn) {
+		ArrayList<TBoard> indexTList = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("indexSelectTBoard");
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				indexTList.add(new TBoard(rset.getInt("T_NO"),
+										  rset.getString("T_TITLE")));
+			}
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return indexTList;
+	}
+	
 
 }

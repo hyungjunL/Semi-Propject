@@ -167,7 +167,10 @@ public class BookDao {
 			while(rset.next()) {
 				
 				
-					Book b = new Book(rset.getInt("T_NO"),rset.getString("T_TITLE"),rset.getInt("T_PRICE"));
+					Book b = new Book(rset.getInt("T_NO"),
+									  rset.getString("T_TITLE"),
+									  rset.getInt("T_PRICE"),
+									  rset.getString("TITLEIMG"));
 				
 				    list.add(b);  
 			}

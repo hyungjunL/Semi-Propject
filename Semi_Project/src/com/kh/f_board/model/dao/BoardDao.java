@@ -14,6 +14,7 @@ import com.kh.common.model.vo.PageInfo;
 import com.kh.f_board.model.vo.Attachment;
 import com.kh.f_board.model.vo.Board;
 import com.kh.f_board.model.vo.Reply;
+import com.kh.f_board.model.vo.yList;
 
 import static com.kh.common.JDBCTemplate.*;
 
@@ -578,6 +579,36 @@ public class BoardDao {
 
 		return result;
 
+	}
+
+	public ArrayList<Board> indexSelectFBoard(Connection conn) {
+		ArrayList<Board> FList = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("indexSelectFBoard");
+		
+		try {
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				FList.add(new Board(rset.getInt("F_NO"),
+									rset.getString("F_TITLE")));
+			}
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return FList;
 	}
 
 }

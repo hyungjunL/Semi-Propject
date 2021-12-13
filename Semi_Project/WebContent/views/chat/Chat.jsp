@@ -4,7 +4,7 @@
  <%@ page import="com.kh.member.model.vo.Member,com.kh.chat.model.vo.*" %>
 <% 
 //Chat c = (Chat)request.getAttribute("c");
-Member loginMember = (Member)session.getAttribute("loginMember");
+Member loginUser = (Member)session.getAttribute("loginUser");
 int toNo = (Integer)request.getAttribute("toNo");
 // 로그인 전 : header.jsp 가 로딩될때 null
 // 로그인 후 : header.jsp 가 로딩될때 로그인한 회원의 정보가 담겨있음
@@ -52,17 +52,8 @@ int toNo = (Integer)request.getAttribute("toNo");
         <!-- 메세지 -->
         
         <table id ="chatbox" align="center">
-        		<thead >
-        			<tr>
-                		<td><strong>보낸 사람</strong></td>
-                		<td><strong>내용</strong></td>
-                		<td><strong>날짜</strong></td>
-                	</tr>
-                	<hr>
-        		</thead>
-        			
+        		<thead></thead>
                 <tbody>
-                
                 </tbody>
             </table>
         
@@ -92,7 +83,7 @@ function submitFunction() {
 		type: "POST",
 		
 		data: {
-			memberNo:   <%= loginMember.getMemberNo() %>,
+		
 			toNo:   <%= toNo %>,
 			chatContent: $('#chatContent').val(),
 		},
@@ -104,9 +95,9 @@ function submitFunction() {
             			}
         				
         			},
-			error : function() {
-				console.log(" ajax 실패");
-			}
+        			error : function() {
+        				console.log(" ajax 실패");
+        			}
 		});
 }
 
@@ -122,18 +113,20 @@ function selectChatlist() {
 		type: "POST",
 		
 		data: {
-			
+		
 			toNo: <%= toNo %>,
+			//listType: type
 		},
 		success: function(list) {
+			
 				   
 		        // 채팅갯수만큼 반복 => 누적(문자열)
-		        var result = "";
+		       var result = "";
 		        for(var i in list) { 
 		          result += "<tr>"
-		        	   			   + "<td>" + list[i].fromNo + "서점" + "</td>"
+		        	   			   + "<td>" + list[i].fromNo + "번책장" + "</td>"
 		        	               + "<td>" + list[i].chatContent + "</td>"
-		        	               + "<td>" +list[i].createDate + "</td>"
+		        	               + "<td>" + list[i].createDate + "</td>"
 		                      + "</tr>";
 		        }
 		        
@@ -147,7 +140,6 @@ function selectChatlist() {
 			
 		})
 };
-
 
 
 

@@ -38,15 +38,17 @@ public class ChatlistController extends HttpServlet {
 	     response.setContentType("text/html;charset=UTF-8");
 	     int fromNo = ((Member)request.getSession().getAttribute("loginMember")).getMemberNo();
 		 int toNo =  Integer.parseInt(request.getParameter("toNo"));
-		 int memberNo =  ((Member)request.getSession().getAttribute("loginMember")).getMemberNo();
 	     //String chatContent = request.getParameter("chatContent");
          //String listType = request.getParameter("listType");
          
-         ArrayList<Chat> list = new ChatService().selectChatList(fromNo,toNo,memberNo);
-         System.out.println("이게 찍힌거야?"+list);
-         response.setContentType("application/json; charset=UTF-8");
- 		
- 		 new Gson().toJson(list, response.getWriter());
+			
+		 ArrayList<Chat> list = new ChatService().selectChatList(fromNo,toNo);
+			 
+		 response.setContentType("application/json; charset=UTF-8");
+			 
+		  new Gson().toJson(list, response.getWriter());
+			
+ 		 
 	}
 
 	/**

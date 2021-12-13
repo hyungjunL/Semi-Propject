@@ -45,6 +45,31 @@
          text-decoration: none;
          color: black;
      }
+     .fix{
+     position: sticky;
+      float: right;
+      width:40px;
+      height:90px;
+      top:0; right:0;
+     
+     }
+     
+	  .chat {
+	 
+	 position: sticky;
+	  float: left;
+	  width: 40px;
+	  height: 30px;
+	}
+	
+	 .plus {
+	  float: left;
+	  width: 30px;
+	  height: 30px;
+	  position: absolute;
+	  left: 0;
+	  bottom: 0px;
+	}
 </style>
 </head>
 <body>
@@ -52,6 +77,56 @@
  <!-- 상단에는 header1.jsp가 보이게 해줌 -->
 <%@include file = "views/common/header1.jsp" %>
 
+<div class = "fix">
+		  <div class="plus">
+		    
+		    <% if(loginMember != null) { %>
+	                  <!-- 로그인이 되어있을 경우 : 판매등록 가능 -->
+                        
+                   <a href = "<%= contextPath %>/enrollForm.it"><img src="resources\plus.png"></a>
+       
+                        <% } else { %>
+                    <!-- 로그인이 안되어있을 경우 : 판매등록 불가 -->
+                    	
+                    	 <a><img src="resources\plus.png"></a>
+                    	 
+                           <script>
+					          $(".plus").click(function() {
+					              alert("로그인 후 이용해주세요.");
+					          })
+					       </script>
+	                    
+                    <% } %>
+		    
+		  </div>
+			
+		 <div class="chat">
+		    
+		    
+		    <% if(loginMember != null) { %>
+	                  <!-- 로그인이 되어있을 경우 : 채팅함 가능 -->
+                        
+                   <a onclick = "message();"><img id = "message" src="resources\chat.png"></a>
+       
+                        <% } else { %>
+                    <!-- 로그인이 안되어있을 경우 :  채팅함 불가 -->
+                    	
+                    	 <a><img src="resources\chat.png"></a>
+                    	 
+                           <script>
+					          $(".chat").click(function() {
+					              alert("로그인 후 이용해주세요.");
+					          })
+					       </script>
+	                    
+                    <% } %>
+		    
+		    
+		    
+		    
+		    
+		  </div>
+		  </div>
         <div id="content1">
             <div class="contain" style="width: 100%; height: 100%; opacity: 1">
                 <div class="koreabook" style="float: left; width: 25%; height: 100%;"><a><img src="resources/koreabook1.PNG"></a></div>
@@ -93,8 +168,8 @@
                         <table class="table table-striped">
                             <thead>
                                 <tr>
-                                  <th colspan="2" style="font-size: 20px;" width="87%">거래게시판</th>
-                                  <th style="font-size: 10px;"><a href="<%= contextPath %>/list.it?currentPage=1&category=1">+더보기</a></th>
+                                  <th colspan="2" style="font-size: 20px;" width="85%">거래게시판</th>
+                                  <th style="font-size: 10px;"><a href="<%= contextPath %>/listAll.it?currentPage=1">+전체보기</a></th>
                                 </tr>
                               </thead>
                               <tbody id="indexTList">
@@ -106,8 +181,8 @@
                         <table class="table table-striped" style="width=50%">
                             <thead>
                                 <tr>
-                                  <th colspan="2" style="font-size: 20px;" width="87%">자유게시판</th>
-                                  <th style="font-size: 10px;"><a href="<%= contextPath %>/list.fb?currentPage=1">+더보기</a></th>
+                                  <th colspan="2" style="font-size: 20px;" width="85%">자유게시판</th>
+                                  <th style="font-size: 10px;"><a href="<%= contextPath %>/list.fb?currentPage=1">+전체보기</a></th>
                                 </tr>
                               </thead>
                               <tbody id="indexFList">
@@ -185,6 +260,46 @@ $(function() {
    });
    
 })
+
+  $.ajax({
+	   url : "Tboard.it",
+	   success : function(indexTList) {
+		   
+		   var tList = "";
+		   console.log(indexTList);
+		   if(indexTList.length == 0) {
+			   tList += '<tr><td colspan="3"><b>게시글이 존재하지 않습니다.</b></td></tr>';
+		   }
+		   else {
+			   for(var i = 0; i < indexTList.length; i++) {
+				   
+				    tList += '<tr>';
+				  	tList += 	'<td colspan="3">';
+				 	tList += 		'<a href = "<%= contextPath %>/detail.it?bno=' + indexTList[i].tNo + '">';
+				 	tList +=			indexTList[i].tTitle;
+				 	tList += 		'</a>';
+				 	tList += 	'</td>';
+				 	tList += '</tr>';
+			   }
+		   }
+		   $("#indexTList").html(tList);
+	   }
+   });
+   
+
+
+$(function(){
+	$("#message").click(function(){
+		
+		// 클릭될때마다 채팅 url 요청 => location.href
+		// /javajo/chat.no?toNo=X
+				
+		// X 먼저 구하기
+		var toNo = $(this).val();
+				
+		window.open("<%=contextPath %>/chatbox.no" , "chatbox", "height = 550,width = 500");
+	});
+});
 
 
 </script>

@@ -9,7 +9,9 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 import com.kh.admin.model.dao.AdminDao;
+import com.kh.common.model.vo.One;
 import com.kh.common.model.vo.PageInfo;
+import com.kh.f_board.model.dao.BoardDao;
 import com.kh.member.model.dao.MemberDao;
 import com.kh.member.model.vo.Member;
 
@@ -67,6 +69,52 @@ public class AdminService {
 		close(conn);
 
 		return mlist;
+	}
+
+	public int updateAnswer(int oid, String ans) {
+		Connection conn = getConnection();
+
+		int result = new AdminDao().updateAnswer(conn, oid, ans);
+
+		if (result > 0) {
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+
+		close(conn);
+
+		return result;
+	}
+
+	public ArrayList<One> selectOneList(PageInfo pi) {
+		Connection conn = getConnection();
+
+		ArrayList<One> olist = new AdminDao().selectOneList(conn, pi);
+
+		close(conn);
+
+		return olist;
+	}
+
+	public int selectListCount() {
+		Connection conn = getConnection();
+
+		int listCount = new AdminDao().selectListCount(conn);
+
+		close(conn);
+
+		return listCount;
+	}
+
+	public int selectListMemberCount() {
+		Connection conn = getConnection();
+
+		int listCount = new AdminDao().selectListMemberCount(conn);
+
+		close(conn);
+
+		return listCount;
 	}
 
 }
