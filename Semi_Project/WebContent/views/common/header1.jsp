@@ -229,7 +229,7 @@
         <div id="header">
             <div id="img"><a href="<%= contextPath %>"><img src="resources\mainImage.png" style="width:100%; height: 100%;"></a></div>
             <div id="search">
-                <form id="search_form" action="search.bo?currentPage=1" method="post">
+                <form id="search_form" action="search.no?currentPage=1" method="post">
                     <div id="search_text">
                         <input type="text" name="keyword" placeholder="내용을 입력해주세요">
                     </div>

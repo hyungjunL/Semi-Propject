@@ -117,18 +117,20 @@
                  
                                
               
-                
+               
             </table>
-            <hr>
             <br>
+            <hr>
  			<div align="center">
                 <button type="submit" class="btn btn-secondary">판매 등록</button>
                 <button type="reset" class="btn btn-secondary btn-danger">초기화</button>
             </div>
-            <br>
+            
+           
+            
             
 
-            <br><br>
+         
             <div id="file-area">
            
             <input type="file" id="file1" name="file1" onchange="loadImg(this, 1);" required >
@@ -190,6 +192,9 @@
         </form>
         
     </div>
+    <br>
+    <br>
+    <br>
     <%@include file = "../common/footer.jsp" %>
 
 </div>

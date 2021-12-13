@@ -32,6 +32,8 @@ public class SearchBookController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		
 		int listCount;// 현재 일반 게시판의 게시글 총 갯수 => COUNT(*) 활용 (STATUS = 'Y')
 		int currentPage;//현재페이지(즉,사용자가 요청한 페이지) => request.getParameter("currentPage")
 		int pageLimit; //페이지 하단에 보여진 페이징바의 페이지 최대 갯수 => 6개로 고정
@@ -65,16 +67,14 @@ public class SearchBookController extends HttpServlet {
 		
 		
 		//keyword
-		//request.setCharacterEncoding("UTF-8");
-		String keyword = request.getParameter("keyword");
 		
+		String keyword = request.getParameter("keyword");
 		//System.out.println(keyword);
 		
 		//Service 단으로 토스 => 7개의 변수들 => VO클래스에 만들어서 가공해서 넘길것
 		//PageInfo(com.kh.common.model.PageInfo)
 		PageInfo pi = new PageInfo(listCount,currentPage,pageLimit,boardLimit,maxPage,startPage,endPage);
 		ArrayList<Book> list = new BookService().selectByTitle(pi,keyword);
-		
 		
 		
 		
