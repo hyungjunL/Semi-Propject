@@ -14,7 +14,11 @@
 		SELECT COUNT(*) COUNT
 		FROM ONE_VS_ONE
 	</entry>
-	
+	<entry key="deleteMember2">
+      UPDATE F_BOARD
+        SET STATUS = 'N'
+        WHERE BOARD_WRITER = ?
+   </entry>
 	<entry key="selectListMemberCount">
 		SELECT COUNT(*) COUNT
 		FROM MEMBER

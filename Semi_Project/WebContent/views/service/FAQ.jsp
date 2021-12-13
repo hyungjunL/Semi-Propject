@@ -3,7 +3,7 @@
 <%@ page import="com.kh.service.model.vo.FAQ,com.kh.member.model.vo.Member" %>
 <% 
 	FAQ f = (FAQ)request.getAttribute("f");
-	Member loginUser = (Member)session.getAttribute("loginUser");
+	Member loginMember = (Member)session.getAttribute("loginMember");
 	String contextPath = request.getContextPath();
 %>
 <!DOCTYPE html>
@@ -144,13 +144,14 @@
     <div id="header">
       <div id="miniMenu">
         <button>회원가입</button>
-        <%if(loginUser == null){ %>
+        <%if(loginMember == null){ %>
         <button onclick="login();">로그인</button>
         <%} else{ %>
         <button onclick="logout();">로그아웃</button>
         <%} %>
         <button>마이페이지</button>
         <button>고객센터</button>
+        <button onclick="home();">홈</button>
     </div>  
     <script>
     	function login(){
@@ -158,6 +159,12 @@
     	}
     	function logout(){
     		location.href = "<%= contextPath %>/logout.me";
+    	}
+    	function home(){
+    		location.href = "<%= contextPath %>";
+    	}
+    	function review(){
+    		location.href = "<%= contextPath %>/list.fb?currentPage=1";
     	}
     </script> 
 
@@ -168,10 +175,9 @@
       
       <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#" style=" font-size: 30px;">COMMUNITY</a>
+          <a class="navbar-brand" href="/javajo/center.se" style=" font-size: 30px;">COMMUNITY</a>
           <form class="d-flex">
-            <input class="form-control me-sm-2" type="text" placeholder="Search" >
-            <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+            
           </form>
         </div>
       </nav>
@@ -182,15 +188,13 @@
         <table class="table-side">
           <p>후기</p>
           <tr>
-            <td>책 후기</td>
+            <td onclick="review();">책 후기</td>
           </tr>
         </table>
 
         <table class="table-side">
           <p style="margin-top: 15px;">고객 센터</p>
-          <tr>
-            <td>공지사항</td>
-          </tr>
+          
           <tr>
             <td> 문의</td>
           </tr>
@@ -217,11 +221,7 @@
         <div id="footer">
             <div id="footer1" style="height: 20%;">
                 <ul id="miniFoot">
-                    <li><a>FAQ</a></li>
-                    <li><a>회사소개</a></li>
-                    <li><a>채용</a></li>
-                    <li><a>이용약관</a></li>
-                    <li><a>개인정보처리방침</a></li>
+                   
                 </ul>
             </div>
            <br>

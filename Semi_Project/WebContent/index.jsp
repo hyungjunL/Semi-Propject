@@ -77,7 +77,40 @@
  <!-- 상단에는 header1.jsp가 보이게 해줌 -->
 <%@include file = "views/common/header1.jsp" %>
 
-<div class = "fix">
+<div id="content1">
+            <div class="contain" style="width: 100%; height: 100%; opacity: 1">
+                <div class="koreabook" style="float: left; width: 25%; height: 100%;"><a><img src="resources/koreabook1.PNG"></a></div>
+                <div class="koreabook" style="float: left; width: 25%; height: 100%;"><a><img src="resources/koreabook2.PNG"></a></div>
+                <div class="koreabook" style="float: left; width: 25%; height: 100%;"><a><img src="resources/koreabook3.PNG"></a></div>
+                <div class="koreabook" style="float: left; width: 25%; height: 100%;"><a><img src="resources/koreabook4.PNG"></a></div>
+            </div>
+            <div class="contain" style="width: 100%; height: 100%;">
+                <div class="globalbook" style="float: left; width: 25%; height: 100%;"><a><img src="resources/globalbook1.PNG"></a></div>
+                <div class="globalbook" style="float: left; width: 25%; height: 100%;"><a><img src="resources/globalbook2.PNG"></a></div>
+                <div class="globalbook" style="float: left; width: 25%; height: 100%;"><a><img src="resources/globalbook3.PNG"></a></div>
+                <div class="globalbook" style="float: left; width: 25%; height: 100%;"><a><img src="resources/globalbook4.PNG"></a></div>
+            </div>
+            <div class="contain" style="width: 100%; height: 100%;">
+                <div class="chamgo" style="float: left; width: 25%; height: 100%;"><a><img src="resources/chamgo1.jpg"></a></div>
+                <div class="chamgo" style="float: left; width: 25%; height: 100%;"><a><img src="resources/chamgo2.jpg"></a></div>
+                <div class="chamgo" style="float: left; width: 25%; height: 100%;"><a><img src="resources/chamgo3.jpg"></a></div>
+                <div class="chamgo" style="float: left; width: 25%; height: 100%;"><a><img src="resources/chamgo4.jpg"></a></div>
+            </div>
+            <div class="contain" style="width: 100%; height: 100%;">
+                <div class="univer" style="float: left; width: 25%; height: 100%;"><a><img src="resources/univer1.jpg"></a></div>
+                <div class="univer" style="float: left; width: 25%; height: 100%;"><a><img src="resources/univer2.jpg"></a></div>
+                <div class="univer" style="float: left; width: 25%; height: 100%;"><a><img src="resources/univer3.jpg"></a></div>
+                <div class="univer" style="float: left; width: 25%; height: 100%;"><a><img src="resources/univer4.jpg"></a></div>
+            </div>
+            <div class="contain" style="width: 100%; height: 100%;">
+                <div class="testbook" style="float: left; width: 25%; height: 100%;"><a><img src="resources/testbook1.jpg"></a></div>
+                <div class="testbook" style="float: left; width: 25%; height: 100%;"><a><img src="resources/testbook2.jpg"></a></div>
+                <div class="testbook" style="float: left; width: 25%; height: 100%;"><a><img src="resources/testbook3.jpg"></a></div>
+                <div class="testbook" style="float: left; width: 25%; height: 100%;"><a><img src="resources/testbook4.jpg"></a></div>
+            </div>
+        </div>
+        
+        <div class = "fix">
 		  <div class="plus">
 		    
 		    <% if(loginMember != null) { %>
@@ -127,39 +160,8 @@
 		    
 		  </div>
 		  </div>
-        <div id="content1">
-            <div class="contain" style="width: 100%; height: 100%; opacity: 1">
-                <div class="koreabook" style="float: left; width: 25%; height: 100%;"><a><img src="resources/koreabook1.PNG"></a></div>
-                <div class="koreabook" style="float: left; width: 25%; height: 100%;"><a><img src="resources/koreabook2.PNG"></a></div>
-                <div class="koreabook" style="float: left; width: 25%; height: 100%;"><a><img src="resources/koreabook3.PNG"></a></div>
-                <div class="koreabook" style="float: left; width: 25%; height: 100%;"><a><img src="resources/koreabook4.PNG"></a></div>
-            </div>
-            <div class="contain" style="width: 100%; height: 100%;">
-                <div class="globalbook" style="float: left; width: 25%; height: 100%;"><a><img src="resources/globalbook1.PNG"></a></div>
-                <div class="globalbook" style="float: left; width: 25%; height: 100%;"><a><img src="resources/globalbook2.PNG"></a></div>
-                <div class="globalbook" style="float: left; width: 25%; height: 100%;"><a><img src="resources/globalbook3.PNG"></a></div>
-                <div class="globalbook" style="float: left; width: 25%; height: 100%;"><a><img src="resources/globalbook4.PNG"></a></div>
-            </div>
-            <div class="contain" style="width: 100%; height: 100%;">
-                <div class="chamgo" style="float: left; width: 25%; height: 100%;"><a><img src="resources/chamgo1.jpg"></a></div>
-                <div class="chamgo" style="float: left; width: 25%; height: 100%;"><a><img src="resources/chamgo2.jpg"></a></div>
-                <div class="chamgo" style="float: left; width: 25%; height: 100%;"><a><img src="resources/chamgo3.jpg"></a></div>
-                <div class="chamgo" style="float: left; width: 25%; height: 100%;"><a><img src="resources/chamgo4.jpg"></a></div>
-            </div>
-            <div class="contain" style="width: 100%; height: 100%;">
-                <div class="univer" style="float: left; width: 25%; height: 100%;"><a><img src="resources/univer1.jpg"></a></div>
-                <div class="univer" style="float: left; width: 25%; height: 100%;"><a><img src="resources/univer2.jpg"></a></div>
-                <div class="univer" style="float: left; width: 25%; height: 100%;"><a><img src="resources/univer3.jpg"></a></div>
-                <div class="univer" style="float: left; width: 25%; height: 100%;"><a><img src="resources/univer4.jpg"></a></div>
-            </div>
-            <div class="contain" style="width: 100%; height: 100%;">
-                <div class="testbook" style="float: left; width: 25%; height: 100%;"><a><img src="resources/testbook1.jpg"></a></div>
-                <div class="testbook" style="float: left; width: 25%; height: 100%;"><a><img src="resources/testbook2.jpg"></a></div>
-                <div class="testbook" style="float: left; width: 25%; height: 100%;"><a><img src="resources/testbook3.jpg"></a></div>
-                <div class="testbook" style="float: left; width: 25%; height: 100%;"><a><img src="resources/testbook4.jpg"></a></div>
-            </div>
-        </div>
-        <hr>
+        
+     
 
         <div id="content2">
             <table id="board">
@@ -193,7 +195,8 @@
 				</tr>
             </table>
         </div>
-        <hr>
+
+        <br><br>
         <div id="banner">
             <img src="resources/banner.jfif" style="width: 100%; height: 100%;">
         </div>

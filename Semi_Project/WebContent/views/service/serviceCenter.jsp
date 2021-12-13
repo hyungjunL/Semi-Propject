@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import="com.kh.service.model.vo.Service ,com.kh.member.model.vo.Member" %>
 <%
-	Member loginUser = (Member)session.getAttribute("loginUser");
+	Member loginMember = (Member)session.getAttribute("loginMember");
 	String alertMsg = (String)session.getAttribute("alertMsg");
 	String contextPath = request.getContextPath();
 %>
@@ -228,16 +228,22 @@
 
     <div id="header">
       <div id="miniMenu">
+      	
         <button>회원가입</button>
-        <%if(loginUser == null){ %>
+        <%if(loginMember == null){ %>
         <button onclick="login();">로그인</button>
         <%} else{ %>
         <button onclick="logout();">로그아웃</button>
         <%} %>
         <button>마이페이지</button>
         <button>고객센터</button>
+        <button onclick="home();">홈</button>
     </div>
     <script>
+
+    	function home(){
+    		location.href = "<%= contextPath %>";
+    	}
 	    function login() {
 	    	
 	        window.open("views/member/minilogin.jsp", "로그인", "width=700, height=400, status=0, toolbar=0, menubar='no'");
@@ -256,8 +262,7 @@
         <div class="container-fluid">
           <a class="navbar-brand" href="#" style=" font-size: 30px;">COMMUNITY</a>
           <form class="d-flex">
-            <input class="form-control me-sm-2" type="text" placeholder="Search" >
-            <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+            
           </form>
         </div>
       </nav>
@@ -274,9 +279,7 @@
 
         <table class="table-side">
           <p style="margin-top: 15px;">고객 센터</p>
-          <tr>
-            <td>공지사항</td>
-          </tr>
+          
           <tr>
             <td> 문의</td>
           </tr>
@@ -335,7 +338,7 @@
                   </tr>
               </thead>
             <tbody>
-                 <% if(loginUser != null) { %>
+                 <% if(loginMember != null) { %>
 				  <!-- 로그인이 되어있을 경우 : 1대1문의 내역보기 가능 -->
 				  
 				    <input id ="service" type=text value="CLICK>>내 문의 내역  " name=service width=40 onclick="selectServicelist()" readonly>
@@ -428,13 +431,7 @@
       
         <div id="footer">
           <div id="footer1" style="height: 20%;">
-              <ul id="miniFoot">
-                  <li><a>FAQ</a></li>
-                  <li><a>회사소개</a></li>
-                  <li><a>채용</a></li>
-                  <li><a>이용약관</a></li>
-                  <li><a>개인정보처리방침</a></li>
-              </ul>
+              
           </div>
           <br>
           <br>

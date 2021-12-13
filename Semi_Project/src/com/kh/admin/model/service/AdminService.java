@@ -17,104 +17,105 @@ import com.kh.member.model.vo.Member;
 
 public class AdminService {
 
-	public ArrayList<Member> selectList(PageInfo pi) {
-		Connection conn = getConnection();
+   public ArrayList<Member> selectList(PageInfo pi) {
+      Connection conn = getConnection();
 
-		ArrayList<Member> list = new AdminDao().selectList(conn, pi);
+      ArrayList<Member> list = new AdminDao().selectList(conn, pi);
 
-		close(conn);
+      close(conn);
 
-		return list;
-	}
+      return list;
+   }
 
-	public int deleteMember(int mno) {
+   public int deleteMember(int mno) {
 
-		Connection conn = getConnection();
+      Connection conn = getConnection();
 
-		int result = new AdminDao().deleteMember(conn, mno);
+      int result = new AdminDao().deleteMember(conn, mno);
+      int result2 = new AdminDao().deleteMember2(conn, mno);
 
-		if (result > 0) {
-			commit(conn);
-		} else {
-			rollback(conn);
-		}
+      if (result*result2 > 0) {
+         commit(conn);
+      } else {
+         rollback(conn);
+      }
 
-		close(conn);
+      close(conn);
 
-		return result;
+      return result*result2;
 
-	}
+   }
 
-	public int updateMember(int mno, String me, String ma, String mp, String mb) {
-		Connection conn = getConnection();
+   public int updateMember(int mno, String me, String ma, String mp, String mb) {
+      Connection conn = getConnection();
 
-		int result = new AdminDao().updateMember(conn, mno, me, ma, mp, mb);
+      int result = new AdminDao().updateMember(conn, mno, me, ma, mp, mb);
 
-		if (result > 0) {
-			commit(conn);
-		} else {
-			rollback(conn);
-		}
+      if (result > 0) {
+         commit(conn);
+      } else {
+         rollback(conn);
+      }
 
-		close(conn);
+      close(conn);
 
-		return result;
-	}
+      return result;
+   }
 
-	public ArrayList<Member> selectMember(String mId) {
-		Connection conn = getConnection();
+   public ArrayList<Member> selectMember(String mId) {
+      Connection conn = getConnection();
 
-		ArrayList<Member> mlist = new AdminDao().selectMember(conn, mId);
+      ArrayList<Member> mlist = new AdminDao().selectMember(conn, mId);
 
-		close(conn);
+      close(conn);
 
-		return mlist;
-	}
+      return mlist;
+   }
 
-	public int updateAnswer(int oid, String ans) {
-		Connection conn = getConnection();
+   public int updateAnswer(int oid, String ans) {
+      Connection conn = getConnection();
 
-		int result = new AdminDao().updateAnswer(conn, oid, ans);
+      int result = new AdminDao().updateAnswer(conn, oid, ans);
 
-		if (result > 0) {
-			commit(conn);
-		} else {
-			rollback(conn);
-		}
+      if (result > 0) {
+         commit(conn);
+      } else {
+         rollback(conn);
+      }
 
-		close(conn);
+      close(conn);
 
-		return result;
-	}
+      return result;
+   }
 
-	public ArrayList<One> selectOneList(PageInfo pi) {
-		Connection conn = getConnection();
+   public ArrayList<One> selectOneList(PageInfo pi) {
+      Connection conn = getConnection();
 
-		ArrayList<One> olist = new AdminDao().selectOneList(conn, pi);
+      ArrayList<One> olist = new AdminDao().selectOneList(conn, pi);
 
-		close(conn);
+      close(conn);
 
-		return olist;
-	}
+      return olist;
+   }
 
-	public int selectListCount() {
-		Connection conn = getConnection();
+   public int selectListCount() {
+      Connection conn = getConnection();
 
-		int listCount = new AdminDao().selectListCount(conn);
+      int listCount = new AdminDao().selectListCount(conn);
 
-		close(conn);
+      close(conn);
 
-		return listCount;
-	}
+      return listCount;
+   }
 
-	public int selectListMemberCount() {
-		Connection conn = getConnection();
+   public int selectListMemberCount() {
+      Connection conn = getConnection();
 
-		int listCount = new AdminDao().selectListMemberCount(conn);
+      int listCount = new AdminDao().selectListMemberCount(conn);
 
-		close(conn);
+      close(conn);
 
-		return listCount;
-	}
+      return listCount;
+   }
 
 }

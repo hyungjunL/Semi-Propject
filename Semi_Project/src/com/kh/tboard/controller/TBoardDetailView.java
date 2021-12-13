@@ -19,7 +19,7 @@ import com.kh.tboard.model.vo.TBoard;
  */
 @WebServlet("/detail.it")
 public class TBoardDetailView extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -29,43 +29,46 @@ public class TBoardDetailView extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// 우선적으로 글번호 뽑아오기
-		int boardNo = Integer.parseInt(request.getParameter("bno"));
-		
-	
-		int result = new TBoardService().increaseCount(boardNo);
-		
-		if(result > 0) { 
-			
-			
-			TBoard b = new TBoardService().selectBoard(boardNo);
-			
-			ArrayList<Attachment> list = new TBoardService().selectAttachmentList(boardNo);
-	
-			request.setAttribute("b", b);
-			request.setAttribute("list", list);
-			System.out.println("b : " + b);
-			System.out.println("list : " + list);
-			
-			
-			request.getRequestDispatcher("views/tboard/tBoardDetailView.jsp").forward(request, response);
-		}
-		else { 
-			
-		}
-		
-	}
+   /**
+    * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+    */
+   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      // 우선적으로 글번호 뽑아오기
+      int boardNo = Integer.parseInt(request.getParameter("bno"));
+      
+   
+      int result = new TBoardService().increaseCount(boardNo);
+      
+      if(result > 0) { 
+         
+         
+         TBoard b = new TBoardService().selectBoard(boardNo);
+         String a = new TBoardService().selectAddress(boardNo);
+         
+         ArrayList<Attachment> list = new TBoardService().selectAttachmentList(boardNo);
+   
+         request.setAttribute("b", b);
+         request.setAttribute("a", a);
+         request.setAttribute("list", list);
+         System.out.println("a : " + a);
+         System.out.println("b : " + b);
+         System.out.println("list : " + list);
+         
+         
+         request.getRequestDispatcher("views/tboard/tBoardDetailView.jsp").forward(request, response);
+      }
+      else { 
+         
+      }
+      
+   }
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
+   /**
+    * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+    */
+   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      // TODO Auto-generated method stub
+      doGet(request, response);
+   }
 
 }

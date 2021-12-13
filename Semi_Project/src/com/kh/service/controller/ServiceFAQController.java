@@ -103,7 +103,7 @@ public class ServiceFAQController extends HttpServlet {
 				
 				// 4) Service 단으로 토스
 				ArrayList<FAQ> list = new FAQService().selectFAQList(pi);
-				
+				System.out.println("에프에이큐 리스트 : " + list);
 				// 5) 응답뷰 지정 => list, pi 를 넘겨서
 				request.setAttribute("list", list); // 우리가 실제로 조회한 한 페이지에 보일 10개의 게시글
 				request.setAttribute("pi", pi); // 페이징바를 만들때 필요한 변수

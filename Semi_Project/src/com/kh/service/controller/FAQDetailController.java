@@ -29,9 +29,9 @@ public class FAQDetailController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		FAQ f = new FAQService().selectFAQ(Integer.parseInt(request.getParameter("fno")));
-		
+		int fno = Integer.parseInt(request.getParameter("fno"));
+		FAQ f = new FAQService().selectFAQ(fno);
+		System.out.println("에프에이큐" + f);
 		request.setAttribute("f", f);
 		
 		request.getRequestDispatcher("/views/service/FAQ.jsp").forward(request, response);

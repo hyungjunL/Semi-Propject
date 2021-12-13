@@ -64,7 +64,7 @@ public class FAQDao {
 			close(rset);
 			close(pstmt);
 		}
-		
+		System.out.println("dao에서의 list " + list);
 		return list;
 		
 	}

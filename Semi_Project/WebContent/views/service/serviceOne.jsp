@@ -3,12 +3,12 @@
  <%@ page import="com.kh.member.model.vo.Member" %>
 <% 
 
-Member loginUser = (Member)session.getAttribute("loginUser");
+Member loginMember = (Member)session.getAttribute("loginMember");
 // 로그인 전 : header.jsp 가 로딩될때 null
 // 로그인 후 : header.jsp 가 로딩될때 로그인한 회원의 정보가 담겨있음
 
-String userId = loginUser.getUserId();
-String userName = loginUser.getUserName();
+String userId = loginMember.getMemberId();
+String userName = loginMember.getMemberName();
 
 %>   
     

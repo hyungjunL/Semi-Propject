@@ -2,136 +2,145 @@
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
 <properties>
 
-	<comment>책 등록 관련 쿼리문</comment>
-	
-	<entry key="insertTBoard">
-		INSERT INTO T_BOARD(T_NO, T_TITLE, T_PRICE, CATEGORY_NO, BOOK_STATUS, CONTENT, MEMBER_NO)  
-		VALUES(SEQ_BNO.NEXTVAL, ?, ?, ?, ?, ?, ?)
-	</entry>
-	<entry key="indexSelectTBoard">
-		SELECT ROWNUM, T.T_NO, T.T_TITLE
-				FROM ( SELECT T_NO, T_TITLE
-		        FROM T_BOARD 
-		        WHERE STATUS = 'Y'
-		        ORDER BY CREATE_DATE DESC) T
-		WHERE ROWNUM &lt; 4
-	</entry>
-	<entry key="insertAttachmentList">
-		INSERT INTO ATTACHMENT2(FILE_NO, T_NO, FILE_NAME, FILE_PATH, FILE_LEVEL,STATUS,CHANGE_NAME)
-		VALUES(SEQ_FNO.NEXTVAL, SEQ_BNO.CURRVAL, ?, ?, ?, ?, ?)
-	</entry>
-	<entry key="selectAllListCount">
-		SELECT COUNT(*) COUNT
-		FROM T_BOARD
-		WHERE STATUS = 'Y'
-	</entry>
-	
-	<entry key="selectAllList">
-		SELECT *
-		FROM (
-		    SELECT ROWNUM RNUM, A.*
-		    FROM (
-		            SELECT T_NO,T_TITLE, T_PRICE, CATEGORY_NO, CREATE_DATE, T_COUNT, MEMBER_NO, B.STATUS ,FILE_PATH || CHANGE_NAME "TITLEIMG"
-		            FROM T_BOARD B
-		            JOIN CATEGORY USING (CATEGORY_NO)
-		            JOIN MEMBER USING (MEMBER_NO)
+   <comment>책 등록 관련 쿼리문</comment>
+   
+   <entry key="insertTBoard">
+      INSERT INTO T_BOARD(T_NO, T_TITLE, T_PRICE, CATEGORY_NO, BOOK_STATUS, CONTENT, MEMBER_NO, T_ADDRESS)  
+      VALUES(SEQ_BNO.NEXTVAL, ?, ?, ?, ?, ?, ?, ?)
+   </entry>
+   
+   <entry key="indexSelectTBoard">
+      SELECT ROWNUM, T.T_NO, T.T_TITLE
+            FROM ( SELECT T_NO, T_TITLE
+              FROM T_BOARD 
+              WHERE STATUS = 'Y'
+              ORDER BY CREATE_DATE DESC) T
+      WHERE ROWNUM &lt; 4
+   </entry>
+   <entry key="insertAttachmentList">
+      INSERT INTO ATTACHMENT2(FILE_NO, T_NO, FILE_NAME, FILE_PATH, FILE_LEVEL,STATUS,CHANGE_NAME)
+      VALUES(SEQ_FNO.NEXTVAL, SEQ_BNO.CURRVAL, ?, ?, ?, ?, ?)
+   </entry>
+   <entry key="selectAllListCount">
+      SELECT COUNT(*) COUNT
+      FROM T_BOARD
+      WHERE STATUS = 'Y'
+   </entry>
+   
+   <entry key="selectAllList">
+      SELECT *
+      FROM (
+          SELECT ROWNUM RNUM, A.*
+          FROM (
+                  SELECT T_NO,T_TITLE, T_PRICE, CATEGORY_NO, CREATE_DATE, T_COUNT, MEMBER_NO, B.STATUS ,FILE_PATH || CHANGE_NAME "TITLEIMG"
+                  FROM T_BOARD B
+                  JOIN CATEGORY USING (CATEGORY_NO)
+                  JOIN MEMBER USING (MEMBER_NO)
                     JOIN ATTACHMENT2 USING (T_NO)
-		            WHERE  B.STATUS = 'Y'
+                  WHERE  B.STATUS = 'Y'
                     AND FILE_LEVEL = 1
-		            ORDER BY CREATE_DATE DESC) A)
-		WHERE RNUM BETWEEN ? AND ?
-	</entry>
-	<entry key="selectThumbnailList">
-		
-		SELECT B.T_NO, T_TITLE, T_PRICE, FILE_PATH || CHANGE_NAME "TITLEIMG"
-		FROM T_BOARD B
-		JOIN ATTACHMENT2 A ON (B.T_NO = A.T_NO)
-		WHERE B.STATUS = 'Y'
-		  AND FILE_LEVEL = 1
-	</entry>
-	<entry key="selectListCount">
-		SELECT COUNT(*) COUNT
-		FROM T_BOARD
-		WHERE STATUS = 'Y'
-		AND CATEGORY_NO = ?
-	</entry>
-	
-	<entry key="selectList">
-		SELECT *
-		FROM (
-		    SELECT ROWNUM RNUM, A.*
-		    FROM (
-		            SELECT T_NO,T_TITLE, T_PRICE,CATEGORY_NO, CREATE_DATE, T_COUNT, MEMBER_NO, B.STATUS ,FILE_PATH || CHANGE_NAME "TITLEIMG"
-		            FROM T_BOARD B
-		            JOIN CATEGORY USING (CATEGORY_NO)
-		            JOIN MEMBER USING (MEMBER_NO)
+                  ORDER BY CREATE_DATE DESC) A)
+      WHERE RNUM BETWEEN ? AND ?
+   </entry>
+   <entry key="selectThumbnailList">
+      
+      SELECT B.T_NO, T_TITLE, T_PRICE, FILE_PATH || CHANGE_NAME "TITLEIMG"
+      FROM T_BOARD B
+      JOIN ATTACHMENT2 A ON (B.T_NO = A.T_NO)
+      WHERE B.STATUS = 'Y'
+        AND FILE_LEVEL = 1
+   </entry>
+   <entry key="selectListCount">
+      SELECT COUNT(*) COUNT
+      FROM T_BOARD
+      WHERE STATUS = 'Y'
+      AND CATEGORY_NO = ?
+   </entry>
+   
+   <entry key="selectList">
+      SELECT *
+      FROM (
+          SELECT ROWNUM RNUM, A.*
+          FROM (
+                  SELECT T_NO,T_TITLE, T_PRICE,CATEGORY_NO, CREATE_DATE, T_COUNT, MEMBER_NO, B.STATUS ,FILE_PATH || CHANGE_NAME "TITLEIMG"
+                  FROM T_BOARD B
+                  JOIN CATEGORY USING (CATEGORY_NO)
+                  JOIN MEMBER USING (MEMBER_NO)
                     JOIN ATTACHMENT2 USING (T_NO)
-		            WHERE  B.STATUS = 'Y'
+                  WHERE  B.STATUS = 'Y'
                     AND FILE_LEVEL = 1
                     AND CATEGORY_NO = ?
-		            ORDER BY CREATE_DATE DESC) A)
-		WHERE RNUM BETWEEN ? AND ?
-		
-	</entry>
-	
-	<entry key="selectBoard">
-		SELECT T_NO, T_TITLE, CATEGORY_NO, CONTENT, CREATE_DATE, MEMBER_NO,T_PRICE,B.STATUS,BOOK_STATUS, CATEGORY_NAME
-		FROM T_BOARD B 
-		LEFT JOIN CATEGORY USING (CATEGORY_NO)
-		JOIN MEMBER USING (MEMBER_NO)
-		WHERE T_NO = ?
-		  AND B.STATUS = 'Y'
+                  ORDER BY CREATE_DATE DESC) A)
+      WHERE RNUM BETWEEN ? AND ?
+      
+   </entry>
+   
+   <entry key="selectBoard">
+      SELECT T_NO, T_TITLE, CATEGORY_NO, CONTENT, CREATE_DATE, MEMBER_NO,T_PRICE,B.STATUS,BOOK_STATUS, CATEGORY_NAME
+      FROM T_BOARD B 
+      LEFT JOIN CATEGORY USING (CATEGORY_NO)
+      JOIN MEMBER USING (MEMBER_NO)
+      WHERE T_NO = ?
+        AND B.STATUS = 'Y'
 
-	</entry>
-	
-	<entry key="selectAttachment">
-		SELECT FILE_NO, FILE_NAME, CHANGE_NAME, FILE_PATH, FILE_PATH || CHANGE_NAME "TITLEIMG"
-		FROM ATTACHMENT2
-		WHERE T_NO = ?
-	</entry>
-	
-	<entry key="increaseCount">
-		UPDATE T_BOARD
-		   SET T_COUNT = T_COUNT + 1
-		 WHERE T_NO = ?
-		   AND STATUS = 'Y'
-	</entry>
-	
-	<entry key="deleteBoard"> 
-		UPDATE T_BOARD
-		   SET STATUS = 'N'
-		 WHERE T_NO = ?
-	</entry>
-	<entry key="selectCategoryList">
-		SELECT *
-		FROM CATEGORY
-	</entry>
-	<entry key="selectAttachment2">
-		SELECT FILE_NO, FILE_NAME, CHANGE_NAME, FILE_PATH, FILE_PATH || CHANGE_NAME "TITLEIMG"
-		FROM ATTACHMENT2
-		WHERE T_NO = ?
-	</entry>
-	
-	<entry key="updateTBoard">
-		UPDATE T_BOARD
-   			SET T_TITLE = ?, 
-       			T_PRICE = ?, 
-       			CATEGORY_NO = ?,
-       			BOOK_STATUS = ?,
-       			CONTENT = ?,
-       			MEMBER_NO = ?
- 			WHERE T_NO = ?
-		
-	</entry>
-	<entry key="updateAttachment">
-		UPDATE ATTACHMENT2
-   			SET FILE_NAME = ?, 
-      		 	FILE_PATH = ?,
-       			STATUS = ?,
-     			CHANGE_NAME = ?
- 		WHERE T_NO = ?
- 		AND FILE_LEVEL=?
-	</entry>
-	
-	
+   </entry>
+   
+   <entry key="selectAttachment">
+      SELECT FILE_NO, FILE_NAME, CHANGE_NAME, FILE_PATH, FILE_PATH || CHANGE_NAME "TITLEIMG"
+      FROM ATTACHMENT2
+      WHERE T_NO = ?
+   </entry>
+   
+   <entry key="increaseCount">
+      UPDATE T_BOARD
+         SET T_COUNT = T_COUNT + 1
+       WHERE T_NO = ?
+         AND STATUS = 'Y'
+   </entry>
+   
+   <entry key="deleteBoard"> 
+      UPDATE T_BOARD
+         SET STATUS = 'N'
+       WHERE T_NO = ?
+   </entry>
+   <entry key="selectCategoryList">
+      SELECT *
+      FROM CATEGORY
+   </entry>
+   <entry key="selectAttachment2">
+      SELECT FILE_NO, FILE_NAME, CHANGE_NAME, FILE_PATH, FILE_PATH || CHANGE_NAME "TITLEIMG"
+      FROM ATTACHMENT2
+      WHERE T_NO = ?
+   </entry>
+   
+   <entry key="updateTBoard">
+      UPDATE T_BOARD
+            SET T_TITLE = ?, 
+                T_PRICE = ?, 
+                CATEGORY_NO = ?,
+                BOOK_STATUS = ?,
+                CONTENT = ?,
+                MEMBER_NO = ?
+          WHERE T_NO = ?
+      
+   </entry>
+   <entry key="updateAttachment">
+      UPDATE ATTACHMENT2
+            SET FILE_NAME = ?, 
+                FILE_PATH = ?,
+                STATUS = ?,
+              CHANGE_NAME = ?
+       WHERE T_NO = ?
+       AND FILE_LEVEL=?
+   </entry>
+   
+   <entry key="selectAddress">
+      SELECT T_ADDRESS
+      FROM T_BOARD
+      WHERE T_NO = ?
+      AND STATUS = 'Y'
+
+   </entry>
+   
+   
 </properties>

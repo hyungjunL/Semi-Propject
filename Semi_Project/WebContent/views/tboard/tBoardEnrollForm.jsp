@@ -101,6 +101,11 @@
                 
                 <tr>
                     <td colspan="2">
+                       <strong>거래 장소</strong>: <textarea name="map" rows="1" style="resize: none;" required></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
                         <textarea name="content" rows="10" style="resize: none;" required></textarea>
                     </td>
                 </tr>
@@ -192,6 +197,9 @@
         </form>
         
     </div>
+    <br>
+    <br>
+    <br>
     <br>
     <br>
     <br>
