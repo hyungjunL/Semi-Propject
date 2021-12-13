@@ -71,6 +71,7 @@ public class F_boardInsertController extends HttpServlet {
 					at.setOriginName(multiRequest.getOriginalFileName(key));
 					at.setChangeName(multiRequest.getFilesystemName(key));
 					at.setFilePath("resources/f_board_upfiles/");
+					at.setFileLevel(i);
 
 					list.add(at);
 

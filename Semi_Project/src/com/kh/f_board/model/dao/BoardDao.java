@@ -223,6 +223,7 @@ public class BoardDao {
 				pstmt.setString(1, at.getOriginName());
 				pstmt.setString(2, at.getChangeName());
 				pstmt.setString(3, at.getFilePath());
+				pstmt.setInt(4, at.getFileLevel());
 
 				result = pstmt.executeUpdate();
 			}
@@ -562,9 +563,12 @@ public class BoardDao {
 					pstmt.setString(2, list.get(i).getChangeName());
 					pstmt.setString(3, list.get(i).getFilePath());
 					pstmt.setInt(4, b.getF_NO());
+					pstmt.setInt(5,	i+1);
 					
+			
 
 					result = pstmt.executeUpdate();
+					
 				} catch (IndexOutOfBoundsException e) {
 
 				}

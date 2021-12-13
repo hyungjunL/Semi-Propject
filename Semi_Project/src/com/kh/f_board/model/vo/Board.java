@@ -15,6 +15,7 @@ public class Board {
 	private String STATUS;
 	private String BOARD_WRITER;
 	private int max_NO;
+	private int FILE_LEVEL;
 
 	public Board() {
 		super();
@@ -28,6 +29,14 @@ public class Board {
 	public Board(int max_NO) {
 		super();
 		this.max_NO = max_NO;
+	}
+
+	public int getFILE_LEVEL() {
+		return FILE_LEVEL;
+	}
+
+	public void setFILE_LEVEL(int fILE_LEVEL) {
+		FILE_LEVEL = fILE_LEVEL;
 	}
 
 	public Board(int f_NO, String f_TITLE, String mEMBER_ID, String cOUNT, Date cREATE_DATE) {

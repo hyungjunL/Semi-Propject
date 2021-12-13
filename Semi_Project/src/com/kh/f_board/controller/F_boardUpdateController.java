@@ -71,6 +71,8 @@ public class F_boardUpdateController extends HttpServlet {
 					Attachment at = new Attachment();
 					at.setOriginName(multiRequest.getOriginalFileName(key));
 					System.out.println("변화된 파일명 : " + multiRequest.getFilesystemName(key));
+					at.setFileNo(boardNo);
+					at.setFileLevel(i);
 					at.setFilePath("resources/f_board_upfiles/");
 					at.setChangeName(multiRequest.getFilesystemName(key));
 					at.setStatus("Y");

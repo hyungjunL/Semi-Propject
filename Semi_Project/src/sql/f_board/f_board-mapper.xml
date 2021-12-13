@@ -60,9 +60,9 @@
 
 	<entry key="insertAttachmentList">
 		INSERT INTO ATTACHMENT(FILE_NO, F_NO, ORIGIN_NAME,
-		CHANGE_NAME, FILE_PATH)
+		CHANGE_NAME, FILE_PATH, FILE_LEVEL)
 		VALUES(FILE_SEQ.NEXTVAL, BO_SEQ.CURRVAL, ?, ?,
-		?)
+		?,?)
 	</entry>
 
 	<entry key="selectAttachment">
@@ -91,6 +91,7 @@
 		, CHANGE_NAME = ?
 		, FILE_PATH = ?
 		WHERE F_NO = ?
+		AND FILE_LEVEL = ?
 	</entry>
 
 	<entry key="deleteBoard">

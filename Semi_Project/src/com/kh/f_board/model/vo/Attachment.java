@@ -11,6 +11,7 @@ public class Attachment {
 	private String filePath; 
 	private Date uploadDate; 
 	private String status; 
+	private int fileLevel;
 	
 	public Attachment() {
 		super();
@@ -40,6 +41,14 @@ public class Attachment {
 
 	public int getFileNo() {
 		return fileNo;
+	}
+
+	public int getFileLevel() {
+		return fileLevel;
+	}
+
+	public void setFileLevel(int fileLevel) {
+		this.fileLevel = fileLevel;
 	}
 
 	public void setFileNo(int fileNo) {

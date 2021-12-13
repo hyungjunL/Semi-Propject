@@ -89,13 +89,13 @@ public class TBoardModifiedController extends HttpServlet {
 					at.setChangeName(multiRequest.getFilesystemName(key));
 					System.out.println("변화된 파일명 : " + multiRequest.getFilesystemName(key));
 					at.setStatus("Y");
-					// 파일레벨
+					
 					if(i == 1) {
-						// 대표이미지
+						
 						at.setFileLevel("1");
 					}
 					else if(i == 2) {
-						// 상세이미지
+						
 						at.setFileLevel("2");
 					}
 					else {
